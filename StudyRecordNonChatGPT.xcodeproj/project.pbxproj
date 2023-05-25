@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		62A92EABAE6AEFCCA1164E2F /* Pods_StudyRecordNonChatGPT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092496FFFEDB213D5B164E38 /* Pods_StudyRecordNonChatGPT.framework */; };
+		9C177A9B2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */; };
+		9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C177A9C2A1F0E76001D4E29 /* ContentView.swift */; };
+		9C177A9F2A1F0E78001D4E29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */; };
+		9C177AA22A1F0E78001D4E29 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C177AA12A1F0E78001D4E29 /* Preview Assets.xcassets */; };
+		9C5E34992A1F48C800A84C26 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E34982A1F48C800A84C26 /* MainView.swift */; };
+		9C5E349B2A1F48F300A84C26 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E349A2A1F48F300A84C26 /* RecordView.swift */; };
+		9C5E349D2A1F490B00A84C26 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E349C2A1F490B00A84C26 /* EditView.swift */; };
+		9C5E349F2A1F492200A84C26 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E349E2A1F492200A84C26 /* StatsView.swift */; };
+		9C5E34A12A1FB42A00A84C26 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9C5E34A02A1FB42A00A84C26 /* .gitignore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		092496FFFEDB213D5B164E38 /* Pods_StudyRecordNonChatGPT.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StudyRecordNonChatGPT.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61D4247D85AB7E32D3D78D20 /* Pods-StudyRecordNonChatGPT.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyRecordNonChatGPT.debug.xcconfig"; path = "Target Support Files/Pods-StudyRecordNonChatGPT/Pods-StudyRecordNonChatGPT.debug.xcconfig"; sourceTree = "<group>"; };
+		846415FACD8E6927077A9003 /* Pods-StudyRecordNonChatGPT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyRecordNonChatGPT.release.xcconfig"; path = "Target Support Files/Pods-StudyRecordNonChatGPT/Pods-StudyRecordNonChatGPT.release.xcconfig"; sourceTree = "<group>"; };
+		9C177A972A1F0E76001D4E29 /* StudyRecordNonChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecordNonChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordNonChatGPTApp.swift; sourceTree = "<group>"; };
+		9C177A9C2A1F0E76001D4E29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9C177AA12A1F0E78001D4E29 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9C5E34982A1F48C800A84C26 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		9C5E349A2A1F48F300A84C26 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
+		9C5E349C2A1F490B00A84C26 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
+		9C5E349E2A1F492200A84C26 /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		9C5E34A02A1FB42A00A84C26 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9C177A942A1F0E76001D4E29 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62A92EABAE6AEFCCA1164E2F /* Pods_StudyRecordNonChatGPT.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		61CE12323DF1CFD2E1C76134 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				61D4247D85AB7E32D3D78D20 /* Pods-StudyRecordNonChatGPT.debug.xcconfig */,
+				846415FACD8E6927077A9003 /* Pods-StudyRecordNonChatGPT.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		7136B042B81CEC8A03CAA372 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				092496FFFEDB213D5B164E38 /* Pods_StudyRecordNonChatGPT.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9C177A8E2A1F0E76001D4E29 = {
+			isa = PBXGroup;
+			children = (
+				9C5E34A02A1FB42A00A84C26 /* .gitignore */,
+				9C177A992A1F0E76001D4E29 /* StudyRecordNonChatGPT */,
+				9C177A982A1F0E76001D4E29 /* Products */,
+				61CE12323DF1CFD2E1C76134 /* Pods */,
+				7136B042B81CEC8A03CAA372 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9C177A982A1F0E76001D4E29 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9C177A972A1F0E76001D4E29 /* StudyRecordNonChatGPT.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9C177A992A1F0E76001D4E29 /* StudyRecordNonChatGPT */ = {
+			isa = PBXGroup;
+			children = (
+				9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */,
+				9C177A9C2A1F0E76001D4E29 /* ContentView.swift */,
+				9C5E34982A1F48C800A84C26 /* MainView.swift */,
+				9C5E349A2A1F48F300A84C26 /* RecordView.swift */,
+				9C5E349C2A1F490B00A84C26 /* EditView.swift */,
+				9C5E349E2A1F492200A84C26 /* StatsView.swift */,
+				9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */,
+				9C177AA02A1F0E78001D4E29 /* Preview Content */,
+			);
+			path = StudyRecordNonChatGPT;
+			sourceTree = "<group>";
+		};
+		9C177AA02A1F0E78001D4E29 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				9C177AA12A1F0E78001D4E29 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9C177A962A1F0E76001D4E29 /* StudyRecordNonChatGPT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9C177AA52A1F0E78001D4E29 /* Build configuration list for PBXNativeTarget "StudyRecordNonChatGPT" */;
+			buildPhases = (
+				50066AEE154876FA4FF9A8B6 /* [CP] Check Pods Manifest.lock */,
+				9C177A932A1F0E76001D4E29 /* Sources */,
+				9C177A942A1F0E76001D4E29 /* Frameworks */,
+				9C177A952A1F0E76001D4E29 /* Resources */,
+				1FDF11B8F6D7BFFF1B27F904 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StudyRecordNonChatGPT;
+			productName = StudyRecordNonChatGPT;
+			productReference = 9C177A972A1F0E76001D4E29 /* StudyRecordNonChatGPT.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9C177A8F2A1F0E76001D4E29 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					9C177A962A1F0E76001D4E29 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = 9C177A922A1F0E76001D4E29 /* Build configuration list for PBXProject "StudyRecordNonChatGPT" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9C177A8E2A1F0E76001D4E29;
+			productRefGroup = 9C177A982A1F0E76001D4E29 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9C177A962A1F0E76001D4E29 /* StudyRecordNonChatGPT */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9C177A952A1F0E76001D4E29 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C177AA22A1F0E78001D4E29 /* Preview Assets.xcassets in Resources */,
+				9C5E34A12A1FB42A00A84C26 /* .gitignore in Resources */,
+				9C177A9F2A1F0E78001D4E29 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1FDF11B8F6D7BFFF1B27F904 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StudyRecordNonChatGPT/Pods-StudyRecordNonChatGPT-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StudyRecordNonChatGPT/Pods-StudyRecordNonChatGPT-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StudyRecordNonChatGPT/Pods-StudyRecordNonChatGPT-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		50066AEE154876FA4FF9A8B6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-StudyRecordNonChatGPT-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9C177A932A1F0E76001D4E29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */,
+				9C5E349D2A1F490B00A84C26 /* EditView.swift in Sources */,
+				9C5E349F2A1F492200A84C26 /* StatsView.swift in Sources */,
+				9C5E349B2A1F48F300A84C26 /* RecordView.swift in Sources */,
+				9C5E34992A1F48C800A84C26 /* MainView.swift in Sources */,
+				9C177A9B2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		9C177AA32A1F0E78001D4E29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9C177AA42A1F0E78001D4E29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9C177AA62A1F0E78001D4E29 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 61D4247D85AB7E32D3D78D20 /* Pods-StudyRecordNonChatGPT.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"StudyRecordNonChatGPT/Preview Content\"";
+				DEVELOPMENT_TEAM = 9M7448R73Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tamakoma.StudyRecordNonChatGPT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9C177AA72A1F0E78001D4E29 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 846415FACD8E6927077A9003 /* Pods-StudyRecordNonChatGPT.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"StudyRecordNonChatGPT/Preview Content\"";
+				DEVELOPMENT_TEAM = 9M7448R73Y;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tamakoma.StudyRecordNonChatGPT;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9C177A922A1F0E76001D4E29 /* Build configuration list for PBXProject "StudyRecordNonChatGPT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C177AA32A1F0E78001D4E29 /* Debug */,
+				9C177AA42A1F0E78001D4E29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9C177AA52A1F0E78001D4E29 /* Build configuration list for PBXNativeTarget "StudyRecordNonChatGPT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C177AA62A1F0E78001D4E29 /* Debug */,
+				9C177AA72A1F0E78001D4E29 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9C177A8F2A1F0E76001D4E29 /* Project object */;
+}
