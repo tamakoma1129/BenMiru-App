@@ -11,7 +11,7 @@ import RealmSwift
 //EditViewのストラクト
 struct EditView: View {
     //viewModelGenreのインスタンスを生成して、変更されたら再実行
-    @ObservedObject var viewModelGenre = ViewModelGenre()
+    @ObservedResults(Genre.self) var genres
     @State var newGenreName = ""            //新しく追加されるジャンル名を保存する変数
     @State var newGenreColor = Color.white  //新しく追加されるジャンルカラーを保存する変数
     var body: some View {
@@ -21,14 +21,26 @@ struct EditView: View {
                 TextField("New Genre", text: $newGenreName)
                 ColorPicker("", selection: $newGenreColor)
                 //ボタンを押すと関数が発動
-                Button(action: createNewGenre) {
-                    Text("Add")
-                }
+                Button(action: {
+                    let genre = Genre()
+                    genre.name = newGenreName
+                    let uiColor = UIColor(newGenreColor)
+                    if let rgba = uiColor.rgba {
+                        genre.colorRed = Float(rgba.red)
+                        genre.colorGreen = Float(rgba.green)
+                        genre.colorBlue = Float(rgba.blue)
+                        genre.colorAlpha = Float(rgba.alpha)
+                    }
+                    $genres.append(genre)
+                    
+                }, label: {
+                    Text("add")
+                })
             }
             .padding()
             // 追加されたジャンルのリストのView
-            List {
-                ForEach(viewModelGenre.genreEntities) { genre in
+            List{
+                ForEach(genres){ genre in
                     //ジャンルにデータがあればifの処理
                     if !genre.isInvalidated {
                         VStack {
@@ -39,14 +51,7 @@ struct EditView: View {
                                     get: { genre.name },
                                     //realmに書き込む
                                     set: { newValue in
-                                        do {
-                                            let realm = try Realm()
-                                            try realm.write {
-                                                genre.name = newValue
-                                            }
-                                        } catch {
-                                            print("Failed to update genre name: \(error)")
-                                        }
+                                        genre.name=newValue
                                     }
                                 ))
                                 
@@ -61,19 +66,13 @@ struct EditView: View {
                                     },
                                     //それをrealmに書き込む
                                     set: { newValue in
-                                        do {
-                                            let realm = try Realm()
-                                            try realm.write {
-                                                let uiColor = UIColor(newValue)
-                                                if let rgba = uiColor.rgba {
-                                                    genre.colorRed = Float(rgba.red)
-                                                    genre.colorGreen = Float(rgba.green)
-                                                    genre.colorBlue = Float(rgba.blue)
-                                                    genre.colorAlpha = Float(rgba.alpha)
-                                                }
-                                            }
-                                        } catch {
-                                            print("Failed to update genre color: \(error)")
+
+                                        let uiColor = UIColor(newValue)
+                                        if let rgba = uiColor.rgba {
+                                            genre.colorRed = Float(rgba.red)
+                                            genre.colorGreen = Float(rgba.green)
+                                            genre.colorBlue = Float(rgba.blue)
+                                            genre.colorAlpha = Float(rgba.alpha)
                                         }
                                     }
                                 ))
@@ -82,11 +81,12 @@ struct EditView: View {
                     }
                 }
                 //左にスワイプして削除したらdeleteGenreという関数を実行
-                .onDelete(perform: deleteGenre)
+                .onDelete(perform: $genres.remove)
             }
         }
         .navigationTitle("Edit Genres")
     }
+    /*
     //新しいジャンルを作るときの処理関数
     private func createNewGenre() {
         let newGenre = Genre()
@@ -127,5 +127,5 @@ struct EditView: View {
         } catch {
             print("Failed to delete genre: \(error)")
         }
-    }
+    }*/
 }
