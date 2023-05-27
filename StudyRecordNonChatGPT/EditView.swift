@@ -20,7 +20,7 @@ struct EditView: View {
             HStack {
                 TextField("New Genre", text: $newGenreName)
                 ColorPicker("", selection: $newGenreColor)
-                //ボタンを押すと関数が発動
+                //ボタンを押すと新しいジャンルが追加される
                 Button(action: {
                     let genre = Genre()
                     genre.name = newGenreName
@@ -32,6 +32,9 @@ struct EditView: View {
                         genre.colorAlpha = Float(rgba.alpha)
                     }
                     $genres.append(genre)
+                    //初期値に戻しておく
+                    newGenreName = ""
+                    newGenreColor = Color.white
                     
                 }, label: {
                     Text("add")
@@ -51,7 +54,13 @@ struct EditView: View {
                                     get: { genre.name },
                                     //realmに書き込む
                                     set: { newValue in
-                                        genre.name=newValue
+                                        //realmを解凍して書き込めるようにする
+                                        let thawGenre = genre.thaw()
+                                        try! thawGenre?.realm!.write{
+                                            thawGenre?.name=newValue
+                                        }
+                                        //再凍結させる。もしかしてこの位置だと意味ない
+                                        thawGenre?.freeze()
                                     }
                                 ))
                                 
@@ -66,14 +75,19 @@ struct EditView: View {
                                     },
                                     //それをrealmに書き込む
                                     set: { newValue in
-
+                                        //解凍する
+                                        let thawGenre = genre.thaw()
+                                        try! thawGenre?.realm!.write{
                                         let uiColor = UIColor(newValue)
-                                        if let rgba = uiColor.rgba {
-                                            genre.colorRed = Float(rgba.red)
-                                            genre.colorGreen = Float(rgba.green)
-                                            genre.colorBlue = Float(rgba.blue)
-                                            genre.colorAlpha = Float(rgba.alpha)
+                                            if let rgba = uiColor.rgba {
+                                                thawGenre?.colorRed = Float(rgba.red)
+                                                thawGenre?.colorGreen = Float(rgba.green)
+                                                thawGenre?.colorBlue = Float(rgba.blue)
+                                                thawGenre?.colorAlpha = Float(rgba.alpha)
+                                            }
                                         }
+                                        //再凍結させる。もしかしてこの位置だと意味ない
+                                        thawGenre?.freeze()
                                     }
                                 ))
                             }
