@@ -16,10 +16,10 @@ struct BlockLinesShape: Shape {
         //「CGFloat(numberOfLine-1) / 7」だと、max15本の線の内、どこを塗るかという選択になる。
         //numberOfLine=0で最初（左上）、numberOfLine=母数が真ん中、numberOfLine=母数*2が最後（右下）に線を生成する。上の例の場合母数は7。
         let x = rect.width * CGFloat(numberOfLine-1) / 7
-        //ここら辺は線が途切れないよう微調整しただけ
+        //ここら辺は線が途切れないよう微調整したから半端
         path.move(to: CGPoint(x: x + 10, y: -10))
         path.addLine(to: CGPoint(x: -10, y: x + 10))
-        path.addLine(to: CGPoint(x: -10, y: x + 10))
+        //path.addLine(to: CGPoint(x: -10, y: x + 10))
         
         return path
     }

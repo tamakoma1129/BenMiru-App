@@ -19,6 +19,7 @@
 		9C5E34A12A1FB42A00A84C26 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 9C5E34A02A1FB42A00A84C26 /* .gitignore */; };
 		9C5E34A32A20990A00A84C26 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E34A22A20990A00A84C26 /* RealmModel.swift */; };
 		9C5E34A52A20FA2C00A84C26 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E34A42A20FA2C00A84C26 /* UIColor+Extensions.swift */; };
+		9C5E34A82A22694900A84C26 /* FigureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E34A72A22694900A84C26 /* FigureModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		9C5E34A02A1FB42A00A84C26 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		9C5E34A22A20990A00A84C26 /* RealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmModel.swift; sourceTree = "<group>"; };
 		9C5E34A42A20FA2C00A84C26 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		9C5E34A72A22694900A84C26 /* FigureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 				9C5E349A2A1F48F300A84C26 /* RecordView.swift */,
 				9C5E34A22A20990A00A84C26 /* RealmModel.swift */,
 				9C5E349C2A1F490B00A84C26 /* EditView.swift */,
+				9C5E34A72A22694900A84C26 /* FigureModel.swift */,
 				9C5E34A42A20FA2C00A84C26 /* UIColor+Extensions.swift */,
 				9C5E349E2A1F492200A84C26 /* StatsView.swift */,
 				9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */,
@@ -235,6 +238,7 @@
 				9C5E349B2A1F48F300A84C26 /* RecordView.swift in Sources */,
 				9C5E34992A1F48C800A84C26 /* MainView.swift in Sources */,
 				9C177A9B2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift in Sources */,
+				9C5E34A82A22694900A84C26 /* FigureModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
