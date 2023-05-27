@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import RealmSwift
 
 struct ContentView: View {
+    let realm = try! Realm()
+    let hoge = print(Realm.Configuration.defaultConfiguration.fileURL!)
     var body: some View {
         //画面したのメニュー追加
         TabView{
