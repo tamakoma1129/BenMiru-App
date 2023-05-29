@@ -9,14 +9,14 @@ import SwiftUI
 struct StopwatchView: View {
     @Binding var allMinuteTime: Int
     @Binding var uiColor: UIColor
-    @Binding var genreId: String
+    @Binding var genreName: String
     @Binding var selectedTab: Int
     @StateObject private var viewModel: StopwatchViewModel
     
-    init(allMinuteTime: Binding<Int>, uiColor: Binding<UIColor>, genreId: Binding<String>, selectedTab: Binding<Int>) {
+    init(allMinuteTime: Binding<Int>, uiColor: Binding<UIColor>, genreName: Binding<String>, selectedTab: Binding<Int>) {
         _allMinuteTime = allMinuteTime
         _uiColor = uiColor
-        _genreId = genreId
+        _genreName = genreName
         _selectedTab = selectedTab
         _viewModel = StateObject(wrappedValue: StopwatchViewModel(updateAllMinuteTime: allMinuteTime))
     }

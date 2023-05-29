@@ -18,7 +18,7 @@ class Genre: Object, Identifiable {
     @objc dynamic var colorGreen: Float = 0
     @objc dynamic var colorBlue: Float = 0
     @objc dynamic var colorAlpha: Float = 1
-    @objc dynamic var lastUpdatedDate: Date?
+    @objc dynamic var lastUpdatedDate: Date = Date()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -35,7 +35,7 @@ class Genre: Object, Identifiable {
 //勉強記録を保存するときのRealmデータモデル
 class StudyRecord: Object {
     @objc dynamic var id = UUID().uuidString  // 一意のID
-    @objc dynamic var genreId: Genre?  // ジャンルのIDを保存して、これと上のGenreと参照して色を求める
+    @objc dynamic var genreId = ""  // ジャンルのIDを保存して、これと上のGenreと参照して色を求める
     @objc dynamic var date = Date()  // 記録したときの日付。これでソートする
     @objc dynamic var durationMinutes = 0  // いくら勉強したか(分)
     

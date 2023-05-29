@@ -14,8 +14,9 @@ struct RecordView: View {
     //日付降順（最新順）でソート
     @ObservedResults(Genre.self,sortDescriptor:SortDescriptor(keyPath: "lastUpdatedDate", ascending: false)) var genres
     @State private var showModal = false
-    @State private var selectedGenreId = String()
-    @State private var selectedGenreColor = UIColor()
+    @State var selectedGenreName = String()
+    @State var selectedGenreColor = UIColor()
+    @State var selectedGenreId : String = "" //UUID.uuidStringで保存しているので、String
     var body: some View {
         NavigationView{
             List{
@@ -30,7 +31,8 @@ struct RecordView: View {
                             //contentShape(Rectangle())をつけることでセル全体を選択できる
                             .contentShape(Rectangle())
                             .onTapGesture {
-                                selectedGenreId = genre.name
+                                selectedGenreId = genre.id
+                                selectedGenreName = genre.name
                                 showModal = true
                                 selectedGenreColor = UIColor(
                                     red: CGFloat(genre.colorRed),
@@ -45,16 +47,18 @@ struct RecordView: View {
             }
             .navigationTitle("Select Genre")
             .sheet(isPresented: $showModal) {
-                RecordViewModal(genreId: $selectedGenreId,showModal: $showModal, uiColor:$selectedGenreColor)
+                RecordViewModal(genreName: $selectedGenreName,showModal: $showModal, uiColor:$selectedGenreColor, selectedGenreId: $selectedGenreId)
             }
         }
     }
     //ジャンルを選択したときのモーダル画面
     struct RecordViewModal: View{
-        @Binding var genreId: String
+        @Binding var genreName: String
         @Binding var showModal: Bool
         @Binding var uiColor: UIColor
+        @Binding var selectedGenreId: String
         @State var allMinuteTime:Int = 0
+        @State var selectedDate: Date = Date()
         @State var selectedTab = 1 //現在選択しているtabの番号を保存する変数
         var body: some View{
             NavigationView{
@@ -62,8 +66,8 @@ struct RecordView: View {
                     //自作したタブバーの表示
                     TabBarView(selectedTab: $selectedTab,uiColor: $uiColor)
                     TabView(selection: $selectedTab){
-                        RecordViewManual(genreName: $genreId,uiColor: $uiColor,allMinuteTime: $allMinuteTime).tag(1)
-                        StopwatchView(allMinuteTime: $allMinuteTime,uiColor: $uiColor,genreId: $genreId,selectedTab: $selectedTab).tag(2)
+                        RecordViewManual(genreName: $genreName,uiColor: $uiColor,selectedDate: $selectedDate, allMinuteTime: $allMinuteTime).tag(1)
+                        StopwatchView(allMinuteTime: $allMinuteTime,uiColor: $uiColor,genreName: $genreName,selectedTab: $selectedTab).tag(2)
                     }
                     .tabViewStyle(.page)
                     //戻るボタンとかをNavigationbarに追加
@@ -82,6 +86,33 @@ struct RecordView: View {
                         ToolbarItemGroup(placement: .navigationBarTrailing){
                             if (selectedTab == 1 && allMinuteTime >= 1){
                                 Button(action: {
+                                    //記録する
+                                    //日付の処理
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.locale = Locale(identifier: "ja_JP") //日本時間に設定
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" //年-月-日 時間:分:秒を0埋めで記録
+                                    let dateString = dateFormatter.string(from: selectedDate)   //selectedDateからフォーマット通りに日付を変更しdataに
+                                    let dateDate = dateFormatter.date(from: dateString) //ここで日付型にしてる。フォーマットが違うとエラーが出るので、本当はエラー処理した方がいいんだけど、同じフォーマットを使っているので問題ないはず
+                                    //Realmに記録する前処理
+                                    let newRecord = StudyRecord()   //genreId,date,durationMinuteの3つを記録
+                                    newRecord.genreId = selectedGenreId
+                                    newRecord.date = dateDate!
+                                    newRecord.durationMinutes = allMinuteTime
+                                    //Realmに記録する処理
+                                    do {
+                                        let realm = try Realm()
+                                        try realm.write {
+                                            realm.add(newRecord)
+                                        }
+                                        //Genreの日付を更新する処理
+                                        if let targetGenre = realm.objects(Genre.self).filter("id == '\(selectedGenreId)'").first {
+                                            try realm.write {
+                                                targetGenre.lastUpdatedDate = Date()
+                                            }
+                                        }
+                                    } catch {
+                                        print("RecordViewModelの記録を追加するところでエラー: \(error)")
+                                    }
                                     showModal.toggle()
                                 }, label:{
                                     Text("記録する")
@@ -94,7 +125,7 @@ struct RecordView: View {
                         }
                     }
                 }
-                .navigationTitle("\(genreId)の記録")
+                .navigationTitle("\(genreName)の記録")
             }
             
         }
@@ -130,7 +161,7 @@ struct RecordView: View {
         struct RecordViewManual : View{
             @Binding var genreName : String
             @Binding var uiColor : UIColor
-            @State private var selectedDate:Date = Date()
+            @Binding var selectedDate:Date
             @State private var dateFormat = "yyyy/M/d HH:mm"
             @State private var dateString = "2021-10-06T18:45:00"
             @State private var hDateModal = false //ハーフモーダルのオンオフ

@@ -11,7 +11,7 @@ import RealmSwift
 //EditViewのストラクト
 struct EditView: View {
     //viewModelGenreのインスタンスを生成して、変更されたら再実行
-    @ObservedResults(Genre.self) var genres
+    @ObservedResults(Genre.self) var genres //ObservedResultはオブジェクトのコレクションを観測、追加、削除やらできる
     @State var newGenreName = ""            //新しく追加されるジャンル名を保存する変数
     @State var newGenreColor = Color.white  //新しく追加されるジャンルカラーを保存する変数
     var body: some View {
@@ -97,7 +97,9 @@ struct EditView: View {
                         }
                     }
                     //左にスワイプしたら削除
-                    .onDelete(perform: $genres.remove)
+                    .onDelete(
+                        perform: $genres.remove
+                    )
                 }
             }
             .navigationTitle("Edit Genres")
