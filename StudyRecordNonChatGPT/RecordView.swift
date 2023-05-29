@@ -78,6 +78,7 @@ struct RecordView: View {
                             })
                         }
                         //tag1 and time>0の時押せる
+                        //処理したいのは、Genreの日付を現在日時にするのと、StudyRecordの選択した日付、時間、ジャンルIDを保存するの
                         ToolbarItemGroup(placement: .navigationBarTrailing){
                             if (selectedTab == 1 && allMinuteTime >= 1){
                                 Button(action: {
@@ -93,7 +94,7 @@ struct RecordView: View {
                         }
                     }
                 }
-                .navigationTitle("記録画面")
+                .navigationTitle("\(genreId)の記録")
             }
             
         }
