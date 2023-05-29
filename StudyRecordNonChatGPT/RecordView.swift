@@ -59,12 +59,11 @@ struct RecordView: View {
         var body: some View{
             NavigationView{
                 VStack{
-                    Text(String(allMinuteTime))
                     //自作したタブバーの表示
                     TabBarView(selectedTab: $selectedTab,uiColor: $uiColor)
                     TabView(selection: $selectedTab){
                         RecordViewManual(genreName: $genreId,uiColor: $uiColor,allMinuteTime: $allMinuteTime).tag(1)
-                        StopwatchView(allMinuteTime: $allMinuteTime).tag(2)
+                        StopwatchView(allMinuteTime: $allMinuteTime,uiColor: $uiColor,genreId: $genreId).tag(2)
                     }
                     .tabViewStyle(.page)
                     //戻るボタンとかをNavigationbarに追加

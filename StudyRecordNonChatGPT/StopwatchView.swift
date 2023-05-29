@@ -8,36 +8,64 @@ import SwiftUI
  */
 struct StopwatchView: View {
     @Binding var allMinuteTime : Int
+    @Binding var uiColor : UIColor
+    @Binding var genreId : String
     @StateObject private var viewModel: StopwatchViewModel
-    
-    init(allMinuteTime: Binding<Int>) {
+    //関数startが起動するたびにallMinuteTimeにストップウォッチの時間が入る
+    init(allMinuteTime: Binding<Int>,uiColor: Binding<UIColor>,genreId: Binding<String>) {
         _allMinuteTime = allMinuteTime
+        _uiColor = uiColor
+        _genreId = genreId
         _viewModel = StateObject(wrappedValue: StopwatchViewModel(updateAllMinuteTime: allMinuteTime))
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing:30) {
+            ZStack {
+                //四角を作って
+                Rectangle()
+                    .fill(Color.white)
+                    .frame(width: 200, height: 200)
+                    .border(Color.black, width: 1)
+                //その中を斜線で埋める
+                EasyBlockModel()
+                    .stroke(Color(uiColor), lineWidth: 1)
+                    .frame(width: 200, height: 200)
+                    .clipped()
+            }
             //経過時間を表示
             Text(viewModel.displayTime)
-                .font(.system(size: 50))
+                .font(.system(size: 80)).fontWeight(.thin)    //相対サイズでないので、他の方法の検討
                 .padding()
-            
-            HStack {
-                //スタート
-                Button(action: { viewModel.start() }) {
-                    Text("Start")
-                }
-                .padding()
-                //ストップ
-                Button(action: { viewModel.stop() }) {
-                    Text("Stop")
-                }
-                .padding()
+            HStack(spacing:50) {
                 //リセット
                 Button(action: { viewModel.reset() }) {
                     Text("Reset")
+                    .padding()
+                    .frame(width: 100, height: 100) //円の大きさ
+                    .foregroundColor(Color.black)   //文字の色
+                    .overlay(
+                        Circle()    //円に指定
+                            .stroke(Color.black, lineWidth: 1)
+                    )
                 }
-                .padding()
+                //開始・一時停止  isRunningで条件分岐
+                Button(action: {
+                    if viewModel.isRunning {
+                        viewModel.stop()
+                    } else {
+                        viewModel.start()
+                    }
+                }) {
+                    Text(viewModel.isRunning ? "一時停止" : "開始")
+                    .padding()
+                    .frame(width: 100, height: 100) //円の大きさ
+                    .foregroundColor(Color.black)   //文字の色
+                    .overlay(
+                        Circle()    //円に指定
+                            .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
+                    )
+                }
             }
         }//UIApplication.willResignActiveNotificationがバックグラウンドに移る際に出る通知。それを受け取ってviewModel.appMovedToBackground()メソッドを呼んでる。
         .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
@@ -55,7 +83,7 @@ class StopwatchViewModel: ObservableObject {
     private var timer: Timer? = nil
     private var timeInterval: TimeInterval = 0.0
     private var backgroundEntryDate: Date? = nil
-    private var isRunning: Bool = false //ストップウォッチが動作してるか否かのフラグ
+    @Published var isRunning: Bool = false //ストップウォッチが動作してるか否かのフラグ
     init(updateAllMinuteTime: Binding<Int>) {
         self.updateAllMinuteTime = { newTime in updateAllMinuteTime.wrappedValue = newTime }
     }
