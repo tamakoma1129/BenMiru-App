@@ -14,6 +14,8 @@ struct EditView: View {
     @ObservedResults(Genre.self) var genres //ObservedResultはオブジェクトのコレクションを観測、追加、削除やらできる
     @State var newGenreName = ""            //新しく追加されるジャンル名を保存する変数
     @State var newGenreColor = Color.white  //新しく追加されるジャンルカラーを保存する変数
+    @State private var showDeleteAlert = false  //Alertの状態を保存
+    @State private var tempIndexSet : IndexSet?
     var body: some View {
         NavigationView{ //上部タイトルを追加
             VStack {
@@ -98,10 +100,18 @@ struct EditView: View {
                     }
                     //左にスワイプしたら削除。また、それに関連するStudyRecordも削除
                     .onDelete{indexSet in   //indexSetは削除するインデックスが入る（スワイプで削除なので基本1つの要素のみ）
-                        do {
+                        tempIndexSet = indexSet
+                        showDeleteAlert = true
+                    }
+                    //誤スワイプで消えると困るので、警告を表示
+                }
+            }
+            .alert("本当に削除しますか？", isPresented: $showDeleteAlert){
+                        Button("削除する",role: .destructive){
+                            do {
                             let realm = try Realm()
                             try realm.write {
-                                for index in indexSet { //forで回して入るけど、通常は1回のみしか動かない。
+                                for index in tempIndexSet! { //forで回して入るけど、通常は1回のみしか動かない。
                                     // 消そうとしたジャンルのidを取得
                                     let genreIdToDelete = genres[index].id
 
@@ -120,12 +130,16 @@ struct EditView: View {
                                     realm.delete(genreToDelete)
                                 }
                             }
-                        } catch {
+                            } catch {
                             print("Error deleting genres and their associated StudyRecords: \(error)")
+                            }
                         }
+                Button("キャンセル",role: .cancel){
+                            tempIndexSet = nil
+                        }
+                    } message: {
+                        Text("関連する勉強記録も削除されます")
                     }
-                }
-            }
             .navigationTitle("Edit Genres")
         }
     }
