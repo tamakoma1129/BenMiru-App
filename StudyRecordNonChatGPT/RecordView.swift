@@ -63,7 +63,7 @@ struct RecordView: View {
                     TabBarView(selectedTab: $selectedTab,uiColor: $uiColor)
                     TabView(selection: $selectedTab){
                         RecordViewManual(genreName: $genreId,uiColor: $uiColor,allMinuteTime: $allMinuteTime).tag(1)
-                        StopwatchView(allMinuteTime: $allMinuteTime,uiColor: $uiColor,genreId: $genreId).tag(2)
+                        StopwatchView(allMinuteTime: $allMinuteTime,uiColor: $uiColor,genreId: $genreId,selectedTab: $selectedTab).tag(2)
                     }
                     .tabViewStyle(.page)
                     //戻るボタンとかをNavigationbarに追加

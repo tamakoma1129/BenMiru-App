@@ -10,12 +10,14 @@ struct StopwatchView: View {
     @Binding var allMinuteTime: Int
     @Binding var uiColor: UIColor
     @Binding var genreId: String
+    @Binding var selectedTab: Int
     @StateObject private var viewModel: StopwatchViewModel
     
-    init(allMinuteTime: Binding<Int>, uiColor: Binding<UIColor>, genreId: Binding<String>) {
+    init(allMinuteTime: Binding<Int>, uiColor: Binding<UIColor>, genreId: Binding<String>, selectedTab: Binding<Int>) {
         _allMinuteTime = allMinuteTime
         _uiColor = uiColor
         _genreId = genreId
+        _selectedTab = selectedTab
         _viewModel = StateObject(wrappedValue: StopwatchViewModel(updateAllMinuteTime: allMinuteTime))
     }
 
@@ -29,27 +31,28 @@ struct StopwatchView: View {
                         //四角を作って
                         Rectangle()
                             .fill(Color.white)
-                            .frame(width: geometry.size.width * 0.6, height: geometry.size.width * 0.6)
+                            .frame(width: geometry.size.width * 0.5, height: geometry.size.width * 0.5)
                             .border(Color.black, width: 1)
                         //その中を斜線で埋める
                         EasyBlockModel()
                             .stroke(Color(uiColor), lineWidth: 1)
-                            .frame(width: geometry.size.width * 0.6, height: geometry.size.width * 0.6)
+                            .frame(width: geometry.size.width * 0.5, height: geometry.size.width * 0.5)
                             .clipped()
                     }
                     //経過時間を表示
                     Text(viewModel.displayTime)
                         .font(.system(size: geometry.size.width * 0.2)).fontWeight(.thin)
                         .padding()
-                    HStack(spacing: geometry.size.width * 0.1) {
+                    HStack(spacing: geometry.size.width * 0.05) {
                         //リセット
                         Button(action: { viewModel.reset() }) {
-                            Text("Reset")
+                            Text("リセット")
+                            .font(.footnote)
                             .padding()
-                            .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
+                            .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
                             .foregroundColor(Color.black)   //文字の色
                             .overlay(
-                                Circle()    //円に指定
+                                Circle()    //丸に指定
                                     .stroke(Color.black, lineWidth: 1)
                             )
                         }
@@ -62,12 +65,28 @@ struct StopwatchView: View {
                             }
                         }) {
                             Text(viewModel.isRunning ? "一時停止" : "開始")
+                            .font(.body)
                             .padding()
                             .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
                             .foregroundColor(Color.black)   //文字の色
                             .overlay(
-                                Circle()    //円に指定
+                                Circle()   //丸に指定
                                     .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
+                            )
+                        }
+                        //完了
+                        Button(action: {
+                            viewModel.stop()
+                            selectedTab = 1
+                        }) {
+                            Text("完了")
+                            .font(.footnote)
+                            .padding()
+                            .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
+                            .foregroundColor(Color.black)   //文字の色
+                            .overlay(
+                                Circle()    //丸に指定
+                                    .stroke(Color.black, lineWidth: 1)
                             )
                         }
                     }
