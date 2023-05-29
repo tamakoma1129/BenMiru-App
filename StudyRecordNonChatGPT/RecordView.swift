@@ -59,12 +59,12 @@ struct RecordView: View {
         var body: some View{
             NavigationView{
                 VStack{
+                    Text(String(allMinuteTime))
                     //自作したタブバーの表示
                     TabBarView(selectedTab: $selectedTab,uiColor: $uiColor)
                     TabView(selection: $selectedTab){
                         RecordViewManual(genreName: $genreId,uiColor: $uiColor,allMinuteTime: $allMinuteTime).tag(1)
-                        PageView(text: genreId).tag(2)
-                        PageView(text: genreId).tag(3)
+                        StopwatchView(allMinuteTime: $allMinuteTime).tag(2)
                     }
                     .tabViewStyle(.page)
                     //戻るボタンとかをNavigationbarに追加
@@ -92,7 +92,6 @@ struct RecordView: View {
                                     .foregroundColor(Color.gray)
                             }
                         }
-                        
                     }
                 }
                 .navigationTitle("記録画面")
@@ -124,29 +123,6 @@ struct RecordView: View {
                             self.selectedTab = 2
                         }
                     Spacer()
-                    Text("タイマー")
-                        .foregroundColor(selectedTab == 3 ? Color.white : Color.gray)
-                        .padding()
-                        .background(selectedTab == 3 ? Color.blue : Color.clear)
-                        .cornerRadius(10)
-                        .onTapGesture {
-                            self.selectedTab = 3
-                        }
-                    Spacer()
-                }
-            }
-        }
-        //テスト用VIew
-        struct PageView : View {
-            var text = ""
-            
-            init(text : String) {
-                self.text = text
-            }
-            var body: some View {
-                VStack {
-                    Text(text)
-                        .font(.title)
                 }
             }
         }
@@ -172,6 +148,10 @@ struct RecordView: View {
             }
             private func convMinute(){
                 allMinuteTime = selectedMinute + (selectedHour*60)
+            }
+            func convMinuteHour(){
+                selectedMinute = Int(allMinuteTime%60)
+                selectedHour = Int(allMinuteTime/60)
             }
             var body: some View {
                 VStack{
@@ -245,12 +225,18 @@ struct RecordView: View {
                         }
                         .onAppear {
                             convMinute()
+                            convMinuteHour()
+                        }
+                        .onChange(of: allMinuteTime){ _ in
+                            convMinuteHour()
                         }
                         .onChange(of: selectedHour) { newValue in
                             convMinute()
+                            convMinuteHour()
                         }
                         .onChange(of: selectedMinute) { newValue in
                             convMinute()
+                            convMinuteHour()
                         }
                     }
                     //モーダル先の選択画面1で日付を押すと来るハーフモーダルのシート
@@ -288,18 +274,12 @@ struct RecordView: View {
                                                 Text("\($0)時間")
                                             }
                                         }.pickerStyle(WheelPickerStyle())
-                                            .onReceive([self.selectedHour].publisher.first()) { (value) in
-                                                print("hour: \(value)")
-                                            }
                                         
                                         Picker(selection: self.$selectedMinute, label: EmptyView()) {
                                             ForEach(0 ..< 60) {
                                                 Text("\($0)分")
                                             }
                                         }.pickerStyle(WheelPickerStyle())
-                                            .onReceive([self.selectedMinute].publisher.first()) { (value) in
-                                                print("minute: \(value)")
-                                            }
                                         
                                     }
                                     .toolbar {
