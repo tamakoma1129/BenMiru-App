@@ -26,29 +26,35 @@ struct BlockLinesShape: Shape {
 }
 //斜線pathの描写を上のstructを使って行う
 struct BlockLinesView: View {
-    let ACLi:[Color?]
-
     var body: some View {
-        //ZStackじゃなくてもいい気はする。
-        ZStack {
-            //15本描写したければ(0..<15)
-            ForEach(0..<15){ i in
-                BlockLinesShape(numberOfLine: i) // 線を渡す
-                //ACLiに色の情報を詰め込んで、それをいちいち描写する感じ。もし、nilなら透明で描写。
-                    .stroke(ACLi[i] ?? Color.clear, lineWidth: 1.5)//斜線の太さ
-                RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(.clear)
-                //ブロックの枠の太さと色
-                    .border(Color.gray, width: 0.151)
+        VStack {
+            Spacer()
+            VStack(spacing: 0) {
+                ForEach(0..<16) { _ in  //縦のブロックの数
+                    GeometryReader { geometry in
+                        HStack(spacing: 0) {
+                            ForEach(0..<10) { _ in  //横のブロックの数
+                                Rectangle()
+                                    .stroke(Color.gray, lineWidth: 1)
+                                    .aspectRatio(1, contentMode: .fill)
+                                    .frame(width: geometry.size.width / 12)
+                            }
+                        }
+                        .padding(.horizontal, geometry.size.width / 12)
+                    }
+                    .frame(height: UIScreen.main.bounds.width / 12)
+                }
             }
+            Spacer()
         }
     }
 }
 
 
+
 //MainViewのストラクト
 struct MainView: View {
     var body: some View {
-        Text("MainView")
+        BlockLinesView ()
     }
 }
