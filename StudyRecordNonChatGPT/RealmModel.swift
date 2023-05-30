@@ -33,7 +33,7 @@ class Genre: Object, Identifiable {
 }
 
 //勉強記録を保存するときのRealmデータモデル
-class StudyRecord: Object {
+class StudyRecord: Object, Identifiable {
     @objc dynamic var id = UUID().uuidString  // 一意のID
     @objc dynamic var genreId = ""  // ジャンルのIDを保存して、これと上のGenreと参照して色を求める
     @objc dynamic var date = Date()  // 記録したときの日付。これでソートする

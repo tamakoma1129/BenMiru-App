@@ -5,7 +5,38 @@
 //  Created by 立花達朗 on 2023/05/30.
 //
 
-import Foundation
+import SwiftUI
+import RealmSwift
+
+
+
+class MakeViewBlock{
+    var blockStudyRecordEntities: Results<StudyRecord> = StudyRecord.studyAll().sorted(byKeyPath: "date", ascending: true)
+    @Published var blockedStudyRecordEntities : [[([String], Date?)]] = []
+    private var notificationTokens: [NotificationToken] = []
+    init() {
+        // DBに変更があったタイミングでblockStudyRecordEntitiesの変数に値を入れ直す
+        //observeはDBに変更があるたびにクロージャ（{}の中の関数）を起動する
+        let token = blockStudyRecordEntities.observe { [weak self] change in // 循環ループしないように[weak self] を追加
+            //最新のデータベース情報がresultsに入り、それがitemEntitiesに代入
+            switch change {
+            case let .initial(results):
+                self?.blockStudyRecordEntities = results
+                self?.blockedStudyRecordEntities = makeScr(makeBlock(self?.blockStudyRecordEntities.map { ($0.date, $0.genreId, $0.durationMinutes) } ?? [], 15),16*10,15)
+            case let .update(results, _, _, _):
+                self?.blockStudyRecordEntities = results
+                self?.blockedStudyRecordEntities = makeScr(makeBlock(self?.blockStudyRecordEntities.map { ($0.date, $0.genreId, $0.durationMinutes) } ?? [], 15),16*10,15)
+            case let .error(error):
+                print(error.localizedDescription,"makeViewBlock")
+            }
+        }
+        notificationTokens.append(token)
+    }
+    deinit {
+        notificationTokens.forEach { $0.invalidate() }
+    }
+}
+
 //setTimeの数だけIDを入れた配列を１ブロックとする
 func makeBlock(_ li: [(Date, String, Int)], _ setTime: Int) -> [([String], Date?)] {
     /*
