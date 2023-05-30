@@ -107,39 +107,39 @@ struct EditView: View {
                 }
             }
             .alert("本当に削除しますか？", isPresented: $showDeleteAlert){
-                        Button("削除する",role: .destructive){
-                            do {
-                            let realm = try Realm()
-                            try realm.write {
-                                for index in tempIndexSet! { //forで回して入るけど、通常は1回のみしか動かない。
-                                    // 消そうとしたジャンルのidを取得
-                                    let genreIdToDelete = genres[index].id
-
-                                    // 削除するジャンルを検索
-                                    guard let genreToDelete = realm.objects(Genre.self).filter("id == '\(genreIdToDelete)'").first else {
-                                        continue
-                                    }
-
-                                    // 削除するジャンルidで登録されているStudyRecordを出力
-                                    let matchingStudyRecords = realm.objects(StudyRecord.self).filter("genreId == '\(genreIdToDelete)'")
-
-                                    // 出力したStudyRecordを削除
-                                    realm.delete(matchingStudyRecords)
-
-                                    // ジャンルを削除
-                                    realm.delete(genreToDelete)
+                Button("削除する",role: .destructive){
+                    do {
+                        let realm = try Realm()
+                        try realm.write {
+                            for index in tempIndexSet! { //forで回して入るけど、通常は1回のみしか動かない。
+                                // 消そうとしたジャンルのidを取得
+                                let genreIdToDelete = genres[index].id
+                                
+                                // 削除するジャンルを検索
+                                guard let genreToDelete = realm.objects(Genre.self).filter("id == '\(genreIdToDelete)'").first else {
+                                    continue
                                 }
-                            }
-                            } catch {
-                            print("Error deleting genres and their associated StudyRecords: \(error)")
+                                
+                                // 削除するジャンルidで登録されているStudyRecordを出力
+                                let matchingStudyRecords = realm.objects(StudyRecord.self).filter("genreId == '\(genreIdToDelete)'")
+                                
+                                // 出力したStudyRecordを削除
+                                realm.delete(matchingStudyRecords)
+                                
+                                // ジャンルを削除
+                                realm.delete(genreToDelete)
                             }
                         }
-                Button("キャンセル",role: .cancel){
-                            tempIndexSet = nil
-                        }
-                    } message: {
-                        Text("関連する勉強記録も削除されます")
+                    } catch {
+                        print("Error deleting genres and their associated StudyRecords: \(error)")
                     }
+                }
+                Button("キャンセル",role: .cancel){
+                    tempIndexSet = nil
+                }
+            } message: {
+                Text("関連する勉強記録も削除されます")
+            }
             .navigationTitle("Edit Genres")
         }
     }

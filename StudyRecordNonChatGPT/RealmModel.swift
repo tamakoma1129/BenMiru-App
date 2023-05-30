@@ -97,3 +97,40 @@ class ViewModelStudy: ObservableObject {
         notificationTokensStudy.forEach { $0.invalidate()}
     }
 }
+
+//IDを色に変換するためのClass
+class GenreColorMap: ObservableObject {
+    @Published var colorMap: [String: UIColor] = [:]
+    private var notificationToken: NotificationToken?
+    
+    init() {
+        updateColorMap()
+        listenForChanges()
+    }
+    
+    deinit {
+        notificationToken?.invalidate()
+    }
+    
+    func updateColorMap() {
+        let genres = Genre.genreAll()
+        colorMap = [:]
+        for genre in genres {
+            colorMap[genre.id] = UIColor(red: CGFloat(genre.colorRed),
+                                         green: CGFloat(genre.colorGreen),
+                                         blue: CGFloat(genre.colorBlue),
+                                         alpha: CGFloat(genre.colorAlpha))
+        }
+    }
+    
+    func listenForChanges() {
+        notificationToken = Genre.genreAll().observe { [weak self] (changes: RealmCollectionChange) in
+            switch changes {
+            case .initial, .update:
+                self?.updateColorMap()
+            case .error(let error):
+                fatalError("\(error)")
+            }
+        }
+    }
+}

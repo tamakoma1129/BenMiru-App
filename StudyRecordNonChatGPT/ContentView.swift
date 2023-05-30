@@ -19,6 +19,7 @@ struct ContentView: View {
                 .tabItem{
                     Label("Main", systemImage: "house.fill")
                 }
+                .environmentObject(GenreColorMap())
             RecordView()
                 .tabItem{
                     Label("Record", systemImage: "square.and.pencil")

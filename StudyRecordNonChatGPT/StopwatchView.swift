@@ -20,7 +20,7 @@ struct StopwatchView: View {
         _selectedTab = selectedTab
         _viewModel = StateObject(wrappedValue: StopwatchViewModel(updateAllMinuteTime: allMinuteTime))
     }
-
+    
     var body: some View {
         GeometryReader { geometry in
             HStack {
@@ -47,14 +47,14 @@ struct StopwatchView: View {
                         //リセット
                         Button(action: { viewModel.reset() }) {
                             Text("リセット")
-                            .font(.footnote)
-                            .padding()
-                            .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
-                            .foregroundColor(Color.black)   //文字の色
-                            .overlay(
-                                Circle()    //丸に指定
-                                    .stroke(Color.black, lineWidth: 1)
-                            )
+                                .font(.footnote)
+                                .padding()
+                                .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
+                                .foregroundColor(Color.black)   //文字の色
+                                .overlay(
+                                    Circle()    //丸に指定
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
                         }
                         //開始・一時停止  isRunningで条件分岐
                         Button(action: {
@@ -65,14 +65,14 @@ struct StopwatchView: View {
                             }
                         }) {
                             Text(viewModel.isRunning ? "一時停止" : "開始")
-                            .font(.body)
-                            .padding()
-                            .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
-                            .foregroundColor(Color.black)   //文字の色
-                            .overlay(
-                                Circle()   //丸に指定
-                                    .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
-                            )
+                                .font(.body)
+                                .padding()
+                                .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
+                                .foregroundColor(Color.black)   //文字の色
+                                .overlay(
+                                    Circle()   //丸に指定
+                                        .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
+                                )
                         }
                         //完了
                         Button(action: {
@@ -80,14 +80,14 @@ struct StopwatchView: View {
                             selectedTab = 1
                         }) {
                             Text("完了")
-                            .font(.footnote)
-                            .padding()
-                            .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
-                            .foregroundColor(Color.black)   //文字の色
-                            .overlay(
-                                Circle()    //丸に指定
-                                    .stroke(Color.black, lineWidth: 1)
-                            )
+                                .font(.footnote)
+                                .padding()
+                                .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
+                                .foregroundColor(Color.black)   //文字の色
+                                .overlay(
+                                    Circle()    //丸に指定
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
                         }
                     }
                     Spacer()

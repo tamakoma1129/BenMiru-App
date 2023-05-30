@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import RealmSwift
+
 
 //ブロック内部の斜線設定
 struct BlockLinesShape: Shape {
@@ -25,19 +27,53 @@ struct BlockLinesShape: Shape {
     }
 }
 //斜線pathの描写を上のstructを使って行う
-struct BlockLinesView: View {
+
+
+//MainViewのストラクト
+struct MainView: View {
+    private var cntIJ:Int = 0
+    @ObservedObject private var viewBlock = MakeViewBlock()
+    @EnvironmentObject var genreColorMap: GenreColorMap
+    // 新たにこの関数を定義します
+    func createSubBlockView(index: Int, lineNumber: Int) -> some View {
+        // 型をOptionalにし、後でViewがnilでない場合だけ表示するようにする
+        guard let lastBlock = viewBlock.blockedStudyRecordEntities.last else {
+            return AnyView(EmptyView())
+        }
+        
+        if index < lastBlock.count {
+            let subBlock:[String] = lastBlock[index].0
+            if lineNumber < subBlock.count {
+                let selectId: String = subBlock[lineNumber]
+                if let selectedColor:UIColor = genreColorMap.colorMap[selectId] {
+                    let color = Color(selectedColor)
+                    let shape = BlockLinesShape(numberOfLine:lineNumber)
+                    return AnyView(shape.stroke(color, lineWidth: 1.5)
+                        .background(RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(.clear)))
+                }
+            }
+        }
+        return AnyView(EmptyView())
+    }
     var body: some View {
         VStack {
             Spacer()
             VStack(spacing: 0) {
-                ForEach(0..<16) { _ in  //縦のブロックの数
+                ForEach(0..<16) { i in  //縦のブロックの数
                     GeometryReader { geometry in
                         HStack(spacing: 0) {
-                            ForEach(0..<10) { _ in  //横のブロックの数
-                                Rectangle()
-                                    .stroke(Color.gray, lineWidth: 1)
-                                    .aspectRatio(1, contentMode: .fill)
-                                    .frame(width: geometry.size.width / 12)
+                            ForEach(0..<10) { j in  //横のブロックの数
+                                ZStack{
+                                    Rectangle()
+                                        .stroke(Color.gray, lineWidth: 1)
+                                        .aspectRatio(1, contentMode: .fill)
+                                        .frame(width: geometry.size.width / 12)
+                                    ForEach(0..<15) { k in
+                                        createSubBlockView(index: i * 10 + j, lineNumber: k)
+                                            .clipped()
+                                    }
+                                }
                             }
                         }
                         .padding(.horizontal, geometry.size.width / 12)
@@ -47,14 +83,5 @@ struct BlockLinesView: View {
             }
             Spacer()
         }
-    }
-}
-
-
-
-//MainViewのストラクト
-struct MainView: View {
-    var body: some View {
-        BlockLinesView ()
     }
 }

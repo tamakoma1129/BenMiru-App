@@ -13,16 +13,16 @@ import SwiftUI
 //色を指定すれば斜線ブロックを引いてくれる
 struct EasyBlockModel: Shape {
     func path(in rect: CGRect) -> Path {
-            var path = Path()
-            
+        var path = Path()
+        
         let step = rect.width / 7.0
-            
-            for i in 0..<15 {
-                let x = rect.width * CGFloat(i-1) / 7
-                path.move(to: CGPoint(x: x + 10, y: -10))
-                path.addLine(to: CGPoint(x: -10, y: x + 10))
-            }
-            
-            return path
+        
+        for i in 0..<15 {
+            let x = rect.width * CGFloat(i-1) / 7
+            path.move(to: CGPoint(x: x + 10, y: -10))
+            path.addLine(to: CGPoint(x: -10, y: x + 10))
         }
+        
+        return path
+    }
 }

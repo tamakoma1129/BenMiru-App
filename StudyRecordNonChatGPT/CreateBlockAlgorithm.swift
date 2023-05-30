@@ -10,14 +10,14 @@ import RealmSwift
 
 
 
-class MakeViewBlock{
+class MakeViewBlock:ObservableObject{
     var blockStudyRecordEntities: Results<StudyRecord> = StudyRecord.studyAll().sorted(byKeyPath: "date", ascending: true)
     @Published var blockedStudyRecordEntities : [[([String], Date?)]] = []
     private var notificationTokens: [NotificationToken] = []
     init() {
         // DBに変更があったタイミングでblockStudyRecordEntitiesの変数に値を入れ直す
         //observeはDBに変更があるたびにクロージャ（{}の中の関数）を起動する
-        let token = blockStudyRecordEntities.observe { [weak self] change in // 循環ループしないように[weak self] を追加
+        let token = blockStudyRecordEntities.observe { [weak self] change in // 循環参照しないように[weak self] を追加　← ？
             //最新のデータベース情報がresultsに入り、それがitemEntitiesに代入
             switch change {
             case let .initial(results):
@@ -46,7 +46,7 @@ func makeBlock(_ li: [(Date, String, Int)], _ setTime: Int) -> [([String], Date?
      */
     var blockLi: [([String], Date?)] = []
     var dateSet: Set<Date> = []
-
+    
     for liData in li {
         let (date, id, time) = liData
         //blockLi.isEmpty=trueってことは初回起動。初回起動で未完成っていうのはありえないので、pass。
@@ -104,8 +104,12 @@ func makeScr(_ blockLiInput: [([String], Date?)], _ scrLimit: Int, _ setTime: In
     let modelBlock: ([String], Date?) = (Array(repeating: "-1", count: setTime), nil)   //丁度scrLimitで分けれなかったら余りのブロックはこれで埋める
     var tempScr: [([String], Date?)] = []
     var blockLi = blockLiInput
+    //blockLi=0　要するに、何も記録してないなら全部をmodelBlockで埋める。だからそのきっかけを作ってる。
+    if blockLi.count == 0 {
+        tempScr.append(modelBlock)
+    }
     //blockLiの最後が未完成なら、-1でsetTimeまで埋める
-    if blockLi.last?.0.count != setTime {
+    else if blockLi.last?.0.count != setTime {
         while true {
             if blockLi.last?.0.count == setTime {
                 break
@@ -132,5 +136,6 @@ func makeScr(_ blockLiInput: [([String], Date?)], _ scrLimit: Int, _ setTime: In
         }
         scrLi.append(tempScr)
     }
+    print(scrLi)
     return scrLi
 }
