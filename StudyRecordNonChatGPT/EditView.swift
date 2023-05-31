@@ -142,5 +142,7 @@ struct EditView: View {
             }
             .navigationTitle("Edit Genres")
         }
+        .navigationViewStyle(.stack)
     }
 }
+

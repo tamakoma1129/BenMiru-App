@@ -14,7 +14,6 @@ struct ContentView: View {
     var body: some View {
         //画面したのメニュー追加
         TabView{
-            
             MainView()
                 .tabItem{
                     Label("Main", systemImage: "house.fill")

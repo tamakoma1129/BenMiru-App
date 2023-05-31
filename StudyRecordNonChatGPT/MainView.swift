@@ -8,7 +8,6 @@
 import SwiftUI
 import RealmSwift
 
-
 //ブロック内部の斜線設定
 struct BlockLinesShape: Shape {
     let numberOfLine: Int //塗る場所の指定をする変数。numberOfLine=0だと左上を塗る
@@ -62,7 +61,7 @@ struct MainView: View {
                     let shape = BlockLinesShape(numberOfLine:lineNumber)
                     return AnyView(shape.stroke(color, lineWidth: 1.5)
                         .background(RoundedRectangle(cornerRadius: 0)
-                            .foregroundColor(.clear)))
+                        .foregroundColor(.clear)))
                 }
             }
         }
@@ -105,3 +104,4 @@ struct MainView: View {
         }
     }
 }
+

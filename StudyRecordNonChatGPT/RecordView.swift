@@ -50,6 +50,7 @@ struct RecordView: View {
                 RecordViewModal(genreName: $selectedGenreName,showModal: $showModal, uiColor:$selectedGenreColor, selectedGenreId: $selectedGenreId)
             }
         }
+        .navigationViewStyle(.stack)
     }
     //ジャンルを選択したときのモーダル画面
     struct RecordViewModal: View{
@@ -335,3 +336,4 @@ struct RecordView: View {
     }
 }
 //BlockLinesView(ACLi: [Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor)])
+
