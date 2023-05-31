@@ -34,14 +34,24 @@ struct MainView: View {
     private var cntIJ:Int = 0
     @ObservedObject private var viewBlock = MakeViewBlock()
     @EnvironmentObject var genreColorMap: GenreColorMap
-    // 新たにこの関数を定義します
+    // 複雑なのは、こうしないと型推論などで時間超過のコンパイルエラーが発生するから
     func createSubBlockView(index: Int, lineNumber: Int) -> some View {
         // 型をOptionalにし、後でViewがnilでない場合だけ表示するようにする
         guard let lastBlock = viewBlock.blockedStudyRecordEntities.last else {
             return AnyView(EmptyView())
         }
-        
-        if index < lastBlock.count {
+        //  lineNumber == -1だったら日付変更
+        if lineNumber == -1 && index < lastBlock.count{
+            let selectDate:Date? = lastBlock[index].1    //日付を代入 Optional(2023-05-31 01:23:33 +0000)
+            if selectDate != nil{
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "M/d"
+                let dateString = dateFormatter.string(from: selectDate!)
+                return AnyView(
+                    Text(dateString)
+                )
+            }
+        }else if index < lastBlock.count {  //違ったら線引く
             let subBlock:[String] = lastBlock[index].0
             if lineNumber < subBlock.count {
                 let selectId: String = subBlock[lineNumber]
@@ -73,6 +83,10 @@ struct MainView: View {
                                         createSubBlockView(index: i * 10 + j, lineNumber: k)
                                             .clipped()
                                     }
+                                    createSubBlockView(index: i * 10 + j, lineNumber: -1)
+                                        .foregroundColor(.white)
+                                        .blendMode(.difference) //文字色を背景から反転
+                                        .font(.system(size: geometry.size.width/40, weight: .bold, design: .monospaced))
                                 }
                             }
                         }

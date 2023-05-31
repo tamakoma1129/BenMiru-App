@@ -48,27 +48,35 @@ func makeBlock(_ li: [(Date, String, Int)], _ setTime: Int) -> [([String], Date?
     var dateSet: Set<Date> = []
     
     for liData in li {
-        let (date, id, time) = liData
-        //blockLi.isEmpty=trueってことは初回起動。初回起動で未完成っていうのはありえないので、pass。
+        var (date, id, time) = liData
+        //日付を年と月と日にちだけにする
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        if let dateYNDOnly = calendar.date(from: components) {
+            date = dateYNDOnly
+        }
+        //blockLi.isEmpty=trueってことは初回実行。初回実行で未完成っていうのはありえないので、pass。
         if blockLi.isEmpty {
             //pass
         }
         else if blockLi[blockLi.count - 1].0.count != setTime {     //blockLi.count - 1ってことは、最後の配列の.0ってことはStringの塊の要素数がsetTimeじゃないってことは未完成
             //時間がなくなる or Stringの塊の要素数がsetTimeになるまで埋める
-            var time = time
+            var tempblock = blockLi[blockLi.count - 1]//一旦tempblockに作って入れ替え
             while true {
-                if time == 0 || blockLi[blockLi.count - 1].0.count == setTime {
+                if time == 0 || tempblock.0.count == setTime {
                     break
                 }
-                blockLi[blockLi.count - 1].0.append(id)
+                tempblock.0.append(id)
                 time -= 1
             }
             //ここの処理に来てる時点でtime==0 or ブロックが埋まってる（端数がなく、未完成でない）
             //現在いじった配列のdateがnil　かつ　今回追加しているジャンルの日付がまだ追加されたこと無かったら日付を追加
-            if blockLi[blockLi.count - 1].1 == nil && !dateSet.contains(date) {
-                blockLi[blockLi.count - 1].1 = date
+            if tempblock.1 == nil && !dateSet.contains(date) {
+                tempblock.1 = date
                 dateSet.insert(date)
             }
+            //tempBlockを入れ替える
+            blockLi[blockLi.count - 1] = tempblock
         }
         //timeが0なら何もせず。timeが余ってるなら未完成のブロックはないので、新しいブロックを作る
         if time != 0 {
