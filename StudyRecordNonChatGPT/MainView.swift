@@ -42,11 +42,13 @@ struct MainView: View {
         }
         //  lineNumber == -1だったら日付変更
         if lineNumber == -1 && index < lastBlock.count{
+            
             let selectDate:Date? = lastBlock[index].1    //日付を代入 Optional(2023-05-31 01:23:33 +0000)
             if selectDate != nil{
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "M/d"
                 let dateString = dateFormatter.string(from: selectDate!)
+                
                 return AnyView(
                     Text(dateString)
                 )
@@ -83,10 +85,14 @@ struct MainView: View {
                                         createSubBlockView(index: i * 10 + j, lineNumber: k)
                                             .clipped()
                                     }
-                                    createSubBlockView(index: i * 10 + j, lineNumber: -1)
-                                        .foregroundColor(.white)
-                                        .blendMode(.difference) //文字色を背景から反転
-                                        .font(.system(size: geometry.size.width/40, weight: .bold, design: .monospaced))
+                                    GeometryReader { geometryBlock in
+                                        createSubBlockView(index: i * 10 + j, lineNumber: -1)
+                                            .foregroundColor(.black)
+                                            .font(.system(size: geometry.size.width/30, weight: .bold, design: .default))
+                                            .lineLimit(1)
+                                            .minimumScaleFactor(0.5)
+                                            .background(.white)
+                                    }
                                 }
                             }
                         }
