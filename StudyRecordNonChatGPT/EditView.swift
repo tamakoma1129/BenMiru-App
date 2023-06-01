@@ -16,12 +16,14 @@ struct EditView: View {
     @State var newGenreColor = Color.white  //新しく追加されるジャンルカラーを保存する変数
     @State private var showDeleteAlert = false  //Alertの状態を保存
     @State private var tempIndexSet : IndexSet?
+    @FocusState var keyIsActive : Bool
     var body: some View {
         NavigationView{ //上部タイトルを追加
             VStack {
                 //ここが上の新しいジャンルを追加する画面
                 HStack {
                     TextField("New Genre", text: $newGenreName)
+                        .focused($keyIsActive)
                     ColorPicker("", selection: $newGenreColor)
                     //ボタンを押すと新しいジャンルが追加される
                     Button(action: {
@@ -67,7 +69,7 @@ struct EditView: View {
                                             thawGenre?.freeze()
                                         }
                                     ))
-                                    
+                                    .focused($keyIsActive)
                                     //色を直接編集できるようにする画面部分
                                     ColorPicker("", selection: Binding(
                                         //新しく色が追加されたら
@@ -103,9 +105,19 @@ struct EditView: View {
                         tempIndexSet = indexSet
                         showDeleteAlert = true
                     }
-                    //誤スワイプで消えると困るので、警告を表示
+                    
+
                 }
             }
+            //キーボードの右上に完了ボタンを追加
+            .toolbar{ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("完了") {
+                    keyIsActive = false //  フォーカスを外す
+                }
+            }
+            }
+            //誤スワイプで消えると困るので、警告を表示
             .alert("本当に削除しますか？", isPresented: $showDeleteAlert){
                 Button("削除する",role: .destructive){
                     do {
