@@ -278,6 +278,7 @@ struct RecordView: View {
                                 Text("日時を選択")
                                 DatePicker("", selection: $selectedDate)    //午前午後は端末の設定らしい
                                     .datePickerStyle(WheelDatePickerStyle())// 回転ホイールスタイルを指定
+                                    .environment(\.locale, Locale(identifier: "ja_JP"))//日本表記にする
                             }
                             .toolbar {
                                 //戻るを左上に指定
