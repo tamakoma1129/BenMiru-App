@@ -49,24 +49,33 @@ struct ChartTest: View {
             // 選択された日付の各グラフ棒の情報を表示するビュー
             if let selectedDate = selectedDate {
                 VStack(alignment: .leading) {
-                    Text("Date: \(dateConv(beforeDate: selectedDate))")
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
+                    let sumDurationTime:Int = viewModel.studyByDayAndGenre[selectedDate]!.values.reduce(0, +)   //選んだ日付の合計勉強時間をreduce関数で求める
+                    Text("日付: \(dateConv(beforeDate: selectedDate))")
+                    Text("合計\(sumDurationTime)分")
                     ScrollView{
                         ForEach(viewModel.studyByDayAndGenre[selectedDate]?.keys.sorted().reversed() ?? [], id: \.self) { genreId in
+                            let durationTime:Int =  viewModel.studyByDayAndGenre[selectedDate]![genreId]!
+                            GeometryReader { geometry in
                             HStack{
                                 Text("\(genreColorMap.nameMap[genreId]!)" )
                                     .font(.title2.bold())
                                     .foregroundColor(.primary)
                                 Spacer()
-                                Text("\(viewModel.studyByDayAndGenre[selectedDate]![genreId]!, format: .number) 分")
+                                Text("\(durationTime, format: .number) 分")
                                     .font(.title2.bold())
                                     .foregroundColor(.primary)
                             }
                             .padding()
-                            .overlay(
-                                Divider().frame(height: 6).background(Color(genreColorMap.colorMap[genreId]!)), alignment: .bottom
-                            )
+                                    .overlay(
+                                        HStack{
+                                            Divider()
+                                                .frame(width: geometry.size.width * (CGFloat(durationTime) / CGFloat(sumDurationTime)), height: 6)
+                                                .background(Color(genreColorMap.colorMap[genreId]!))
+                                        Spacer()
+                                        }, alignment: .bottom
+                                    )
+                            }
+                            .padding(.vertical)
                         }
                     }
                 }
