@@ -16,22 +16,24 @@ struct StatsView: View {
     }
 }
 
-/*
+
 struct ChartTest: View {
     @State var selectedDate: Date?   //ユーザーのタップしたところを保存する変数selectedDateをStateで宣言
-    
+    @ObservedObject private var viewModel = ViewModelStudy()    //グラフ用にデータを加工かつ、データを同期する処理をするStructからデータを引っ張ってくる
+    @EnvironmentObject var genreColorMap: GenreColorMap //IDと色を同期させた辞書を作っているClass
     var body: some View {
         VStack{
-            //チャート使う時はChartで囲う
+            //グラフ使う時はChartで囲う
             Chart {
-                            ForEach(studyTimeByDateAndGenre.keys.sorted(), id: \.self) { date in
-                                ForEach(studyTimeByDateAndGenre[date]!.keys.sorted(), id: \.self) { genre in
-                                    let studyTime = studyTimeByDateAndGenre[date]![genre]!
-                                    BarMark(x: .value("Date", date),
-                                            y: .value("Study Time", studyTime),
-                                            color: .color(getColorForGenre(genre)))
-                                }
-                            }
+                ForEach(viewModel.studyByDayAndGenre.keys.sorted(), id: \.self) { date in
+                    ForEach(viewModel.studyByDayAndGenre[date]!.keys.sorted(), id: \.self) { genreId in
+                        let minutes = viewModel.studyByDayAndGenre[date]![genreId]!
+                        BarMark(x: .value("日", date),
+                                y: .value("分", minutes))
+                        .foregroundStyle(Color(genreColorMap.colorMap[genreId]!))
+                    }
+                }
+            }
             .chartOverlay { proxy in
                 GeometryReader { geo in
                     Rectangle().fill(.clear).contentShape(Rectangle())
@@ -49,30 +51,34 @@ struct ChartTest: View {
                         )
                 }
             }
-            
-        }
-        .frame(height: 200)  // グラフの高さ
-        .padding()
-        // 選択された日付の各食事のカロリー摂取量を表示するビュー
-        if let selectedDate = selectedDate {
-            VStack(alignment: .leading) {
-                Text("Date: \(selectedDate, format: .dateTime.year().month().day())")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                Text("Breakfast: \(findCalories(for: selectedDate, in: intakeBreakfast), format: .number) calories")
-                    .font(.title2.bold())
-                    .foregroundColor(.primary)
-                Text("Lunch: \(findCalories(for: selectedDate, in: intakeLunch), format: .number) calories")
-                    .font(.title2.bold())
-                    .foregroundColor(.primary)
-                Text("Dinner: \(findCalories(for: selectedDate, in: intakeDinner), format: .number) calories")
-                    .font(.title2.bold())
-                    .foregroundColor(.primary)
-                Text("Snack: \(findCalories(for: selectedDate, in: intakeSnack), format: .number) calories")
-                    .font(.title2.bold())
-                    .foregroundColor(.primary)
-            }
+            .frame(height: 200)  // グラフの高さ
             .padding()
+            // 選択された日付の各グラフ棒の情報を表示するビュー
+            if let selectedDate = selectedDate {
+                VStack(alignment: .leading) {
+                    Text("Date: \(selectedDate, format: .dateTime.year().month().day())")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                    ScrollView{
+                        ForEach(viewModel.studyByDayAndGenre[selectedDate]?.keys.sorted().reversed() ?? [], id: \.self) { genreId in
+                            HStack{
+                                Text("\(genreColorMap.nameMap[genreId]!)" )
+                                    .font(.title2.bold())
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Text("\(viewModel.studyByDayAndGenre[selectedDate]![genreId]!, format: .number) 分")
+                                    .font(.title2.bold())
+                                    .foregroundColor(.primary)
+                            }
+                            .padding()
+                            .overlay(
+                                Divider().frame(height: 6).background(Color(genreColorMap.colorMap[genreId]!)), alignment: .bottom
+                            )
+                        }
+                    }
+                }
+                .padding()
+            }
         }
     }
     
@@ -82,19 +88,15 @@ struct ChartTest: View {
             // Find the closest date element.
             var minDistance: TimeInterval = .infinity
             var closestDate: Date? = nil
-            for dataIndex in intakeBreakfast.indices {
-                let nthDataDistance = intakeBreakfast[dataIndex].date.distance(to: date)
+            for dateKey in viewModel.studyByDayAndGenre.keys {
+                let nthDataDistance = dateKey.distance(to: date)
                 if abs(nthDataDistance) < minDistance {
                     minDistance = abs(nthDataDistance)
-                    closestDate = intakeBreakfast[dataIndex].date
+                    closestDate = dateKey
                 }
             }
             selectedDate = closestDate
         }
     }
-    
-    func findCalories(for date: Date, in intake: [MealIntake]) -> Int {
-        return intake.first(where: { $0.date == date })?.calories ?? 0
-    }
 }
-*/
+

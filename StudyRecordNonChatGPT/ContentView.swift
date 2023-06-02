@@ -28,10 +28,11 @@ struct ContentView: View {
                     Label("Edit", systemImage: "pencil.circle.fill")
                 }
 
-            StatsView()
+            ChartTest()
                 .tabItem {
                     Label("Stats", systemImage: "chart.bar.fill")
                 }
+                .environmentObject(GenreColorMap())
         }
     }
 }

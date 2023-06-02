@@ -128,8 +128,10 @@ class ViewModelStudy: ObservableObject {
 
 
 //IDを色に変換するためのClass
+//名前にも対応させる機能を追加しました
 class GenreColorMap: ObservableObject {
     @Published var colorMap: [String: UIColor] = [:]
+    @Published var nameMap: [String: String] = [:]      //追加
     private var notificationToken: NotificationToken?
     
     init() {
@@ -149,6 +151,7 @@ class GenreColorMap: ObservableObject {
                                          green: CGFloat(genre.colorGreen),
                                          blue: CGFloat(genre.colorBlue),
                                          alpha: CGFloat(genre.colorAlpha))
+            nameMap[genre.id] = genre.name  //追加
         }
     }
     
