@@ -23,7 +23,7 @@ struct EditView: View {
                 VStack {
                     //ここが上の新しいジャンルを追加する画面
                     HStack {
-                        TextField("学習対象の名前を記入", text: $newGenreName)
+                        TextField("学習対象の名前を入力", text: $newGenreName)
                             .frame(maxWidth:.infinity)  //ColorPickerギリギリまで広くする
                             .focused($keyIsActive)
                         ColorPicker("", selection: $newGenreColor)
@@ -59,6 +59,14 @@ struct EditView: View {
                             if !genre.isInvalidated {
                                 VStack {
                                     HStack {
+                                        Rectangle()
+                                            .fill(Color(UIColor(
+                                                red: CGFloat(genre.colorRed),
+                                                green: CGFloat(genre.colorGreen),
+                                                blue: CGFloat(genre.colorBlue),
+                                                alpha: CGFloat(genre.colorAlpha)
+                                            )))
+                                            .frame(width: 4)
                                         //テキストを直接編集できるようにする画面部分
                                         TextField("学習対象の名前を入力", text: Binding(
                                             //新しくテキストが入力されたら
@@ -104,7 +112,6 @@ struct EditView: View {
                                         ))
                                         .frame(width:geometry.size.width / 20)//カラーピッカーを小さくしてテキストフィールドを大きくする
                                     }
-                                    .frame(height:geometry.size.height/20)  //リストの要素（HStack）の縦幅を調整
                                     Divider()   //区切り線がTextFieldの下に表示されないバグ？　があったので自分で追加
                                 }
                                 .listRowSeparator(.hidden)  //上に応じて、区切り線を非表示に

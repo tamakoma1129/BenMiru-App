@@ -24,23 +24,32 @@ struct RecordView: View {
                     if !genre.isInvalidated {
                         VStack{
                             HStack{
+                                Rectangle()
+                                    .fill(Color(UIColor(
+                                        red: CGFloat(genre.colorRed),
+                                        green: CGFloat(genre.colorGreen),
+                                        blue: CGFloat(genre.colorBlue),
+                                        alpha: CGFloat(genre.colorAlpha)
+                                    )))
+                                    .frame(width: 4)
                                 Text(genre.name)
-                                //スペーサーで選択範囲を広げる
                                 Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
                             }
                             //contentShape(Rectangle())をつけることでセル全体を選択できる
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                selectedGenreId = genre.id
-                                selectedGenreName = genre.name
-                                showModal = true
-                                selectedGenreColor = UIColor(
-                                    red: CGFloat(genre.colorRed),
-                                    green: CGFloat(genre.colorGreen),
-                                    blue: CGFloat(genre.colorBlue),
-                                    alpha: CGFloat(genre.colorAlpha)
-                                )
-                            }
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    selectedGenreId = genre.id
+                                    selectedGenreName = genre.name
+                                    showModal = true
+                                    selectedGenreColor = UIColor(
+                                        red: CGFloat(genre.colorRed),
+                                        green: CGFloat(genre.colorGreen),
+                                        blue: CGFloat(genre.colorBlue),
+                                        alpha: CGFloat(genre.colorAlpha)
+                                    )
+                                }
                         }
                     }
                 }
