@@ -18,26 +18,28 @@ struct RecordView: View {
     @State var selectedGenreColor = UIColor()
     @State var selectedGenreId : String = "" //UUID.uuidStringで保存しているので、String
     var body: some View {
-        NavigationView{
-            List{
-                ForEach(genres){ genre in
-                    if !genre.isInvalidated {
-                        VStack{
-                            HStack{
-                                Rectangle()
-                                    .fill(Color(UIColor(
-                                        red: CGFloat(genre.colorRed),
-                                        green: CGFloat(genre.colorGreen),
-                                        blue: CGFloat(genre.colorBlue),
-                                        alpha: CGFloat(genre.colorAlpha)
-                                    )))
-                                    .frame(width: 4)
-                                Text(genre.name)
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
-                            }
-                            //contentShape(Rectangle())をつけることでセル全体を選択できる
+        GeometryReader { geometry in
+            NavigationView{
+                List{
+                    ForEach(genres){ genre in
+                        if !genre.isInvalidated {
+                            VStack{
+                                HStack{
+                                    Rectangle()
+                                        .fill(Color(UIColor(
+                                            red: CGFloat(genre.colorRed),
+                                            green: CGFloat(genre.colorGreen),
+                                            blue: CGFloat(genre.colorBlue),
+                                            alpha: CGFloat(genre.colorAlpha)
+                                        )))
+                                        .frame(width: 4)
+                                    Text(genre.name)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .foregroundColor(.gray)
+                                }
+                                .frame(height:geometry.size.height/20)
+                                //contentShape(Rectangle())をつけることでセル全体を選択できる
                                 .contentShape(Rectangle())
                                 .onTapGesture {
                                     selectedGenreId = genre.id
@@ -50,16 +52,17 @@ struct RecordView: View {
                                         alpha: CGFloat(genre.colorAlpha)
                                     )
                                 }
+                            }
                         }
                     }
                 }
+                .navigationTitle("学習対象を選択")
+                .sheet(isPresented: $showModal) {
+                    RecordViewModal(genreName: $selectedGenreName,showModal: $showModal, uiColor:$selectedGenreColor, selectedGenreId: $selectedGenreId)
+                }
             }
-            .navigationTitle("学習対象を選択")
-            .sheet(isPresented: $showModal) {
-                RecordViewModal(genreName: $selectedGenreName,showModal: $showModal, uiColor:$selectedGenreColor, selectedGenreId: $selectedGenreId)
-            }
+            .navigationViewStyle(.stack)
         }
-        .navigationViewStyle(.stack)
     }
     //ジャンルを選択したときのモーダル画面
     struct RecordViewModal: View{
