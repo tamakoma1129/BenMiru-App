@@ -43,6 +43,7 @@
 		9C5E34A72A22694900A84C26 /* FigureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureModel.swift; sourceTree = "<group>"; };
 		9C5E34C32A23E09800A84C26 /* StopwatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchView.swift; sourceTree = "<group>"; };
 		9CD99D7E2A2605FE000B7002 /* CreateBlockAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBlockAlgorithm.swift; sourceTree = "<group>"; };
+		9CD99D842A2A22F5000B7002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 		9C177A992A1F0E76001D4E29 /* StudyRecordNonChatGPT */ = {
 			isa = PBXGroup;
 			children = (
+				9CD99D842A2A22F5000B7002 /* Info.plist */,
 				9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */,
 				9C177A9C2A1F0E76001D4E29 /* ContentView.swift */,
 				9C5E34982A1F48C800A84C26 /* MainView.swift */,
@@ -379,6 +381,7 @@
 				DEVELOPMENT_TEAM = 9M7448R73Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyRecordNonChatGPT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -409,6 +412,7 @@
 				DEVELOPMENT_TEAM = 9M7448R73Y;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = StudyRecordNonChatGPT/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

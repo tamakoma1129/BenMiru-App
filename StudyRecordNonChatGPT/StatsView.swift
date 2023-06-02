@@ -9,13 +9,6 @@ import SwiftUI
 import RealmSwift
 import Charts
 //StatsViewのストラクト
-struct StatsView: View {
-    
-    var body: some View {
-        Text("StatsView")
-    }
-}
-
 
 struct ChartTest: View {
     @State var selectedDate: Date?   //ユーザーのタップしたところを保存する変数selectedDateをStateで宣言
@@ -56,7 +49,7 @@ struct ChartTest: View {
             // 選択された日付の各グラフ棒の情報を表示するビュー
             if let selectedDate = selectedDate {
                 VStack(alignment: .leading) {
-                    Text("Date: \(selectedDate, format: .dateTime.year().month().day())")
+                    Text("Date: \(dateConv(beforeDate: selectedDate))")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                     ScrollView{
@@ -82,7 +75,7 @@ struct ChartTest: View {
         }
     }
     
-    func findElement(location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
+    private func findElement(location: CGPoint, proxy: ChartProxy, geometry: GeometryProxy) {
         let relativeXPosition = location.x - geometry[proxy.plotAreaFrame].origin.x
         if let date = proxy.value(atX: relativeXPosition) as Date? {
             // Find the closest date element.
@@ -97,6 +90,14 @@ struct ChartTest: View {
             }
             selectedDate = closestDate
         }
+    }
+    
+    private func dateConv(beforeDate:Date) -> (String) {
+        let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy/MM/dd"
+            formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        let dateTokyo = formatter.string(from: beforeDate)
+        return dateTokyo
     }
 }
 
