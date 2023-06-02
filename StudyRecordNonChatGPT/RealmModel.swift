@@ -79,6 +79,7 @@ class ViewModelGenre: ObservableObject {
 //ViewModelGenreのStudy版
 class ViewModelStudy: ObservableObject {
     @Published var studyEntities: Results<StudyRecord> = StudyRecord.studyAll()
+    @Published var studyByDayAndGenre = [Date: [String: Int]]() //グラフ描写のための辞書データを作成
     private var notificationTokensStudy: [NotificationToken] = []
     
     init() {
@@ -86,17 +87,45 @@ class ViewModelStudy: ObservableObject {
             switch change {
             case let .initial(results):
                 self.studyEntities = results
+                self.updateStudyByDayAndGenre()
             case let .update(results, _, _, _):
                 self.studyEntities = results
+                self.updateStudyByDayAndGenre()
             case let .error(error):
                 print(error.localizedDescription)
             }
         })
     }
+
     deinit {
         notificationTokensStudy.forEach { $0.invalidate()}
     }
+    //全データから日付毎に勉強したジャンルIDとその日勉強した時間を記録する辞書を作る関数
+    func updateStudyByDayAndGenre() {
+        var newStudyByDayAndGenre = [Date: [String: Int]]()
+        let calendar = Calendar.current
+        
+        for study in studyEntities {
+            // Remove the time part of the date
+            let date = calendar.startOfDay(for: study.date)
+            let genreId = study.genreId
+            let duration = study.durationMinutes
+            
+            if newStudyByDayAndGenre[date] == nil {
+                newStudyByDayAndGenre[date] = [String: Int]()
+            }
+            
+            if newStudyByDayAndGenre[date]![genreId] == nil {
+                newStudyByDayAndGenre[date]![genreId] = duration
+            } else {
+                newStudyByDayAndGenre[date]![genreId]! += duration
+            }
+        }
+        
+        studyByDayAndGenre = newStudyByDayAndGenre
+    }
 }
+
 
 //IDを色に変換するためのClass
 class GenreColorMap: ObservableObject {
