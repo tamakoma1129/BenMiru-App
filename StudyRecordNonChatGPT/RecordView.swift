@@ -45,7 +45,7 @@ struct RecordView: View {
                     }
                 }
             }
-            .navigationTitle("Select Genre")
+            .navigationTitle("学習対象を選択")
             .sheet(isPresented: $showModal) {
                 RecordViewModal(genreName: $selectedGenreName,showModal: $showModal, uiColor:$selectedGenreColor, selectedGenreId: $selectedGenreId)
             }
@@ -168,7 +168,7 @@ struct RecordView: View {
             @State private var hDateModal = false //ハーフモーダルのオンオフ
             @State private var selectedHour:Int = 0     //勉強時間(時）
             @State private var selectedMinute:Int = 0  //勉強時間(分）
-            @State private var timeString = "0時間0分"
+            @State private var timeString = "学習時間"
             @State private var hTimeModal = false //ハーフモーダルのオンオフ
             @Binding var allMinuteTime : Int //時間を全て分に直したもの
             //日付をStringに変える関数
@@ -238,18 +238,28 @@ struct RecordView: View {
                             convDate()
                         }
                         //3個目のリスト要素　時間選択
-                        Label(
-                            title:{
-                                Text("\(selectedHour)時間\(selectedMinute)分")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                            },
-                            icon: {
-                                Image(systemName: "clock.arrow.circlepath")
-                                    .foregroundColor(Color(uiColor))
-                                    .rotation3DEffect(.degrees(180),
-                                                      axis: (x: 0, y: 1, z: 0)) //y軸で回転させて左右反転
-                            }
-                        )
+                        HStack{
+                            Label(
+                                title:{
+                                    if (selectedHour == 0 && selectedMinute == 0) {
+                                        Text("学習時間")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    } else{
+                                        Text("\(selectedHour)時間\(selectedMinute)分")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                    }
+                                },
+                                icon: {
+                                    Image(systemName: "clock.arrow.circlepath")
+                                        .foregroundColor(Color(uiColor))
+                                        .rotation3DEffect(.degrees(180),
+                                                          axis: (x: 0, y: 1, z: 0)) //y軸で回転させて左右反転
+                                }
+                            )
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
+                        }
                         //ラベルを押すとハーフモーダルが出現
                         .contentShape(Rectangle())
                         .onTapGesture {

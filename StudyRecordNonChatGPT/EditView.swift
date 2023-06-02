@@ -23,7 +23,7 @@ struct EditView: View {
                 VStack {
                     //ここが上の新しいジャンルを追加する画面
                     HStack {
-                        TextField("学ぶテーマ名を記入", text: $newGenreName)
+                        TextField("学習対象の名前を記入", text: $newGenreName)
                             .frame(maxWidth:.infinity)  //ColorPickerギリギリまで広くする
                             .focused($keyIsActive)
                         ColorPicker("", selection: $newGenreColor)
@@ -60,7 +60,7 @@ struct EditView: View {
                                 VStack {
                                     HStack {
                                         //テキストを直接編集できるようにする画面部分
-                                        TextField("Edit Genre", text: Binding(
+                                        TextField("学習対象の名前を入力", text: Binding(
                                             //新しくテキストが入力されたら
                                             get: { genre.name },
                                             //realmに書き込む
@@ -74,6 +74,7 @@ struct EditView: View {
                                                 thawGenre?.freeze()
                                             }
                                         ))
+                                        .frame(maxWidth:.infinity)  //ColorPickerギリギリまで横幅を広くする
                                         .focused($keyIsActive)
                                         //色を直接編集できるようにする画面部分
                                         ColorPicker("", selection: Binding(
@@ -101,8 +102,12 @@ struct EditView: View {
                                                 thawGenre?.freeze()
                                             }
                                         ))
+                                        .frame(width:geometry.size.width / 20)//カラーピッカーを小さくしてテキストフィールドを大きくする
                                     }
+                                    .frame(height:geometry.size.height/20)  //リストの要素（HStack）の縦幅を調整
+                                    Divider()   //区切り線がTextFieldの下に表示されないバグ？　があったので自分で追加
                                 }
+                                .listRowSeparator(.hidden)  //上に応じて、区切り線を非表示に
                             }
                         }
                         //左にスワイプしたら削除。また、それに関連するStudyRecordも削除
@@ -157,7 +162,7 @@ struct EditView: View {
                 } message: {
                     Text("関連する勉強記録も削除されます")
                 }
-                .navigationTitle("Edit Genres")
+                .navigationTitle("学習対象の編集")
             }
             .navigationViewStyle(.stack)
         }
