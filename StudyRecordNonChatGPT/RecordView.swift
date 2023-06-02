@@ -204,9 +204,9 @@ struct RecordView: View {
                             ZStack {
                                 //四角を作って
                                 Rectangle()
-                                    .fill(Color.white)
+                                    .fill(Color(UIColor(named:"Background")!))
                                     .frame(width: 80, height: 80)
-                                    .border(Color.black, width: 1)
+                                    .border(Color(UIColor(named:"Border")!), width: 1)
                                 //その中を斜線で埋める
                                 EasyBlockModel()
                                     .stroke(Color(uiColor), lineWidth: 2)

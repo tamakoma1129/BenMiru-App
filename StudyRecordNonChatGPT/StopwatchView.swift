@@ -30,9 +30,9 @@ struct StopwatchView: View {
                     ZStack {
                         //四角を作って
                         Rectangle()
-                            .fill(Color.white)
+                            .fill(Color(UIColor(named:"Background")!))
                             .frame(width: geometry.size.width * 0.5, height: geometry.size.width * 0.5)
-                            .border(Color.black, width: 1)
+                            .border(Color(UIColor(named:"Border")!), width: 1)
                         //その中を斜線で埋める
                         EasyBlockModel()
                             .stroke(Color(uiColor), lineWidth: 1)
@@ -50,10 +50,10 @@ struct StopwatchView: View {
                                 .font(.footnote)
                                 .padding()
                                 .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
-                                .foregroundColor(Color.black)   //文字の色
+                                .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
                                 .overlay(
                                     Circle()    //丸に指定
-                                        .stroke(Color.black, lineWidth: 1)
+                                        .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
                                 )
                         }
                         //開始・一時停止  isRunningで条件分岐
@@ -68,7 +68,7 @@ struct StopwatchView: View {
                                 .font(.body)
                                 .padding()
                                 .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
-                                .foregroundColor(Color.black)   //文字の色
+                                .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
                                 .overlay(
                                     Circle()   //丸に指定
                                         .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
@@ -83,10 +83,10 @@ struct StopwatchView: View {
                                 .font(.footnote)
                                 .padding()
                                 .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
-                                .foregroundColor(Color.black)   //文字の色
+                                .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
                                 .overlay(
                                     Circle()    //丸に指定
-                                        .stroke(Color.black, lineWidth: 1)
+                                        .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
                                 )
                         }
                     }
