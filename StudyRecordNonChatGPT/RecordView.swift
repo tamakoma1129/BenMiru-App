@@ -212,6 +212,7 @@ struct RecordView: View {
                                     .stroke(Color(uiColor), lineWidth: 2)
                                     .frame(width: 80, height: 80)
                                     .clipped()
+                                    
                             }
                             .padding(0)
                             Text(genreName)

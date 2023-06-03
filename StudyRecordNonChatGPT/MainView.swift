@@ -31,41 +31,44 @@ struct BlockLinesShape: Shape {
 //MainViewのストラクト
 struct MainView: View {
     private var cntIJ:Int = 0
-    @ObservedObject private var viewBlock = MakeViewBlock()
-    @EnvironmentObject var genreColorMap: GenreColorMap
-    // 複雑なのは、こうしないと型推論などで時間超過のコンパイルエラーが発生するから
-    func createSubBlockView(index: Int, lineNumber: Int) -> some View {
-        // 型をOptionalにし、後でViewがnilでない場合だけ表示するようにする
-        guard let lastBlock = viewBlock.blockedStudyRecordEntities.last else {
-            return AnyView(EmptyView())
-        }
-        //  lineNumber == -1だったら日付変更
-        if lineNumber == -1 && index < lastBlock.count{
-            
-            let selectDate:Date? = lastBlock[index].1    //日付を代入 Optional(2023-05-31 01:23:33 +0000)
-            if selectDate != nil{
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "M/d"
-                let dateString = dateFormatter.string(from: selectDate!)
-                
-                return AnyView(
-                    Text(dateString)
-                )
-            }
-        }else if index < lastBlock.count {  //違ったら線引く
-            let subBlock:[String] = lastBlock[index].0
-            if lineNumber < subBlock.count {
-                let selectId: String = subBlock[lineNumber]
-                if let selectedColor:UIColor = genreColorMap.colorMap[selectId] {
-                    let color = Color(selectedColor)
-                    let shape = BlockLinesShape(numberOfLine:lineNumber)
-                    return AnyView(shape.stroke(color, lineWidth: 1.5)
-                        .background(RoundedRectangle(cornerRadius: 0)
-                        .foregroundColor(.clear)))
+    @ObservedObject private var viewBlock = MakeViewBlock() //常に最新のScrブロックリストを作成するClass
+    @EnvironmentObject var genreColorMap: GenreColorMap //genreIdと色、名前の変換を辞書で行えるClass
+    
+    // 中身のコードが複雑なのは、こうしないと型推論などで時間超過のコンパイルエラーが発生するから
+    func createSubBlockView(index: Int, lineNumber: Int, scrIndex: Int) -> some View {
+        // indicesでViewがnilでない場合だけ表示するようにする
+        if viewBlock.blockedStudyRecordEntities.indices.contains(scrIndex) {
+            let nowScr = viewBlock.blockedStudyRecordEntities[scrIndex]
+            //  lineNumber == -1だったら日付変更の関数へ（これクラスとかで分けるべきでは？）
+            if lineNumber == -1 && index < nowScr.count{
+                let selectDate:Date? = nowScr[index].1    //日付を代入 Optional(2023-05-31 01:23:33 +0000)
+                if selectDate != nil{
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "M/d"
+                    let dateString = dateFormatter.string(from: selectDate!)
+                    
+                    return AnyView(
+                        Text(dateString)
+                    )
+                }
+            }else if index < nowScr.count {  //違ったら線引く関数へ
+                let subBlock:[String] = nowScr[index].0
+                if lineNumber < subBlock.count {
+                    let selectId: String = subBlock[lineNumber]
+                    if let selectedColor:UIColor = genreColorMap.colorMap[selectId] {
+                        let color = Color(selectedColor)
+                        let shape = BlockLinesShape(numberOfLine:lineNumber)
+                        return AnyView(shape.stroke(color, lineWidth: 1.5)
+                            .background(RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(.clear)))
+                    }
                 }
             }
+            return AnyView(EmptyView())
+        } else {
+            return AnyView(EmptyView())
         }
-        return AnyView(EmptyView())
+        
     }
     var body: some View {
         VStack {
@@ -81,11 +84,11 @@ struct MainView: View {
                                         .aspectRatio(1, contentMode: .fill)
                                         .frame(width: geometry.size.width / 12)
                                     ForEach(0..<15) { k in
-                                        createSubBlockView(index: i * 10 + j, lineNumber: k)
+                                        createSubBlockView(index: i * 10 + j, lineNumber: k, scrIndex: 0)    //線の追加
                                             .clipped()
                                     }
                                     GeometryReader { geometryBlock in
-                                        createSubBlockView(index: i * 10 + j, lineNumber: -1)
+                                        createSubBlockView(index: i * 10 + j, lineNumber: -1, scrIndex: 0)   //日付の追加
                                             .foregroundColor(.black)
                                             .font(.system(size: geometry.size.width/30, weight: .bold, design: .default))
                                             .lineLimit(1)
