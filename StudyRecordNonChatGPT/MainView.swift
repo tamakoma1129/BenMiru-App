@@ -93,11 +93,11 @@ struct MainView: View {
                                     }
                                     GeometryReader { geometryBlock in
                                         createSubBlockView(index: i * 10 + j, lineNumber: -1, scrIndex: scrIndex)   //日付の追加
-                                            .foregroundColor(.black)
-                                            .font(.system(size: geometry.size.width/30, weight: .bold, design: .default))
+                                            .foregroundColor(Color(UIColor(named:"Border")!))
+                                            .font(.system(size: geometry.size.width/36, weight: .medium, design: .default))
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.5)
-                                            .background(.white)
+                                            .background(Color(UIColor(named:"Background")!))
                                     }
                                 }
                             }
