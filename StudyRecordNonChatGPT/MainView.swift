@@ -13,10 +13,11 @@ struct BlockLinesShape: Shape {
     let numberOfLine: Int //塗る場所の指定をする変数。numberOfLine=0だと左上を塗る
     //実際に線を描写する為のpathの生成
     func path(in rect: CGRect) -> Path {
+        
         var path = Path()
         //「CGFloat(numberOfLine-1) / 7」だと、max15本の線の内、どこを塗るかという選択になる。
         //numberOfLine=0で最初（左上）、numberOfLine=母数が真ん中、numberOfLine=母数*2が最後（右下）に線を生成する。上の例の場合母数は7。
-        let x = rect.width * CGFloat(numberOfLine-1) / 7
+        let x = rect.width * CGFloat(numberOfLine) / 7
         //ここら辺は線が途切れないよう微調整したから半端
         path.move(to: CGPoint(x: x + 10, y: -10))
         path.addLine(to: CGPoint(x: -10, y: x + 10))
@@ -25,6 +26,7 @@ struct BlockLinesShape: Shape {
         return path
     }
 }
+
 //斜線pathの描写を上のstructを使って行う
 
 
@@ -60,7 +62,7 @@ struct MainView: View {
                     if let selectedColor:UIColor = genreColorMap.colorMap[selectId] {
                         let color = Color(selectedColor)
                         let shape = BlockLinesShape(numberOfLine:lineNumber)
-                        return AnyView(shape.stroke(color, lineWidth: 1.5)
+                        return AnyView(shape.stroke(color, lineWidth: 1.5)  //斜線の太さ
                             .background(RoundedRectangle(cornerRadius: 0)
                                 .foregroundColor(.clear)))
                     }

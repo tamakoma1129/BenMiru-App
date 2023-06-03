@@ -49,7 +49,7 @@ struct ChartTest: View {
             // 選択された日付の各グラフ棒の情報を表示するビュー
             if let selectedDate = selectedDate {
                 VStack(alignment: .leading) {
-                    let sumDurationTime:Int = viewModel.studyByDayAndGenre[selectedDate]!.values.reduce(0, +)   //選んだ日付の合計勉強時間をreduce関数で求める
+                    let sumDurationTime:Int = viewModel.studyByDayAndGenre[selectedDate]?.values.reduce(0, +) ?? 0   //選んだ日付の合計勉強時間をreduce関数で求める
                     Text("日付: \(dateConv(beforeDate: selectedDate))")
                     Text("合計\(sumDurationTime)分")
                     ScrollView{
