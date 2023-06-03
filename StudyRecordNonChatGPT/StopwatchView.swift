@@ -47,7 +47,9 @@ struct StopwatchView: View {
                         //リセット
                         Button(action: { viewModel.reset() }) {
                             Text("リセット")
-                                .font(.footnote)
+                                .font(.system(size:geometry.size.width * 0.03))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                                 .padding()
                                 .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
                                 .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
@@ -65,7 +67,9 @@ struct StopwatchView: View {
                             }
                         }) {
                             Text(viewModel.isRunning ? "一時停止" : "開始")
-                                .font(.body)
+                                .font(.system(size:geometry.size.width * 0.05))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                                 .padding()
                                 .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
                                 .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
@@ -80,7 +84,9 @@ struct StopwatchView: View {
                             selectedTab = 1
                         }) {
                             Text("完了")
-                                .font(.footnote)
+                                .font(.system(size:geometry.size.width * 0.03))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                                 .padding()
                                 .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
                                 .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
