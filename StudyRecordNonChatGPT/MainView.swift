@@ -33,6 +33,8 @@ struct MainView: View {
     private var cntIJ:Int = 0
     @ObservedObject private var viewBlock = MakeViewBlock() //常に最新のScrブロックリストを作成するClass
     @EnvironmentObject var genreColorMap: GenreColorMap //genreIdと色、名前の変換を辞書で行えるClass
+    @State private var pages: [AnyView] = []    //ページを表示するリスト。someViewのsomeは値は隠蔽するけど、型は合ってると保証するもの？　っぽいので具体的な値を求める配列には使えない。
+    @State private var selectedPage: Int = 0    //現在ページの変数
     
     // 中身のコードが複雑なのは、こうしないと型推論などで時間超過のコンパイルエラーが発生するから
     func createSubBlockView(index: Int, lineNumber: Int, scrIndex: Int) -> some View {
@@ -60,7 +62,7 @@ struct MainView: View {
                         let shape = BlockLinesShape(numberOfLine:lineNumber)
                         return AnyView(shape.stroke(color, lineWidth: 1.5)
                             .background(RoundedRectangle(cornerRadius: 0)
-                            .foregroundColor(.clear)))
+                                .foregroundColor(.clear)))
                     }
                 }
             }
@@ -68,10 +70,10 @@ struct MainView: View {
         } else {
             return AnyView(EmptyView())
         }
-        
     }
-    var body: some View {
-        VStack {
+    
+    func createPageView(scrIndex: Int) -> some View{        //動的にページを作る
+        return VStack {
             Spacer()
             VStack(spacing: 0) {
                 ForEach(0..<16) { i in  //縦のブロックの数
@@ -84,11 +86,11 @@ struct MainView: View {
                                         .aspectRatio(1, contentMode: .fill)
                                         .frame(width: geometry.size.width / 12)
                                     ForEach(0..<15) { k in
-                                        createSubBlockView(index: i * 10 + j, lineNumber: k, scrIndex: 0)    //線の追加
+                                        createSubBlockView(index: i * 10 + j, lineNumber: k, scrIndex: scrIndex)    //線の追加
                                             .clipped()
                                     }
                                     GeometryReader { geometryBlock in
-                                        createSubBlockView(index: i * 10 + j, lineNumber: -1, scrIndex: 0)   //日付の追加
+                                        createSubBlockView(index: i * 10 + j, lineNumber: -1, scrIndex: scrIndex)   //日付の追加
                                             .foregroundColor(.black)
                                             .font(.system(size: geometry.size.width/30, weight: .bold, design: .default))
                                             .lineLimit(1)
@@ -104,6 +106,29 @@ struct MainView: View {
                 }
             }
             Spacer()
+        }
+    }
+    func allPage(){
+        pages = []
+        for scrIndex in 0..<viewBlock.blockedStudyRecordEntities.count{
+            let hoge = AnyView(createPageView(scrIndex: scrIndex)) // AnyViewでラップ
+            pages.append(hoge)
+        }
+    }
+    var body: some View {
+        VStack{
+            TabView(selection: $selectedPage) {
+                ForEach(pages.indices, id: \.self) { index in
+                    pages[index].tag(index)
+                }
+            }
+            .tabViewStyle(PageTabViewStyle())
+            .onAppear(){
+                allPage()
+            }
+            .onChange(of: viewBlock.blockedStudyRecordEntities.count){ _ in
+                allPage()
+            }
         }
     }
 }
