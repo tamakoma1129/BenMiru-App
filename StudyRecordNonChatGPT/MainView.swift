@@ -74,7 +74,8 @@ struct MainView: View {
     }
     
     func createPageView(scrIndex: Int) -> some View{        //動的にページを作る
-        return VStack {
+        return
+        VStack {
             Spacer()
             VStack(spacing: 0) {
                 ForEach(0..<16) { i in  //縦のブロックの数
@@ -117,19 +118,24 @@ struct MainView: View {
         }
     }
     var body: some View {
-        VStack{
-            TabView(selection: $selectedPage) {
-                ForEach(pages.indices, id: \.self) { index in
-                    pages[index].tag(index)
+        NavigationView(){
+            VStack{
+                TabView(selection: $selectedPage) {
+                    ForEach(pages.indices, id: \.self) { index in
+                        pages[index].tag(index)
+                    }
+                }
+                .tabViewStyle(PageTabViewStyle())
+                .onAppear(){
+                    allPage()
+                    selectedPage=viewBlock.blockedStudyRecordEntities.count-1
+                }
+                .onChange(of: viewBlock.blockedStudyRecordEntities.count){ _ in
+                    allPage()
+                    selectedPage=viewBlock.blockedStudyRecordEntities.count-1
                 }
             }
-            .tabViewStyle(PageTabViewStyle())
-            .onAppear(){
-                allPage()
-            }
-            .onChange(of: viewBlock.blockedStudyRecordEntities.count){ _ in
-                allPage()
-            }
+            .navigationTitle("\(selectedPage+1)/\(viewBlock.blockedStudyRecordEntities.count)ページ目")
         }
     }
 }
