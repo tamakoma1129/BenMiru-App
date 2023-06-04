@@ -57,6 +57,18 @@ struct RecordView: View {
                     }
                 }
                 .navigationTitle("学習対象を選択")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: RecordDeleteView()) {
+                            Text("Go")
+                                .font(.title)
+                                .padding()
+                                .background(Color.blue)
+                                .foregroundColor(.white)
+                                .cornerRadius(10)
+                        }
+                    }
+                }
                 .sheet(isPresented: $showModal) {
                     RecordViewModal(genreName: $selectedGenreName,showModal: $showModal, uiColor:$selectedGenreColor, selectedGenreId: $selectedGenreId)
                 }

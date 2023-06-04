@@ -32,7 +32,6 @@ struct BlockLinesShape: Shape {
 
 //MainViewのストラクト
 struct MainView: View {
-    private var cntIJ:Int = 0
     @ObservedObject private var viewBlock = MakeViewBlock() //常に最新のScrブロックリストを作成するClass
     @EnvironmentObject var genreColorMap: GenreColorMap //genreIdと色、名前の変換を辞書で行えるClass
     @State private var pages: [AnyView] = []    //ページを表示するリスト。someViewのsomeは値は隠蔽するけど、型は合ってると保証するもの？　っぽいので具体的な値を求める配列には使えない。

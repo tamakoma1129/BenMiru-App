@@ -12,6 +12,7 @@
 		9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C177A9C2A1F0E76001D4E29 /* ContentView.swift */; };
 		9C177A9F2A1F0E78001D4E29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */; };
 		9C177AA22A1F0E78001D4E29 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C177AA12A1F0E78001D4E29 /* Preview Assets.xcassets */; };
+		9C2F265F2A2C84AA00E48BBB /* RecordDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2F265E2A2C84AA00E48BBB /* RecordDeleteView.swift */; };
 		9C5E34992A1F48C800A84C26 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E34982A1F48C800A84C26 /* MainView.swift */; };
 		9C5E349B2A1F48F300A84C26 /* RecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E349A2A1F48F300A84C26 /* RecordView.swift */; };
 		9C5E349D2A1F490B00A84C26 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E349C2A1F490B00A84C26 /* EditView.swift */; };
@@ -33,6 +34,7 @@
 		9C177A9C2A1F0E76001D4E29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C177AA12A1F0E78001D4E29 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9C2F265E2A2C84AA00E48BBB /* RecordDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordDeleteView.swift; sourceTree = "<group>"; };
 		9C5E34982A1F48C800A84C26 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9C5E349A2A1F48F300A84C26 /* RecordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordView.swift; sourceTree = "<group>"; };
 		9C5E349C2A1F490B00A84C26 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				9C5E34982A1F48C800A84C26 /* MainView.swift */,
 				9C5E349A2A1F48F300A84C26 /* RecordView.swift */,
 				9C5E34A22A20990A00A84C26 /* RealmModel.swift */,
+				9C2F265E2A2C84AA00E48BBB /* RecordDeleteView.swift */,
 				9C5E349C2A1F490B00A84C26 /* EditView.swift */,
 				9C5E34A72A22694900A84C26 /* FigureModel.swift */,
 				9C5E34A42A20FA2C00A84C26 /* UIColor+Extensions.swift */,
@@ -240,6 +243,7 @@
 			files = (
 				9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */,
 				9C5E34A32A20990A00A84C26 /* RealmModel.swift in Sources */,
+				9C2F265F2A2C84AA00E48BBB /* RecordDeleteView.swift in Sources */,
 				9C5E349D2A1F490B00A84C26 /* EditView.swift in Sources */,
 				9C5E34A52A20FA2C00A84C26 /* UIColor+Extensions.swift in Sources */,
 				9CD99D7F2A2605FE000B7002 /* CreateBlockAlgorithm.swift in Sources */,
