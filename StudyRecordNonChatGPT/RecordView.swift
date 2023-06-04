@@ -38,7 +38,7 @@ struct RecordView: View {
                                     Image(systemName: "chevron.right")
                                         .foregroundColor(.gray)
                                 }
-                                .frame(height:geometry.size.height/20)
+                                .frame(height:geometry.size.height/16)
                                 //contentShape(Rectangle())をつけることでセル全体を選択できる
                                 .contentShape(Rectangle())
                                 .onTapGesture {
@@ -59,13 +59,11 @@ struct RecordView: View {
                 .navigationTitle("学習対象を選択")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: RecordDeleteView()) {
-                            Text("Go")
-                                .font(.title)
-                                .padding()
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
+                        NavigationLink(destination: RecordDeleteView()
+                            .environmentObject(GenreColorMap())
+                        ) {
+                            Text("データの一覧と削除")
+                                .foregroundColor(.blue)
                         }
                     }
                 }
