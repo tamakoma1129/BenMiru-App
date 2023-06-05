@@ -11,7 +11,7 @@
 - 好きな色で自分だけのページを作ることができます
 - 1分から記録できるので、少ない勉強時間でもどんどん記録できます
 
-## Youtube1分40秒ほどの実際の操作動画です。
+## 1分40秒ほどの実際のYoutubeの操作動画です。
 [![YouTube video link](https://img.youtube.com/vi/4sJPLM3w4zc/maxresdefault.jpg)](https://www.youtube.com/watch?v=4sJPLM3w4zc)
 
 -----
