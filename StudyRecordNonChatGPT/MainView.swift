@@ -98,6 +98,7 @@ struct MainView: View {
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.5)
                                             .background(Color(UIColor(named:"Background")!))
+                                            .cornerRadius(geometryBlock.size.width / 12)
                                     }
                                 }
                             }
@@ -137,6 +138,7 @@ struct MainView: View {
             }
             .navigationTitle("\(selectedPage+1)/\(viewBlock.blockedStudyRecordEntities.count)ページ目")
         }
+        .navigationViewStyle(.stack)
     }
 }
 

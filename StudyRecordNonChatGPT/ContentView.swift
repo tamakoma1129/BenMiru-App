@@ -16,21 +16,21 @@ struct ContentView: View {
         TabView{
             MainView()
                 .tabItem{
-                    Label("Main", systemImage: "house.fill")
+                    Label("ホーム", systemImage: "house.fill")
                 }
                 .environmentObject(GenreColorMap())
             RecordView()
                 .tabItem{
-                    Label("Record", systemImage: "square.and.pencil")
+                    Label("記録する", systemImage: "square.and.pencil")
                 }
             EditView()
                 .tabItem {
-                    Label("Edit", systemImage: "pencil.circle.fill")
+                    Label("追加/編集", systemImage: "pencil.circle.fill")
                 }
 
             ChartTest()
                 .tabItem {
-                    Label("Stats", systemImage: "chart.bar.fill")
+                    Label("グラフで見る", systemImage: "chart.bar.fill")
                 }
                 .environmentObject(GenreColorMap())
         }
