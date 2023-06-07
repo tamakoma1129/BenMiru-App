@@ -36,6 +36,7 @@ struct MainView: View {
     @EnvironmentObject var genreColorMap: GenreColorMap //genreIdと色、名前の変換を辞書で行えるClass
     @State private var pages: [AnyView] = []    //ページを表示するリスト。someViewのsomeは値は隠蔽するけど、型は合ってると保証するもの？　っぽいので具体的な値を求める配列には使えない。
     @State private var selectedPage: Int = 0    //現在ページの変数
+    @State private var isLoading = false    // ローディング画面表示フラグを追加
     
     // 中身のコードが複雑なのは、こうしないと型推論などで時間超過のコンパイルエラーが発生するから
     func createSubBlockView(index: Int, lineNumber: Int, scrIndex: Int) -> some View {
@@ -112,33 +113,47 @@ struct MainView: View {
         }
     }
     func allPage(){
-        pages = []
-        for scrIndex in 0..<viewBlock.blockedStudyRecordEntities.count{
-            let hoge = AnyView(createPageView(scrIndex: scrIndex)) // AnyViewでラップ
-            pages.append(hoge)
+        DispatchQueue.global().async {  //非同期処理の実行
+            self.isLoading = true   //ローディング中をTrue
+
+            var newPages: [AnyView] = []
+            for scrIndex in 0..<self.viewBlock.blockedStudyRecordEntities.count{
+                let hoge = AnyView(self.createPageView(scrIndex: scrIndex))
+                newPages.append(hoge)
+            }
+
+            DispatchQueue.main.async {  //UIを更新する為にメインスレッドに戻るらしい
+                self.pages = newPages
+                self.selectedPage = self.viewBlock.blockedStudyRecordEntities.count-1
+                self.isLoading = false
+            }
         }
     }
     var body: some View {
-        NavigationView(){
-            VStack{
-                TabView(selection: $selectedPage) {
-                    ForEach(pages.indices, id: \.self) { index in
-                        pages[index].tag(index)
+            NavigationView(){
+                VStack{
+                    if isLoading { // ローディング中は ProgressView を表示
+                        ProgressView()
+                    } else {
+                        TabView(selection: $selectedPage) {
+                            ForEach(pages.indices, id: \.self) { index in
+                                pages[index].tag(index)
+                            }
+                        }
+                        .tabViewStyle(PageTabViewStyle())
+                        .onAppear(){
+                            allPage()
+                            selectedPage=viewBlock.blockedStudyRecordEntities.count-1
+                        }
+                        .onChange(of: viewBlock.blockedStudyRecordEntities.count){ _ in
+                            allPage()
+                            selectedPage=viewBlock.blockedStudyRecordEntities.count-1
+                        }
                     }
                 }
-                .tabViewStyle(PageTabViewStyle())
-                .onAppear(){
-                    allPage()
-                    selectedPage=viewBlock.blockedStudyRecordEntities.count-1
-                }
-                .onChange(of: viewBlock.blockedStudyRecordEntities.count){ _ in
-                    allPage()
-                    selectedPage=viewBlock.blockedStudyRecordEntities.count-1
-                }
+                .navigationTitle("\(selectedPage+1)/\(viewBlock.blockedStudyRecordEntities.count)ページ目")
             }
-            .navigationTitle("\(selectedPage+1)/\(viewBlock.blockedStudyRecordEntities.count)ページ目")
+            .navigationViewStyle(.stack)
         }
-        .navigationViewStyle(.stack)
-    }
 }
 
