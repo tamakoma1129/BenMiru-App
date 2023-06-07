@@ -23,12 +23,11 @@ struct ContentView: View {
                 }
                 .environmentObject(GenreColorMap())
                 .tag(0)
-            RecordView()
+            RecordView(redrawTrigger: $redrawTrigger)
                 .tabItem{
                     Label("記録する", systemImage: "square.and.pencil")
                 }
                 .tag(1)
-                .id(redrawTrigger) //一時的なバグに対する処置
             EditView()
                 .tabItem {
                     Label("追加/編集", systemImage: "pencil.circle.fill")

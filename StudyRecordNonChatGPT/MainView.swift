@@ -122,7 +122,7 @@ struct MainView: View {
                 newPages.append(hoge)
             }
 
-            DispatchQueue.main.async {  //UIを更新する為にメインスレッドに戻るらしい
+            DispatchQueue.main.async {  //UIを更新する為にメインに戻る
                 self.pages = newPages
                 self.selectedPage = self.viewBlock.blockedStudyRecordEntities.count-1
                 self.isLoading = false

@@ -17,6 +17,7 @@ struct RecordView: View {
     @State var selectedGenreName = String()
     @State var selectedGenreColor = UIColor()
     @State var selectedGenreId : String = "" //UUID.uuidStringで保存しているので、String
+    @Binding var redrawTrigger:UUID
     var body: some View {
         GeometryReader { geometry in
             NavigationView{
@@ -56,6 +57,7 @@ struct RecordView: View {
                         }
                     }
                 }
+                .id(redrawTrigger)//一時的な修正のため
                 .navigationTitle("学習対象を選択")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {

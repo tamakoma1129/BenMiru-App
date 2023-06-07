@@ -144,6 +144,7 @@ func makeScr(_ blockLiInput: [([String], Date?)], _ scrLimit: Int, _ setTime: In
         }
         scrLi.append(tempScr)
     }
+    print(scrLi)
     return scrLi
 }
 
