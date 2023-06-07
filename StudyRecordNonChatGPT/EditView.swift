@@ -26,6 +26,22 @@ struct EditView: View {
                         TextField("学習対象の名前を入力", text: $newGenreName)
                             .frame(maxWidth:.infinity)  //ColorPickerギリギリまで広くする
                             .focused($keyIsActive)
+                            .onTapGesture {
+                                keyIsActive = true
+                                Task {
+                                    // 入力した1文字目が変換対象にならないバグの暫定対応
+                                    do {
+                                        try await Task.sleep(nanoseconds: 200 * 1000 * 1000)
+                                        // TextFieldに文字列を入力
+                                        newGenreName = " "
+                                        try await Task.sleep(nanoseconds: 500 * 1000 * 1000)
+                                        // TextFieldを空にする
+                                        newGenreName = ""
+                                    } catch {
+                                        print(error)
+                                    }
+                                }
+                            }
                         ColorPicker("", selection: $newGenreColor)
                             .frame(width:geometry.size.width / 20)
                         
