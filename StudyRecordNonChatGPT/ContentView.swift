@@ -23,7 +23,7 @@ struct ContentView: View {
                 }
                 .environmentObject(GenreColorMap())
                 .tag(0)
-            RecordView(redrawTrigger: $redrawTrigger)
+            RecordView()
                 .tabItem{
                     Label("記録する", systemImage: "square.and.pencil")
                 }
@@ -39,11 +39,6 @@ struct ContentView: View {
                 }
                 .environmentObject(GenreColorMap())
                 .tag(3)
-        }
-        .onChange(of: selectedTab) { newValue in    //一時的なバグに対する処置のため
-            if newValue == 1 {
-                redrawTrigger = UUID()
-            }
         }
     }
 }
