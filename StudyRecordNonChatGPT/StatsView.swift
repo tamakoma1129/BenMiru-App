@@ -20,10 +20,10 @@ struct ChartTest: View {
             Chart {
                 ForEach(viewModel.studyByDayAndGenre.keys.sorted(), id: \.self) { date in
                     ForEach(viewModel.studyByDayAndGenre[date]!.keys.sorted(), id: \.self) { genreId in
-                        let minutes = viewModel.studyByDayAndGenre[date]![genreId]!
+                        let minutes = (viewModel.studyByDayAndGenre[date]![genreId] ?? 0)
                         BarMark(x: .value("日", date),
                                 y: .value("分", minutes))
-                        .foregroundStyle(Color(genreColorMap.colorMap[genreId]!))
+                        .foregroundStyle(Color(genreColorMap.colorMap[genreId] ?? UIColor(.red)))
                     }
                 }
             }
@@ -54,10 +54,10 @@ struct ChartTest: View {
                     Text("合計\(sumDurationTime)分")
                     ScrollView{
                         ForEach(viewModel.studyByDayAndGenre[selectedDate]?.keys.sorted().reversed() ?? [], id: \.self) { genreId in
-                            let durationTime:Int =  viewModel.studyByDayAndGenre[selectedDate]![genreId]!
+                            let durationTime:Int =  (viewModel.studyByDayAndGenre[selectedDate]![genreId] ?? 0)
                             GeometryReader { geometry in
                             HStack{
-                                Text("\(genreColorMap.nameMap[genreId]!)" )
+                                Text("\(genreColorMap.nameMap[genreId] ?? "エラーです　「記録する」からデータを削除してください。")" )
                                     .font(.title2.bold())
                                     .foregroundColor(.primary)
                                 Spacer()
@@ -70,7 +70,7 @@ struct ChartTest: View {
                                         HStack{
                                             Divider()
                                                 .frame(width: geometry.size.width * (CGFloat(durationTime) / CGFloat(sumDurationTime)), height: 6)
-                                                .background(Color(genreColorMap.colorMap[genreId]!))
+                                                .background(Color(genreColorMap.colorMap[genreId] ?? UIColor(.red)))
                                         Spacer()
                                         }, alignment: .bottom
                                     )

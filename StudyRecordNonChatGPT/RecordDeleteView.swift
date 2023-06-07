@@ -23,11 +23,11 @@ struct RecordDeleteView: View {
                                     Text("\(dateToJapaneseString(date:record.date))")
                                         .font(.subheadline)
                                     Rectangle()
-                                        .fill(Color(genreColorMap.colorMap[record.genreId]!))
+                                        .fill(Color(genreColorMap.colorMap[record.genreId] ?? UIColor.red))
                                         .frame(height:1)
                                     Spacer()
                                     HStack {
-                                        Text(genreColorMap.nameMap[record.genreId]!)
+                                        Text(genreColorMap.nameMap[record.genreId] ?? "エラー(削除してください)")
                                             .lineLimit(1)
                                             .minimumScaleFactor(0.3)
                                             .font(.title3)

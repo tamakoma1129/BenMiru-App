@@ -11,7 +11,7 @@ import RealmSwift
 //EditViewのストラクト
 struct EditView: View {
     //viewModelGenreのインスタンスを生成して、変更されたら再実行
-    @ObservedResults(Genre.self) var genres //ObservedResultはオブジェクトのコレクションを観測、追加、削除やらできる
+    @ObservedResults(Genre.self,sortDescriptor:SortDescriptor(keyPath: "lastUpdatedDate", ascending: false)) var genres //ObservedResultはオブジェクトのコレクションを観測、追加、削除やらできる
     @State var newGenreName = ""            //新しく追加されるジャンル名を保存する変数
     @State var newGenreColor = Color.white  //新しく追加されるジャンルカラーを保存する変数
     @State private var showDeleteAlert = false  //Alertの状態を保存
@@ -93,8 +93,6 @@ struct EditView: View {
                                                 try! thawGenre?.realm!.write{
                                                     thawGenre?.name=newValue
                                                 }
-                                                //再凍結させる。もしかしてこの位置だと意味ない
-                                                thawGenre?.freeze()
                                             }
                                         ))
                                         .frame(maxWidth:.infinity)  //ColorPickerギリギリまで横幅を広くする

@@ -47,7 +47,7 @@ class StudyRecord: Object, Identifiable {
     //Resultは常に最新のデータを保持する
     //studyAllはデータベースからすべてのStudyRecordオブジェクトを取得する静的関数で、Results<ItemEntity>型のオブジェクトを返す
     static func studyAll() -> Results<StudyRecord> {
-        realm.objects(StudyRecord.self)
+        return realm.objects(StudyRecord.self).sorted(byKeyPath: "date", ascending: true)   //日付順が新しい順に受け取る
     }
 }
 
