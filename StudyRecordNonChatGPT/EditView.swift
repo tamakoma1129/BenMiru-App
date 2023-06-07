@@ -16,7 +16,7 @@ struct EditView: View {
     @State var newGenreColor = Color.white  //新しく追加されるジャンルカラーを保存する変数
     @State private var showDeleteAlert = false  //Alertの状態を保存
     @State private var tempIndexSet : IndexSet?
-    @FocusState var keyIsActive : Bool
+    @FocusState var keyIsActive : Bool  //TextFieldを開くか否か
     var body: some View {
         GeometryReader { geometry in
             NavigationView{ //上部タイトルを追加
@@ -27,7 +27,6 @@ struct EditView: View {
                             .frame(maxWidth:.infinity)  //ColorPickerギリギリまで広くする
                             .focused($keyIsActive)
                             .onTapGesture {
-                                keyIsActive = true
                                 Task {
                                     // 入力した1文字目が変換対象にならないバグの暫定対応
                                     do {
