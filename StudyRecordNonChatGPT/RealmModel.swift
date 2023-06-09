@@ -28,8 +28,9 @@ class Genre: Object, Identifiable {
     //Resultは常に最新のデータを保持する
     //genreAllはデータベースからすべてのgenreオブジェクトを取得する静的関数で、Results<ItemEntity>型のオブジェクトを返す
     static func genreAll() -> Results<Genre> {
-        realm.objects(Genre.self).sorted(byKeyPath: "lastUpdatedDate", ascending: true)
+        return realm.objects(Genre.self).sorted(byKeyPath: "lastUpdatedDate", ascending: false)
     }
+
 }
 
 //勉強記録を保存するときのRealmデータモデル
