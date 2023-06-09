@@ -102,12 +102,11 @@ class ViewModelStudy: ObservableObject {
         notificationTokensStudy.forEach { $0.invalidate()}
     }
     //全データから日付毎に勉強したジャンルIDとその日勉強した時間を記録する辞書を作る関数
-    func updateStudyByDayAndGenre() {
+    func updateStudyByDayAndGenre() {   //積み立て棒グラフのための関数
         var newStudyByDayAndGenre = [Date: [String: Int]]()
         let calendar = Calendar.current
         
         for study in studyEntities {
-            // Remove the time part of the date
             let date = calendar.startOfDay(for: study.date)
             let genreId = study.genreId
             let duration = study.durationMinutes
@@ -125,6 +124,13 @@ class ViewModelStudy: ObservableObject {
         
         studyByDayAndGenre = newStudyByDayAndGenre
     }
+    func totalStudyTimeByGenre() -> [String: Int] { //全データから各genreIdの合計分数を求める
+            var totals: [String: Int] = [:]
+            for record in studyEntities {
+                totals[record.genreId, default: 0] += record.durationMinutes
+            }
+            return totals
+        }
 }
 
 
