@@ -20,7 +20,7 @@ struct RecordView: View {
     @State var selectedGenreId : String = "" //UUID.uuidStringで保存しているので、String
     var body: some View {
         GeometryReader { geometry in
-            NavigationView{
+            NavigationStack{
                 List{
                     ForEach(viewModel.genreEntities){ (genre:Genre) in
                         if !genre.isInvalidated {

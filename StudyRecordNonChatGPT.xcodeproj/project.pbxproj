@@ -23,6 +23,7 @@
 		9C5E34A82A22694900A84C26 /* FigureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E34A72A22694900A84C26 /* FigureModel.swift */; };
 		9C5E34C42A23E09800A84C26 /* StopwatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E34C32A23E09800A84C26 /* StopwatchView.swift */; };
 		9CAB6BBC2A334FC4004FCEF1 /* StackedBarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAB6BBB2A334FC4004FCEF1 /* StackedBarChart.swift */; };
+		9CAB6BBE2A335505004FCEF1 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAB6BBD2A335505004FCEF1 /* PieChartView.swift */; };
 		9CD99D7F2A2605FE000B7002 /* CreateBlockAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD99D7E2A2605FE000B7002 /* CreateBlockAlgorithm.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		9C5E34A72A22694900A84C26 /* FigureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureModel.swift; sourceTree = "<group>"; };
 		9C5E34C32A23E09800A84C26 /* StopwatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopwatchView.swift; sourceTree = "<group>"; };
 		9CAB6BBB2A334FC4004FCEF1 /* StackedBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackedBarChart.swift; sourceTree = "<group>"; };
+		9CAB6BBD2A335505004FCEF1 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		9CD99D7E2A2605FE000B7002 /* CreateBlockAlgorithm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBlockAlgorithm.swift; sourceTree = "<group>"; };
 		9CD99D842A2A22F5000B7002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 				9C5E34A72A22694900A84C26 /* FigureModel.swift */,
 				9C5E34A42A20FA2C00A84C26 /* UIColor+Extensions.swift */,
 				9C5E349E2A1F492200A84C26 /* StatsView.swift */,
+				9CAB6BBD2A335505004FCEF1 /* PieChartView.swift */,
 				9CAB6BBB2A334FC4004FCEF1 /* StackedBarChart.swift */,
 				9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */,
 				9C177AA02A1F0E78001D4E29 /* Preview Content */,
@@ -244,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CAB6BBE2A335505004FCEF1 /* PieChartView.swift in Sources */,
 				9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */,
 				9C5E34A32A20990A00A84C26 /* RealmModel.swift in Sources */,
 				9C2F265F2A2C84AA00E48BBB /* RecordDeleteView.swift in Sources */,
