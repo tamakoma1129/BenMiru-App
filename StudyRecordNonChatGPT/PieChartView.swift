@@ -43,19 +43,62 @@ struct PieSlice: Shape {
 }
 
 struct PieChartView: View {
-    @ObservedObject private var viewModel = ViewModelStudy()    //既にstartAngleとendAngleを計算済みの配列を取得。（ForEach内で計算すると原因不明のreportBugになる。）
-    @EnvironmentObject var genreColorMap: GenreColorMap //色を反映させるための
+    @ObservedObject private var viewModel = ViewModelStudy()
+    @EnvironmentObject var genreColorMap: GenreColorMap
+
+    private func timeInHoursAndMinutes(_ minutes: Int) -> (hours: Int, minutes: Int) {
+        let hours = minutes / 60
+        let remainingMinutes = minutes % 60
+        return (hours, remainingMinutes)
+    }
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                ForEach(viewModel.totalStudyTimeByGenre, id: \.genreId) { data in
-                    PieSlice(startAngle: data.startAngle, endAngle: data.endAngle)
-                        .fill(Color(genreColorMap.colorMap[data.genreId]!))
+        let totalMinutes = viewModel.totalStudyTimeByGenre.reduce(0, { $0 + $1.studyTime })
+        let (totalHours, remainingMinutes) = timeInHoursAndMinutes(totalMinutes)
+        VStack {
+            // 合計勉強時間を表示
+            Text("合計勉強時間 \(totalHours) 時間 \(remainingMinutes) 分")
+            
+            // グラフを表示
+            GeometryReader { geometry in
+                ZStack {
+                    ForEach(viewModel.totalStudyTimeByGenre.sorted(by: { $0.studyTime > $1.studyTime }), id: \.genreId) { data in
+                        PieSlice(startAngle: data.startAngle, endAngle: data.endAngle)
+                            .fill(Color(genreColorMap.colorMap[data.genreId]!))
+                    }
+                    .frame(width: geometry.size.width*0.8)
                 }
-                .frame(width: geometry.size.width*0.8)
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .padding()
+            
+            // 各要素の時間を表示
+            ScrollView{
+                ForEach(viewModel.totalStudyTimeByGenre.sorted(by: { $0.studyTime > $1.studyTime }), id: \.genreId) { data in
+                    let (hours, minutes) = timeInHoursAndMinutes(data.studyTime)
+                    GeometryReader { geometry in
+                        HStack{
+                            Text("\(genreColorMap.nameMap[data.genreId] ?? "エラーです　「記録する」からデータを削除してください。")")
+                                .font(.title2.bold())
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Text("\(hours) 時間 \(minutes) 分")
+                                .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .regular)))
+                                .foregroundColor(.primary)
+                        }
+                        .padding()
+                        .overlay(
+                            HStack{
+                                Divider()
+                                    .frame(width: geometry.size.width * (CGFloat(data.studyTime) / CGFloat(totalMinutes)), height: 6)
+                                    .background(Color(genreColorMap.colorMap[data.genreId] ?? UIColor(.red)))
+                                Spacer()
+                            }, alignment: .bottom
+                        )
+                    }
+                    .padding(.vertical)
+                }
+            }
         }
     }
 }
