@@ -33,7 +33,7 @@ struct ContentView: View {
                     Label("追加/編集", systemImage: "pencil.circle.fill")
                 }
                 .tag(2)
-            ChartTest()
+            StatsView()
                 .tabItem {
                     Label("グラフで見る", systemImage: "chart.bar.fill")
                 }
