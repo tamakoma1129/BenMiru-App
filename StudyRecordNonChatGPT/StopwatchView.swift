@@ -23,88 +23,173 @@ struct StopwatchView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            HStack {
-                Spacer()
-                VStack(spacing: geometry.size.height * 0.03) {
+            if geometry.size.height > 550 { //iPhoneSEなどでレイアウトが途切れてしまう問題があったため、応急的な処置
+                HStack {
                     Spacer()
-                    ZStack {
-                        //四角を作って
-                        Rectangle()
-                            .fill(Color(UIColor(named:"Background")!))
-                            .frame(width: geometry.size.width * 0.5, height: geometry.size.width * 0.5)
-                            .border(Color(UIColor(named:"Border")!), width: 1)
-                        //その中を斜線で埋める
-                        EasyBlockModel()
-                            .stroke(Color(uiColor), lineWidth: 1)
-                            .frame(width: geometry.size.width * 0.5, height: geometry.size.width * 0.5)
-                            .clipped()
-                    }
-                    //経過時間を表示
-                    Text(viewModel.displayTime)
-                        .font(.system(size: geometry.size.width * 0.2)).fontWeight(.thin)
-                        .padding()
-                    HStack(spacing: geometry.size.width * 0.05) {
-                        //リセット
-                        Button(action: { viewModel.reset() }) {
-                            Text("リセット")
-                                .font(.system(size:geometry.size.width * 0.03))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                                .padding()
-                                .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
-                                .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
-                                .overlay(
-                                    Circle()    //丸に指定
-                                        .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
-                                )
+                    VStack(spacing: geometry.size.height * 0.03) {
+                        Spacer()
+                        ZStack {
+                            //四角を作って
+                            Rectangle()
+                                .fill(Color(UIColor(named:"Background")!))
+                                .frame(width: geometry.size.width * 0.5, height: geometry.size.width * 0.5)
+                                .border(Color(UIColor(named:"Border")!), width: 1)
+                            //その中を斜線で埋める
+                            EasyBlockModel()
+                                .stroke(Color(uiColor), lineWidth: 1)
+                                .frame(width: geometry.size.width * 0.5, height: geometry.size.width * 0.5)
+                                .clipped()
                         }
-                        //開始・一時停止  isRunningで条件分岐
-                        Button(action: {
-                            if viewModel.isRunning {
-                                viewModel.stop()
-                            } else {
-                                viewModel.start()
+                        //経過時間を表示
+                        Text(viewModel.displayTime)
+                            .font(.system(size: geometry.size.width * 0.2)).fontWeight(.thin)
+                            .padding()
+                        HStack(spacing: geometry.size.width * 0.05) {
+                            //リセット
+                            Button(action: { viewModel.reset() }) {
+                                Text("リセット")
+                                    .font(.system(size:geometry.size.width * 0.03))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .padding()
+                                    .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
+                                    .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
+                                    .overlay(
+                                        Circle()    //丸に指定
+                                            .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
+                                    )
                             }
-                        }) {
-                            Text(viewModel.isRunning ? "一時停止" : "開始")
-                                .font(.system(size:geometry.size.width * 0.05))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                                .padding()
-                                .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
-                                .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
-                                .overlay(
-                                    Circle()   //丸に指定
-                                        .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
-                                )
+                            //開始・一時停止  isRunningで条件分岐
+                            Button(action: {
+                                if viewModel.isRunning {
+                                    viewModel.stop()
+                                } else {
+                                    viewModel.start()
+                                }
+                            }) {
+                                Text(viewModel.isRunning ? "一時停止" : "開始")
+                                    .font(.system(size:geometry.size.width * 0.05))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .padding()
+                                    .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
+                                    .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
+                                    .overlay(
+                                        Circle()   //丸に指定
+                                            .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
+                                    )
+                            }
+                            //完了
+                            Button(action: {
+                                viewModel.stop()
+                                selectedTab = 1
+                            }) {
+                                Text("完了")
+                                    .font(.system(size:geometry.size.width * 0.03))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .padding()
+                                    .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
+                                    .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
+                                    .overlay(
+                                        Circle()    //丸に指定
+                                            .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
+                                    )
+                            }
                         }
-                        //完了
-                        Button(action: {
-                            viewModel.stop()
-                            selectedTab = 1
-                        }) {
-                            Text("完了")
-                                .font(.system(size:geometry.size.width * 0.03))
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.5)
-                                .padding()
-                                .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
-                                .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
-                                .overlay(
-                                    Circle()    //丸に指定
-                                        .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
-                                )
-                        }
+                        Spacer()
+                    }//UIApplication.willResignActiveNotificationがバックグラウンドに移る際に出る通知。それを受け取ってviewModel.appMovedToBackground()メソッドを呼んでる。
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                        viewModel.appMovedToBackground()
+                    }//こちらは上のフォアグラウンドに戻ってきた時ver
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        viewModel.appMovedToForeground()
                     }
                     Spacer()
-                }//UIApplication.willResignActiveNotificationがバックグラウンドに移る際に出る通知。それを受け取ってviewModel.appMovedToBackground()メソッドを呼んでる。
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
-                    viewModel.appMovedToBackground()
-                }//こちらは上のフォアグラウンドに戻ってきた時ver
-                .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
-                    viewModel.appMovedToForeground()
                 }
-                Spacer()
+            } else {    //iPhoneSE等用
+                HStack {
+                    Spacer()
+                    VStack(spacing: geometry.size.height * 0.01) {
+                        ZStack {
+                            //四角を作って
+                            Rectangle()
+                                .fill(Color(UIColor(named:"Background")!))
+                                .frame(width: geometry.size.width * 0.45, height: geometry.size.width * 0.45)
+                                .border(Color(UIColor(named:"Border")!), width: 1)
+                            //その中を斜線で埋める
+                            EasyBlockModel()
+                                .stroke(Color(uiColor), lineWidth: 1)
+                                .frame(width: geometry.size.width * 0.45, height: geometry.size.width * 0.45)
+                                .clipped()
+                        }
+                        //経過時間を表示
+                        Text(viewModel.displayTime)
+                            .font(.system(size: geometry.size.width * 0.18)).fontWeight(.thin)
+                            .padding()
+                        HStack(spacing: geometry.size.width * 0.04) {
+                            //リセット
+                            Button(action: { viewModel.reset() }) {
+                                Text("リセット")
+                                    .font(.system(size:geometry.size.width * 0.03))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .padding()
+                                    .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
+                                    .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
+                                    .overlay(
+                                        Circle()    //丸に指定
+                                            .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
+                                    )
+                            }
+                            //開始・一時停止  isRunningで条件分岐
+                            Button(action: {
+                                if viewModel.isRunning {
+                                    viewModel.stop()
+                                } else {
+                                    viewModel.start()
+                                }
+                            }) {
+                                Text(viewModel.isRunning ? "一時停止" : "開始")
+                                    .font(.system(size:geometry.size.width * 0.05))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .padding()
+                                    .frame(width: geometry.size.width * 0.25, height: geometry.size.width * 0.25) //円の大きさ
+                                    .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
+                                    .overlay(
+                                        Circle()   //丸に指定
+                                            .stroke(viewModel.isRunning ? Color.red : Color(uiColor), lineWidth: 2)
+                                    )
+                            }
+                            //完了
+                            Button(action: {
+                                viewModel.stop()
+                                selectedTab = 1
+                            }) {
+                                Text("完了")
+                                    .font(.system(size:geometry.size.width * 0.03))
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .padding()
+                                    .frame(width: geometry.size.width * 0.20, height: geometry.size.width * 0.20) //円の大きさ
+                                    .foregroundColor(Color(UIColor(named:"Border")!))   //文字の色
+                                    .overlay(
+                                        Circle()    //丸に指定
+                                            .stroke(Color(UIColor(named:"Border")!), lineWidth: 1)
+                                    )
+                            }
+                        }
+                        Spacer()
+                    }//UIApplication.willResignActiveNotificationがバックグラウンドに移る際に出る通知。それを受け取ってviewModel.appMovedToBackground()メソッドを呼んでる。
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)) { _ in
+                        viewModel.appMovedToBackground()
+                    }//こちらは上のフォアグラウンドに戻ってきた時ver
+                    .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { _ in
+                        viewModel.appMovedToForeground()
+                    }
+                    Spacer()
+                }
             }
         }
     }
