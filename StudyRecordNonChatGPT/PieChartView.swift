@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+//円グラフを表示する
+//Angleはラジアンで、ラジアンは約57.296度であり、360度は約6.28319ラジアンに相当。度なら.degree
+
 struct PieSlice: Shape {
-    // 開始角度と終了角度をプロパティとして保持します。
     var startAngle: Angle
     var endAngle: Angle
     
@@ -41,8 +43,8 @@ struct PieSlice: Shape {
 }
 
 struct PieChartView: View {
-    @ObservedObject private var viewModel = ViewModelStudy()
-    @EnvironmentObject var genreColorMap: GenreColorMap
+    @ObservedObject private var viewModel = ViewModelStudy()    //既にstartAngleとendAngleを計算済みの配列を取得。（ForEach内で計算すると原因不明のreportBugになる。）
+    @EnvironmentObject var genreColorMap: GenreColorMap //色を反映させるための
 
     var body: some View {
         GeometryReader { geometry in
@@ -51,8 +53,7 @@ struct PieChartView: View {
                     PieSlice(startAngle: data.startAngle, endAngle: data.endAngle)
                         .fill(Color(genreColorMap.colorMap[data.genreId]!))
                 }
-                .frame(width: min(geometry.size.width, geometry.size.height),
-                       height: min(geometry.size.width, geometry.size.height))
+                .frame(width: geometry.size.width*0.8)
             }
             .padding()
         }

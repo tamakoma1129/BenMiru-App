@@ -127,7 +127,7 @@ class ViewModelStudy: ObservableObject {
         
         studyByDayAndGenre = newStudyByDayAndGenre
     }
-    func updateTotalStudyTimeByGenre() {
+    func updateTotalStudyTimeByGenre() {    //startAngleとendAngleを事前に計算して、配列に詰める。ついでにgenreIdと分数も詰める
             var totalStudyTime = 0
             var startAngle = Angle(degrees: 0)
             
@@ -191,6 +191,8 @@ class GenreColorMap: ObservableObject {
     }
 }
 
+
+//事前にstartAngleやendAngleを計算しておくためのstruct
 struct GenreStudyData {
     let genreId: String
     let studyTime: Int
