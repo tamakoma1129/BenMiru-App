@@ -80,6 +80,7 @@ class ViewModelGenre: ObservableObject {
 class ViewModelStudy: ObservableObject {
     @Published var studyEntities: Results<StudyRecord> = StudyRecord.studyAll()
     @Published var studyByDayAndGenre = [Date: [String: Int]]() //グラフ描写のための辞書データを作成
+    @Published var totalStudyTimeByGenre = [GenreStudyData]()
     private var notificationTokensStudy: [NotificationToken] = []
     
     init() {
@@ -88,9 +89,11 @@ class ViewModelStudy: ObservableObject {
             case let .initial(results):
                 self.studyEntities = results
                 self.updateStudyByDayAndGenre()
+                self.updateTotalStudyTimeByGenre()
             case let .update(results, _, _, _):
                 self.studyEntities = results
                 self.updateStudyByDayAndGenre()
+                self.updateTotalStudyTimeByGenre()
             case let .error(error):
                 print(error.localizedDescription)
             }
@@ -124,6 +127,27 @@ class ViewModelStudy: ObservableObject {
         
         studyByDayAndGenre = newStudyByDayAndGenre
     }
+    func updateTotalStudyTimeByGenre() {
+            var totalStudyTime = 0
+            var startAngle = Angle(degrees: 0)
+            
+            // 全データから各genreIdの合計分数を求める
+            var totals = [String: Int]()
+            for record in studyEntities {
+                totals[record.genreId, default: 0] += record.durationMinutes
+                totalStudyTime += record.durationMinutes
+            }
+            
+            // GenreStudyDataを作成する
+            var genreStudyData = [GenreStudyData]()
+            for (genreId, studyTime) in totals {
+                let endAngle = startAngle + Angle(degrees: Double(studyTime) / Double(totalStudyTime) * 360)
+                genreStudyData.append(GenreStudyData(genreId: genreId, studyTime: studyTime, startAngle: startAngle, endAngle: endAngle))
+                startAngle = endAngle
+            }
+            
+            totalStudyTimeByGenre = genreStudyData
+        }
 }
 
 
@@ -165,4 +189,11 @@ class GenreColorMap: ObservableObject {
             }
         }
     }
+}
+
+struct GenreStudyData {
+    let genreId: String
+    let studyTime: Int
+    let startAngle: Angle
+    let endAngle: Angle
 }
