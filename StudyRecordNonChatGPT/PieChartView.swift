@@ -83,7 +83,7 @@ struct PieChartView: View {
                                 .foregroundColor(.primary)
                             Spacer()
                             Text("\(hours) 時間 \(minutes) 分")
-                                .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .regular)))
+                                .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .bold)))
                                 .foregroundColor(.primary)
                         }
                         .padding()
@@ -93,7 +93,7 @@ struct PieChartView: View {
                                     .frame(width: geometry.size.width * (CGFloat(data.studyTime) / CGFloat(totalMinutes)), height: 6)
                                     .background(Color(genreColorMap.colorMap[data.genreId] ?? UIColor(.red)))
                                 Spacer()
-                            }, alignment: .bottom
+                            }.padding(.horizontal), alignment: .bottom
                         )
                     }
                     .padding(.vertical)
