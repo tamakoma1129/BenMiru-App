@@ -74,13 +74,14 @@ struct MainView: View {
         }
     }
     
-    func createPageView(scrIndex: Int) -> some View{        //動的にページを作る
-        return
-        VStack {
-            Spacer()
-            VStack(spacing: 0) {
-                ForEach(0..<16) { i in  //縦のブロックの数
-                    GeometryReader { geometry in
+    func createPageView(scrIndex: Int) -> some View {
+        GeometryReader { geometry in
+            VStack {
+                if (geometry.size.height > 600){
+                    Spacer()
+                }
+                VStack(spacing: 0) {
+                    ForEach(0..<16) { i in  //縦のブロックの数
                         HStack(spacing: 0) {
                             ForEach(0..<10) { j in  //横のブロックの数
                                 ZStack{
@@ -105,13 +106,14 @@ struct MainView: View {
                             }
                         }
                         .padding(.horizontal, geometry.size.width / 12)
+                        .frame(height: UIScreen.main.bounds.width / 12)
                     }
-                    .frame(height: UIScreen.main.bounds.width / 12)
                 }
+                Spacer()
             }
-            Spacer()
         }
     }
+
     func allPage(){
         DispatchQueue.global().async {  //非同期処理の実行
             self.isLoading = true   //ローディング中をTrue
