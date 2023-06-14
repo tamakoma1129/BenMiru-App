@@ -154,6 +154,11 @@ struct MainView: View {
                     }
                 }
                 .navigationTitle("\(selectedPage+1)/\(viewBlock.blockedStudyRecordEntities.count)ページ目")
+                .navigationBarItems(trailing:   //SettingViewへの遷移ボタン
+                            NavigationLink(destination: SettingsView()) {
+                                Image(systemName: "gearshape.fill")
+                            }
+                        )
             }
             .navigationViewStyle(.stack)
         }

@@ -10,6 +10,7 @@
 		62A92EABAE6AEFCCA1164E2F /* Pods_StudyRecordNonChatGPT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092496FFFEDB213D5B164E38 /* Pods_StudyRecordNonChatGPT.framework */; };
 		9C1481382A33FAA800A8D958 /* StackChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1481372A33FAA800A8D958 /* StackChartView.swift */; };
 		9C14813A2A33FBEB00A8D958 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1481392A33FBEB00A8D958 /* PieChartView.swift */; };
+		9C14813C2A39469D00A8D958 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C14813B2A39469D00A8D958 /* SettingsView.swift */; };
 		9C177A9B2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */; };
 		9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C177A9C2A1F0E76001D4E29 /* ContentView.swift */; };
 		9C177A9F2A1F0E78001D4E29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */; };
@@ -33,6 +34,7 @@
 		846415FACD8E6927077A9003 /* Pods-StudyRecordNonChatGPT.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyRecordNonChatGPT.release.xcconfig"; path = "Target Support Files/Pods-StudyRecordNonChatGPT/Pods-StudyRecordNonChatGPT.release.xcconfig"; sourceTree = "<group>"; };
 		9C1481372A33FAA800A8D958 /* StackChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackChartView.swift; sourceTree = "<group>"; };
 		9C1481392A33FBEB00A8D958 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
+		9C14813B2A39469D00A8D958 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9C177A972A1F0E76001D4E29 /* StudyRecordNonChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecordNonChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordNonChatGPTApp.swift; sourceTree = "<group>"; };
 		9C177A9C2A1F0E76001D4E29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */,
 				9C177A9C2A1F0E76001D4E29 /* ContentView.swift */,
 				9C5E34982A1F48C800A84C26 /* MainView.swift */,
+				9C14813B2A39469D00A8D958 /* SettingsView.swift */,
 				9C1481372A33FAA800A8D958 /* StackChartView.swift */,
 				9C5E349A2A1F48F300A84C26 /* RecordView.swift */,
 				9C5E34A22A20990A00A84C26 /* RealmModel.swift */,
@@ -247,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C14813C2A39469D00A8D958 /* SettingsView.swift in Sources */,
 				9C14813A2A33FBEB00A8D958 /* PieChartView.swift in Sources */,
 				9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */,
 				9C5E34A32A20990A00A84C26 /* RealmModel.swift in Sources */,
