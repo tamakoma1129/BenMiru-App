@@ -77,7 +77,7 @@ struct MainView: View {
     func createPageView(scrIndex: Int) -> some View {
         GeometryReader { geometry in
             VStack {
-                if (geometry.size.height > 600){    //iPhoneXなどの画面縦幅が長い場合はSpacer
+                if (geometry.size.height > 600){    //iPhoneXなどの画面縦幅が長い場合はSpacerで整える
                     Spacer()
                 }
                 VStack(spacing: 0) {
