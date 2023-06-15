@@ -153,6 +153,7 @@ struct MainView: View {
                         }
                     }
                 }
+                .navigationTitle("\(selectedPage+1)/\(viewBlock.blockedStudyRecordEntities.count)ページ目")
                 .navigationBarItems(trailing:   //HelpViewへの遷移ボタン
                             NavigationLink(destination: HelpView()) {
                                 Image(systemName: "questionmark.circle")
