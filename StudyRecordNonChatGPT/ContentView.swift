@@ -39,6 +39,11 @@ struct ContentView: View {
                 }
                 .environmentObject(GenreColorMap())
                 .tag(3)
+            HelpView()
+                .tabItem{
+                    Label("その他",systemImage: "questionmark.circle")
+                }
+                .tag(4)
         }
     }
 }
