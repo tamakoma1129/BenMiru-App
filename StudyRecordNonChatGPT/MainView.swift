@@ -159,11 +159,6 @@ struct MainView: View {
                                 Image(systemName: "gearshape")
                             }
                                     )
-                .navigationBarItems(trailing:   //SettingViewへの遷移ボタン
-                            NavigationLink(destination: HelpView()) {
-                                Image(systemName: "questionmark.circle")
-                            }
-                        )
             }
             .navigationViewStyle(.stack)
         }
