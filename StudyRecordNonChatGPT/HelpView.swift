@@ -64,28 +64,50 @@ struct HelpView: View {
 
 //よくある質問View
 struct FnQView: View {
-    
-    // NavigationLinkを作る関数
-    func makeNavigationLink(label: String, destination: Text) -> some View {
-        NavigationLink(destination: destination) {
-            HStack {
-                Text(label)
-                Spacer()
+    // モーダル表示フラグ
+    @State private var showModal = false
+    // モーダルに表示するテキスト
+    @State private var modalText = ""
+
+    //モーダルViewを表示する
+    struct ModalView: View {
+        let text: String
+
+        var body: some View {
+            VStack {
+                Text(text)
             }
         }
     }
-    
+    // NavigationLinkを作る関数
+    func makeNavigationLink(label: String, text: String) -> some View {
+        Button(action: {
+            modalText = text
+            showModal.toggle()
+        }) {
+            HStack {
+                Text(label)
+                    .foregroundColor(Color(UIColor(named:"Border")!))
+                Spacer()
+            }
+        }
+        .sheet(isPresented: $showModal) {
+            ModalView(text: modalText)
+        }
+    }
+
     var body: some View {
         VStack{
             List{
-                makeNavigationLink(label: "登録した科目を削除したい", destination: Text("登録した科目を削除したいときモーダルがいいかな"))
-                makeNavigationLink(label: "勉強記録を一部削除", destination: Text("勉強記録を一部削除"))
-                makeNavigationLink(label: "全データを削除したい", destination: Text("できないので、再インストール"))
-                makeNavigationLink(label: "機種変更などのデータ引き継ぎ", destination: Text("サンプルテキスト"))
-                makeNavigationLink(label: "データはどこに保存されてる？", destination: Text("サンプルテキスト"))
-                makeNavigationLink(label: "勉強科目の名前を変更したい", destination: Text("サンプルテキスト"))
-                makeNavigationLink(label: "勉強科目の色を変更したい", destination: Text("サンプルテキスト"))
-                makeNavigationLink(label: "○○のような機能はないの？", destination: Text("サンプルテキスト"))
+                makeNavigationLink(label: "登録した科目を削除したい", text: "登録した科目を削除したいときモーダルがいいかな")
+                makeNavigationLink(label: "勉強記録を一部削除", text: "勉強記録を一部削除")
+                makeNavigationLink(label: "全データを削除したい", text: "できないので、再インストール")
+                makeNavigationLink(label: "機種変更などのデータ引き継ぎ", text: "サンプルテキスト")
+                makeNavigationLink(label: "データはどこに保存されてる？", text: "サンプルテキスト")
+                makeNavigationLink(label: "勉強科目の名前を変更したい", text: "サンプルテキスト")
+                makeNavigationLink(label: "勉強科目の色を変更したい", text: "サンプルテキスト")
+                makeNavigationLink(label: "○○のような機能はないの？", text: "サンプルテキスト")
+                makeNavigationLink(label: "○○の部分バグってない？", text: "サンプルテキスト")
             }
         }
         .navigationTitle("よくある質問")
