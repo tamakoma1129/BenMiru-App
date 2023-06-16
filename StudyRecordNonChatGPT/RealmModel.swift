@@ -28,7 +28,7 @@ class Genre: Object, Identifiable {
     //Resultは常に最新のデータを保持する
     //genreAllはデータベースからすべてのgenreオブジェクトを取得する静的関数で、Results<ItemEntity>型のオブジェクトを返す
     static func genreAll() -> Results<Genre> {
-        realm.objects(Genre.self).sorted(byKeyPath: "lastUpdatedDate", ascending: true)
+        realm.objects(Genre.self)
     }
 }
 
@@ -62,13 +62,16 @@ class ViewModelGenre: ObservableObject {
         notificationTokensGenre.append(genreEntities.observe { change in
             switch change {
             case let .initial(results):
+                print("Initial")
                 self.genreEntities = results
             case let .update(results, _, _, _):
+                print("Update")
                 self.genreEntities = results
             case let .error(error):
                 print(error.localizedDescription)
             }
         })
+
     }
     //deinitするとき、Tokenの購読を解除（無駄な負担をかけない為）
     deinit {

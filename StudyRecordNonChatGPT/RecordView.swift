@@ -12,8 +12,7 @@ import RealmSwift
 struct RecordView: View {
     //viewModelGenreのインスタンスを生成して、変更されたら再実行
     //日付降順（最新順）でソート
-
-    @ObservedObject private var viewModel = ViewModelGenre()
+    @ObservedResults(Genre.self,sortDescriptor:SortDescriptor(keyPath: "lastUpdatedDate", ascending: false)) var genres //ObservedResultはオブジェクトのコレクションを観測、追加、削除やらできる
     @State private var showModal = false
     @State var selectedGenreName = String()
     @State var selectedGenreColor = UIColor()
@@ -22,8 +21,9 @@ struct RecordView: View {
         GeometryReader { geometry in
             NavigationView{
                 List{
-                    ForEach(viewModel.genreEntities){ (genre:Genre) in
-                        if !genre.isInvalidated {
+                    let hoge = print(genres)
+                    ForEach(genres){ (genre:Genre) in
+                        let hoe = print(genre,"ForEach")
                             VStack{
                                 HStack{
                                     Rectangle()
@@ -53,7 +53,6 @@ struct RecordView: View {
                                         alpha: CGFloat(genre.colorAlpha)
                                     )
                                 }
-                            }
                         }
                     }
                 }
@@ -223,7 +222,6 @@ struct RecordView: View {
                                     .stroke(Color(uiColor), lineWidth: 2)
                                     .frame(width: 80, height: 80)
                                     .clipped()
-                                    
                             }
                             .padding(0)
                             Text(genreName)

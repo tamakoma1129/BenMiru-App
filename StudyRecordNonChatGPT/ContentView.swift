@@ -11,7 +11,6 @@ import RealmSwift
 struct ContentView: View {
     let realm = try! Realm()
     let hoge = print(Realm.Configuration.defaultConfiguration.fileURL!)
-    //一時的なバグに対する対処のための変数
     @State private var selectedTab = 0
     @State private var redrawTrigger = UUID()
 

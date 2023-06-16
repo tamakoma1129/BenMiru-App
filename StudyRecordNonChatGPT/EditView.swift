@@ -11,7 +11,7 @@ import RealmSwift
 //EditViewのストラクト
 struct EditView: View {
     //viewModelGenreのインスタンスを生成して、変更されたら再実行
-    @ObservedResults(Genre.self,sortDescriptor:SortDescriptor(keyPath: "lastUpdatedDate", ascending: false)) var genres //ObservedResultはオブジェクトのコレクションを観測、追加、削除やらできる
+    @ObservedResults(Genre.self) var genres //ObservedResultはオブジェクトのコレクションを観測、追加、削除やらできる
     @State var newGenreName = ""            //新しく追加されるジャンル名を保存する変数
     @State var newGenreColor = Color.white  //新しく追加されるジャンルカラーを保存する変数
     @State private var showDeleteAlert = false  //Alertの状態を保存
@@ -71,7 +71,7 @@ struct EditView: View {
                     List{
                         ForEach(genres){ genre in
                             //ジャンルにデータがあればifの処理
-                            if !genre.isInvalidated {
+
                                 VStack {
                                     HStack {
                                         Rectangle()
@@ -128,7 +128,7 @@ struct EditView: View {
                                     Divider()   //区切り線がTextFieldの下に表示されないバグ？　があったので自分で追加
                                 }
                                 .listRowSeparator(.hidden)  //上に応じて、区切り線を非表示に
-                            }
+                            
                         }
                         //左にスワイプしたら削除。また、それに関連するStudyRecordも削除
                         .onDelete{indexSet in   //indexSetは削除するインデックスが入る（スワイプで削除なので基本1つの要素のみ）
