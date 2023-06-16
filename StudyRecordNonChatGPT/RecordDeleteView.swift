@@ -17,7 +17,6 @@ struct RecordDeleteView: View {
             GeometryReader { geometry in
                 List {
                     ForEach(studyRecords) { record in
-                        if !record.isInvalidated {
                             HStack{
                                 VStack{
                                     Text("\(dateToJapaneseString(date:record.date))")
@@ -38,7 +37,6 @@ struct RecordDeleteView: View {
                                             .font(.title3)
                                     }
                                     Spacer()
-                                }
                             }
                         }
                     }
