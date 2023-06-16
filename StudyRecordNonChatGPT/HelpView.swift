@@ -9,55 +9,56 @@ import SwiftUI
 
 struct HelpView: View {
     var body: some View {
-        VStack{
-            List{
-                Section(header: Text("わからない時")){
-                    NavigationLink(destination: Text("よくある質問の詳細")) {
-                        HStack {
-                            Text("よくある質問")
-                            Spacer()
-                        }
-                    }
-                    NavigationLink(destination: Text("使い方の詳細")) {
-                        HStack {
-                            Text("使い方")
-                            Spacer()
-                        }
-                    }
-                    NavigationLink(destination: Text("使い方（動画）の詳細")) {
-                        HStack {
-                            Text("使い方（動画）")
-                            Spacer()
-                        }
-                    }
-                }
-                Section(header:Text("その他")){
-                    HStack{
-                        Text("レビューする")
-                            .contentShape(Rectangle())
-                            .onTapGesture {
-                                reviewApp()
+        NavigationView{
+            VStack{
+                List{
+                    Section(header: Text("わからない時")){
+                        NavigationLink(destination: Text("よくある質問の詳細")) {
+                            HStack {
+                                Text("よくある質問")
+                                Spacer()
                             }
-                        Spacer()
-                        Image(systemName: "star.fill")
-                            .foregroundColor(.gray)
+                        }
+                        NavigationLink(destination: Text("使い方の詳細")) {
+                            HStack {
+                                Text("使い方")
+                                Spacer()
+                            }
+                        }
+                        NavigationLink(destination: Text("使い方（動画）の詳細")) {
+                            HStack {
+                                Text("使い方（動画）")
+                                Spacer()
+                            }
+                        }
                     }
-                    HStack{
-                        makeLinkView(text: "機能リクエスト・ご意見", url: "https://docs.google.com/forms/d/e/1FAIpQLSe2bfx-TgZF1T1-wbjACPL51zJX454wsuvCLD-8Oogh8mJauQ/viewform?usp=sf_link")
+                    Section(header:Text("その他")){
+                        HStack{
+                            Text("レビューする")
+                                .contentShape(Rectangle())
+                                .onTapGesture {
+                                    reviewApp()
+                                }
+                            Spacer()
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.gray)
+                        }
+                        HStack{
+                            makeLinkView(text: "機能リクエスト・ご意見", url: "https://docs.google.com/forms/d/e/1FAIpQLSe2bfx-TgZF1T1-wbjACPL51zJX454wsuvCLD-8Oogh8mJauQ/viewform?usp=sf_link")
+                        }
+                        
+                        HStack{
+                            makeLinkView(text: "お問い合わせ", url: "https://tamakoma.com/%e5%8b%89%e5%bc%b7%e6%99%82%e9%96%93%e8%a8%98%e9%8c%b2%e3%82%a2%e3%83%97%e3%83%aa%e3%80%8c%e3%81%b9%e3%82%93%e3%83%9f%e3%83%ab%e3%80%8d%e3%82%92%e4%bd%9c%e3%82%8a%e3%81%be%e3%81%97%e3%81%9f/#toc3")
+                        }
+                        
+                        makeLinkView(text: "プライバシーポリシー", url: "https://tamakoma.com/%e3%81%b9%e3%82%93%e3%83%9f%e3%83%ab-%e3%83%97%e3%83%a9%e3%82%a4%e3%83%90%e3%82%b7%e3%83%bc%e3%83%9d%e3%83%aa%e3%82%b7%e3%83%bc/")
                     }
                     
-                    HStack{
-                        makeLinkView(text: "お問い合わせ", url: "https://tamakoma.com/%e5%8b%89%e5%bc%b7%e6%99%82%e9%96%93%e8%a8%98%e9%8c%b2%e3%82%a2%e3%83%97%e3%83%aa%e3%80%8c%e3%81%b9%e3%82%93%e3%83%9f%e3%83%ab%e3%80%8d%e3%82%92%e4%bd%9c%e3%82%8a%e3%81%be%e3%81%97%e3%81%9f/#toc3")
-                    }
-                    
-                    makeLinkView(text: "プライバシーポリシー", url: "https://tamakoma.com/%e3%81%b9%e3%82%93%e3%83%9f%e3%83%ab-%e3%83%97%e3%83%a9%e3%82%a4%e3%83%90%e3%82%b7%e3%83%bc%e3%83%9d%e3%83%aa%e3%82%b7%e3%83%bc/")
                 }
-                
             }
+            .navigationTitle("ヘルプ")
+            .navigationBarTitleDisplayMode(.inline)
         }
-        
-        .navigationTitle("ヘルプ")
-        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
