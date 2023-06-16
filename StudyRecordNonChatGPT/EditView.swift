@@ -71,7 +71,6 @@ struct EditView: View {
                     List{
                         ForEach(genres){ genre in
                             //ジャンルにデータがあればifの処理
-
                                 VStack {
                                     HStack {
                                         Rectangle()

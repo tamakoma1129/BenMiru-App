@@ -13,7 +13,7 @@ struct HelpView: View {
             VStack{
                 List{
                     Section(header: Text("わからない時")){
-                        NavigationLink(destination: Text("よくある質問の詳細")) {
+                        NavigationLink(destination: FnQView()) {
                             HStack {
                                 Text("よくある質問")
                                 Spacer()
@@ -62,12 +62,35 @@ struct HelpView: View {
     }
 }
 
-struct HelpView_Previews: PreviewProvider {
-    static var previews: some View {
-        HelpView()
+//よくある質問View
+struct FnQView: View {
+    
+    // NavigationLinkを作る関数
+    func makeNavigationLink(label: String, destination: Text) -> some View {
+        NavigationLink(destination: destination) {
+            HStack {
+                Text(label)
+                Spacer()
+            }
+        }
+    }
+    
+    var body: some View {
+        VStack{
+            List{
+                makeNavigationLink(label: "登録した科目を削除したい", destination: Text("登録した科目を削除したいときモーダルがいいかな"))
+                makeNavigationLink(label: "勉強記録を一部削除", destination: Text("勉強記録を一部削除"))
+                makeNavigationLink(label: "全データを削除したい", destination: Text("できないので、再インストール"))
+                makeNavigationLink(label: "機種変更などのデータ引き継ぎ", destination: Text("サンプルテキスト"))
+                makeNavigationLink(label: "データはどこに保存されてる？", destination: Text("サンプルテキスト"))
+                makeNavigationLink(label: "勉強科目の名前を変更したい", destination: Text("サンプルテキスト"))
+                makeNavigationLink(label: "勉強科目の色を変更したい", destination: Text("サンプルテキスト"))
+                makeNavigationLink(label: "○○のような機能はないの？", destination: Text("サンプルテキスト"))
+            }
+        }
+        .navigationTitle("よくある質問")
     }
 }
-
 //レビュー画面への遷移
 func reviewApp(){
     let productURL:URL = URL(string: "https://apps.apple.com/us/app/%E3%81%B9%E3%82%93%E3%83%9F%E3%83%AB-%E5%8B%89%E5%BC%B7%E8%A8%98%E9%8C%B2%E3%82%92%E8%A6%8B%E3%81%88%E3%82%8B%E5%8C%96%E3%81%99%E3%82%8B/id6449942689")!
