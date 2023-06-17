@@ -64,26 +64,38 @@ struct HelpView: View {
 
 //よくある質問View
 struct FnQView: View {
-    // モーダル表示フラグ
-    @State private var showModal = false
-    // モーダルに表示するテキスト
-    @State private var modalText = ""
-
+    //モーダル表示内容
+    @State private var modalContent: ModalContent?
+    //モーダルの中身の定義
+    struct ModalContent: Identifiable {
+        let id = UUID()
+        let label: String
+        let text: String
+    }
     //モーダルViewを表示する
     struct ModalView: View {
-        let text: String
+        let content: ModalContent
 
         var body: some View {
-            VStack {
-                Text(text)
+            NavigationView {
+                VStack{
+                    Divider()
+                        .padding()
+                    Text(content.text)
+                        .padding()
+                    Spacer()
+                        
+                }
+                .navigationTitle(content.label)
+                .navigationBarTitleDisplayMode(.inline)
             }
         }
     }
+
     // NavigationLinkを作る関数
     func makeNavigationLink(label: String, text: String) -> some View {
         Button(action: {
-            modalText = text
-            showModal.toggle()
+            modalContent = ModalContent(label: label, text: text)
         }) {
             HStack {
                 Text(label)
@@ -91,15 +103,15 @@ struct FnQView: View {
                 Spacer()
             }
         }
-        .sheet(isPresented: $showModal) {
-            ModalView(text: modalText)
+        .sheet(item: $modalContent) { content in
+            ModalView(content: content)
         }
     }
 
     var body: some View {
         VStack{
             List{
-                makeNavigationLink(label: "登録した科目を削除したい", text: "登録した科目を削除したいときモーダルがいいかな")
+                makeNavigationLink(label: "登録した科目を削除したい", text: "「追加/編集」画面から該当の科目を左にスワイプすることで消すことができます。")
                 makeNavigationLink(label: "勉強記録を一部削除", text: "勉強記録を一部削除")
                 makeNavigationLink(label: "全データを削除したい", text: "できないので、再インストール")
                 makeNavigationLink(label: "機種変更などのデータ引き継ぎ", text: "サンプルテキスト")
