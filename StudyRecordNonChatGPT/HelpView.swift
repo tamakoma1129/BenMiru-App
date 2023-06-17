@@ -75,19 +75,23 @@ struct FnQView: View {
     //モーダルViewを表示する
     struct ModalView: View {
         let content: ModalContent
+        @Environment(\.presentationMode) var presentationMode
 
         var body: some View {
             NavigationView {
                 VStack{
-                    Divider()
-                        .padding()
                     Text(content.text)
                         .padding()
                     Spacer()
-                        
                 }
                 .navigationTitle(content.label)
                 .navigationBarTitleDisplayMode(.inline)
+                .navigationBarItems(leading: Button(action: {
+                    presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("戻る")
+                        .foregroundColor(Color(UIColor.systemBlue))
+                })
             }
         }
     }
