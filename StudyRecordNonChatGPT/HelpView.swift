@@ -56,7 +56,7 @@ struct HelpView: View {
                     
                 }
             }
-            .navigationTitle("ヘルプ")
+            .navigationTitle("その他")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -111,15 +111,15 @@ struct FnQView: View {
     var body: some View {
         VStack{
             List{
-                makeNavigationLink(label: "登録した科目を削除したい", text: "「追加/編集」画面から該当の科目を左にスワイプすることで消すことができます。")
-                makeNavigationLink(label: "勉強記録を一部削除", text: "勉強記録を一部削除")
-                makeNavigationLink(label: "全データを削除したい", text: "できないので、再インストール")
-                makeNavigationLink(label: "機種変更などのデータ引き継ぎ", text: "サンプルテキスト")
-                makeNavigationLink(label: "データはどこに保存されてる？", text: "サンプルテキスト")
-                makeNavigationLink(label: "勉強科目の名前を変更したい", text: "サンプルテキスト")
-                makeNavigationLink(label: "勉強科目の色を変更したい", text: "サンプルテキスト")
-                makeNavigationLink(label: "○○のような機能はないの？", text: "サンプルテキスト")
-                makeNavigationLink(label: "○○の部分バグってない？", text: "サンプルテキスト")
+                makeNavigationLink(label: "登録した科目を削除したい", text: "「追加/編集」画面から消したい科目を左にスワイプすることで消すことができます。\n\n科目を削除すると、その科目で記録した勉強時間は全て消えてしまいます。")
+                makeNavigationLink(label: "勉強記録を一部削除", text: "「記録する」画面の右上にある「データの一覧と削除」から、消したい科目を左にスワイプすることで削除することができます。")
+                makeNavigationLink(label: "全データを削除したい", text: "本アプリは誤削除対策として全データ削除の機能を搭載していません。\n\n全データを削除したいときは本アプリを一回削除していただき、再インストールすることでデータは初めからになりますので、こちらの方法でお願い致します。")
+                makeNavigationLink(label: "機種変更などのデータ引き継ぎ", text: "Android,iPadでのアプリリリースを行なっておりませんので、機種変更などによるデータ引き継ぎサービスは行なっていません。\nご了承ください。")
+                makeNavigationLink(label: "データはどこに保存されてる？", text: "データは自身のiPhoneに保存されています。\nその為、オフラインでも問題なく使えますが、アプリを削除してしまうとデータも一緒に削除されますのでご注意ください。")
+                makeNavigationLink(label: "勉強科目の名前を変更したい", text: "「追加/編集」画面で、名前を変更したい科目の名前をタップすることで名前を編集することができます。")
+                makeNavigationLink(label: "勉強科目の色を変更したい", text: "「追加/編集」画面で、色を変更したい科目の色をタップすることで色を編集することができます。")
+                makeNavigationLink(label: "○○のような機能はないの？", text: "そのような機能が搭載されていない可能性があります。\n\nお手数をお掛けしますが、「その他」画面の「機能リクエスト・ご意見」または、返信が必要な場合は「お問い合わせ」から該当機能についてお問い合わせ頂くと作者に届きますのでよろしくお願いします。")
+                makeNavigationLink(label: "○○の部分バグってない？", text: "ご不便をおかけして申し訳ありません。\n\nお手数をお掛けしますが、「その他」画面の「機能リクエスト・ご意見」または、返信が必要な場合は「お問い合わせ」から該当箇所に関してお問い合わせ頂くと作者に届きますのでよろしくお願いします。")
             }
         }
         .navigationTitle("よくある質問")
