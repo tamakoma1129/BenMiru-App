@@ -13,21 +13,15 @@ struct HelpView: View {
             VStack{
                 List{
                     Section(header: Text("わからない時")){
+                        NavigationLink(destination: AppDescView()) {
+                            HStack {
+                                Text("本アプリについて")
+                                Spacer()
+                            }
+                        }
                         NavigationLink(destination: FnQView()) {
                             HStack {
                                 Text("よくある質問")
-                                Spacer()
-                            }
-                        }
-                        NavigationLink(destination: Text("使い方の詳細")) {
-                            HStack {
-                                Text("使い方")
-                                Spacer()
-                            }
-                        }
-                        NavigationLink(destination: Text("使い方（動画）の詳細")) {
-                            HStack {
-                                Text("使い方（動画）")
                                 Spacer()
                             }
                         }
@@ -59,6 +53,19 @@ struct HelpView: View {
             .navigationTitle("その他")
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
+}
+
+//本アプリについてView
+struct AppDescView:View{
+    var body: some View{
+        VStack{
+            Divider()
+            Text("本アプリは勉強時間を記録し、管理するアプリです。\nホーム画面では1画面当たり1マス15分のマスを横10マス縦16マス、計160マスの40時間分を記録することができます。")
+        }
+        .padding()
+        .navigationTitle("本アプリについて")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
