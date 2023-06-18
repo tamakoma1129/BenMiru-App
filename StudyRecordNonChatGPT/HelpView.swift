@@ -112,6 +112,8 @@ struct FnQView: View {
                 Text(label)
                     .foregroundColor(Color(UIColor(named:"Border")!))
                 Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundColor(.gray)
             }
         }
         .sheet(item: $modalContent) { content in
