@@ -18,6 +18,7 @@ struct StackedBarChartView: View {
     var chartOn: Bool
     var body: some View {
         VStack{
+            let hohoho = print(viewModel.studyByDayAndGenre,"hiho")
             let filterStackChartData = viewModel.studyByDayAndGenre.filter { $0.key >= startDate && $0.key <= endDate }
             //グラフ使う時はChartで囲う
             Chart {

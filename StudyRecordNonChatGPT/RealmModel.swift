@@ -117,6 +117,7 @@ class ViewModelStudy: ObservableObject {
             let genreId = study.genreId
             let duration = study.durationMinutes
             
+            let sss = print(date,"加工")
             if newStudyByDayAndGenre[date] == nil {
                 newStudyByDayAndGenre[date] = [String: Int]()
             }

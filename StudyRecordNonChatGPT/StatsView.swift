@@ -24,13 +24,11 @@ struct StatsView: View {
         
         switch range {
         case .oneWeek:
-            startDate = calendar.date(byAdding: .day, value: -6, to: endDate)!
+            startDate = calendar.date(byAdding: .day, value: -7, to: endDate)!
         case .oneMonth:
             startDate = calendar.date(byAdding: .month, value: -1, to: endDate)!
-            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
         case .oneYear:
             startDate = calendar.date(byAdding: .year, value: -1, to: endDate)!
-            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
         case .all:
             // すべての期間をカバーするため、非常に過去の日付を使用します。
             startDate = calendar.date(byAdding: .year, value: -100, to: endDate)!
@@ -42,21 +40,20 @@ struct StatsView: View {
     
     func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP") // ロケールを日本に設定
+        formatter.locale = Locale(identifier: "ja_JP")
         formatter.dateFormat = "yyyy/MM/dd(E)" // 形式を設定
         return formatter.string(from: date)
     }
     @State private var selectedDateRange = DateRange.oneWeek
-    @State private var customStartDate: Date = Calendar.current.date(byAdding: .weekOfMonth, value: -1, to: Date())!
-    @State private var customEndDate: Date = Calendar.current.date(byAdding: .hour, value: 9, to: Date())!
-    
-    
+    @State private var customStartDate: Date = Calendar.current.date(byAdding: .day, value: -7, to: Date())!
+    @State private var customEndDate: Date = Date()
     var body: some View {
+        let hoge = print("始まり:",customStartDate,"終わり:",customEndDate)
         GeometryReader{ geo in
             NavigationView{
                 VStack{
                     HStack{
-                        DatePicker("〜\(formatDate(date: customEndDate))まで", selection: $customEndDate, displayedComponents: .date)
+                        DatePicker("〜\(formatDate(date: customEndDate))までの\(selectedDateRange.rawValue)", selection: $customEndDate, displayedComponents: .date)
                             .padding()
                     }
                     // 日付範囲を選択するPickerを配置
@@ -80,9 +77,6 @@ struct StatsView: View {
                     }
                     // 選択した日付範囲に基づいてstartDateとendDateを計算
                     let dateRange = calculateDateRange(for: selectedDateRange, endDate: customEndDate)
-                    
-                    Text("\(formatDate(date: dateRange.startDate))〜\(formatDate(date: dateRange.endDate))")
-                    
                     List{
                         Section{
                             NavigationLink(destination: PieSliceVariable(startDate: $customStartDate, endDate: $customEndDate,onInfo: true)) {
@@ -127,6 +121,4 @@ struct StatsView: View {
         }
     }
 }
-
-
 
