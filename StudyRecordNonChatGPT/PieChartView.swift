@@ -27,46 +27,58 @@ struct PieSliceVariable:View{
             // PieChartDataをPieSliceDataに変換
             let convPieSliceData = convertToPieChartData(studyData: viewModel.studyByDayAndGenre,startDate: startDate, endDate: endDate)
             let pieSliceData = convertToPieSliceData(pieChartData: convPieSliceData)
+            let totalMinutes = convPieSliceData.reduce(0, { $0 + $1.studyTime })
+            let (totalHours, remainingMinutes) = timeInHoursAndMinutes(totalMinutes)
             if pieSliceData.isEmpty{
                 Text("この期間のデータはありません><")
             }
             else{
-                VStack{
-                    // PieSliceDataを使って円グラフを描画
-                    ZStack {
-                        ForEach(pieSliceData, id: \.genreID) { data in
-                            PieSlice(startAngle: data.startAngle, endAngle: data.endAngle)
-                                .fill(Color(genreColorMap.colorMap[data.genreID] ?? UIColor(.red))) // ランダムな色を使用。実際にはジャンルに基づいた色を使用することを推奨します。
+                HStack{
+                    VStack{
+                        if onInfo{
+                            Text("合計勉強時間 \(totalHours) 時間 \(remainingMinutes) 分")
+                        }
+                        // PieSliceDataを使って円グラフを描画
+                        ZStack {
+                            ForEach(pieSliceData, id: \.genreID) { data in
+                                PieSlice(startAngle: data.startAngle, endAngle: data.endAngle)
+                                    .fill(Color(genreColorMap.colorMap[data.genreID] ?? UIColor(.red))) // ランダムな色を使用。実際にはジャンルに基づいた色を使用することを推奨します。
+                            }
+                        }
+                        if onInfo{
+                            GeometryReader { geometry in
+                                ScrollView{
+                                    ForEach(convPieSliceData.sorted(by: { $0.studyTime > $1.studyTime }), id: \.genreID) { data in
+                                        let (hours, minutes) = timeInHoursAndMinutes(data.studyTime)
+                                        
+                                        HStack{
+                                            Text("\(genreColorMap.nameMap[data.genreID] ?? "エラーです　「記録する」からデータを削除してください。")")
+                                                .font(.title2.bold())
+                                                .foregroundColor(.primary)
+                                            Spacer()
+                                            Text("\(hours) 時間 \(minutes) 分")
+                                                .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .bold)))
+                                                .foregroundColor(.primary)
+                                        }
+                                        .padding()
+                                        .overlay(
+                                            HStack{
+                                                Divider()
+                                                    .frame(width: geometry.size.width * (CGFloat(data.studyTime) / CGFloat(totalMinutes)), height: 6)
+                                                    .background(Color(genreColorMap.colorMap[data.genreID] ?? UIColor(.red)))
+                                                Spacer()
+                                            }.padding(.horizontal), alignment: .bottom
+                                        )
+                                    }
+                                    .padding(.vertical)
+                                }
+                            }
                         }
                     }
-                    if onInfo{
-                        let totalMinutes = convPieSliceData.reduce(0, { $0 + $1.studyTime })
-                        GeometryReader { geometry in
-                            ScrollView{
-                                ForEach(convPieSliceData.sorted(by: { $0.studyTime > $1.studyTime }), id: \.genreID) { data in
-                                    let (hours, minutes) = timeInHoursAndMinutes(data.studyTime)
-                                    
-                                    HStack{
-                                        Text("\(genreColorMap.nameMap[data.genreID] ?? "エラーです　「記録する」からデータを削除してください。")")
-                                            .font(.title2.bold())
-                                            .foregroundColor(.primary)
-                                        Spacer()
-                                        Text("\(hours) 時間 \(minutes) 分")
-                                            .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .bold)))
-                                            .foregroundColor(.primary)
-                                    }
-                                    .padding()
-                                    .overlay(
-                                        HStack{
-                                            Divider()
-                                                .frame(width: geometry.size.width * (CGFloat(data.studyTime) / CGFloat(totalMinutes)), height: 6)
-                                                .background(Color(genreColorMap.colorMap[data.genreID] ?? UIColor(.red)))
-                                            Spacer()
-                                        }.padding(.horizontal), alignment: .bottom
-                                    )
-                                }
-                                .padding(.vertical)
-                            }
+                    if !onInfo {
+                        VStack{
+                            Text("合計")
+                            Text(" \(totalHours) 時間 \(remainingMinutes) 分")
                         }
                     }
                 }

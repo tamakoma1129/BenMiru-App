@@ -56,7 +56,7 @@ struct StatsView: View {
             NavigationView{
                 VStack{
                     HStack{
-                        DatePicker("〜\(formatDate(date: customEndDate))の期間", selection: $customEndDate, displayedComponents: .date)
+                        DatePicker("〜\(formatDate(date: customEndDate))まで", selection: $customEndDate, displayedComponents: .date)
                             .padding()
                     }
                     // 日付範囲を選択するPickerを配置
@@ -97,7 +97,7 @@ struct StatsView: View {
                                     Divider()
                                     // startDateとendDateをPieSliceVariableに渡す
                                     PieSliceVariable(startDate: $customStartDate, endDate: $customEndDate, onInfo: false)
-                                        .frame(height:geo.size.height*0.3)
+                                        .frame(height:geo.size.height*0.2)
                                 }
                             }
                         }
@@ -114,7 +114,7 @@ struct StatsView: View {
                                     Divider()
                                     // startDateとendDateをPieSliceVariableに渡す
                                     StackedBarChartView(startDate: $customStartDate, endDate: $customEndDate,chartOn:false)
-                                        .frame(height:geo.size.height*0.3)
+                                        .frame(height:geo.size.height*0.4)
                                 }
                             }
                         }
