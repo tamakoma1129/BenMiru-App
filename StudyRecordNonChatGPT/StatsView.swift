@@ -108,7 +108,7 @@ struct StatsView: View {
                                     Divider()
                                     // startDateとendDateをPieSliceVariableに渡す
                                     StackedBarChartView(startDate: $customStartDate, endDate: $customEndDate,chartOn:false)
-                                        .frame(height:geo.size.height*0.4)
+                                        .frame(height:geo.size.height*0.2)
                                 }
                             }
                         }

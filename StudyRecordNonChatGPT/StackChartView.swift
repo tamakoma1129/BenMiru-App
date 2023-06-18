@@ -48,7 +48,6 @@ struct StackedBarChartView: View {
                         )
                 }
             }
-            .frame(height: 200)  // グラフの高さ
             .padding()
             // 選択された日付の各グラフ棒の情報を表示するビュー
             if chartOn{
@@ -85,8 +84,9 @@ struct StackedBarChartView: View {
                         }
                     }
                     .padding()
-                } else {
-                    Text("グラフをタッチで詳細")
+                } else{
+                        Text("グラフをタッチで詳細を表示")
+                    .frame(height:400)
                 }
             }
         }
