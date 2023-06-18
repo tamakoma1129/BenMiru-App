@@ -13,12 +13,6 @@ struct HelpView: View {
             VStack{
                 List{
                     Section(header: Text("わからない時")){
-                        NavigationLink(destination: AppDescView()) {
-                            HStack {
-                                Text("本アプリについて")
-                                Spacer()
-                            }
-                        }
                         NavigationLink(destination: FnQView()) {
                             HStack {
                                 Text("よくある質問")
@@ -61,7 +55,7 @@ struct AppDescView:View{
     var body: some View{
         VStack{
             Divider()
-            Text("本アプリは勉強時間を記録し、管理するアプリです。\nホーム画面では1画面当たり1マス15分のマスを横10マス縦16マス、計160マスの40時間分を記録することができます。")
+            Text("本アプリについて書く")
         }
         .padding()
         .navigationTitle("本アプリについて")

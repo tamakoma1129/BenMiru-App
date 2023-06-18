@@ -24,46 +24,48 @@ struct RecordView: View {
                     let hoge = print(genres)
                     ForEach(genres){ (genre:Genre) in
                         let hoe = print(genre,"ForEach")
-                            VStack{
-                                HStack{
-                                    Rectangle()
-                                        .fill(Color(UIColor(
-                                            red: CGFloat(genre.colorRed),
-                                            green: CGFloat(genre.colorGreen),
-                                            blue: CGFloat(genre.colorBlue),
-                                            alpha: CGFloat(genre.colorAlpha)
-                                        )))
-                                        .frame(width: 4)
-                                    Text(genre.name)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .foregroundColor(.gray)
-                                }
-                                .frame(height:geometry.size.height/16)
-                                //contentShape(Rectangle())をつけることでセル全体を選択できる
-                                .contentShape(Rectangle())
-                                .onTapGesture {
-                                    selectedGenreId = genre.id
-                                    selectedGenreName = genre.name
-                                    showModal = true
-                                    selectedGenreColor = UIColor(
+                        VStack{
+                            HStack{
+                                Rectangle()
+                                    .fill(Color(UIColor(
                                         red: CGFloat(genre.colorRed),
                                         green: CGFloat(genre.colorGreen),
                                         blue: CGFloat(genre.colorBlue),
                                         alpha: CGFloat(genre.colorAlpha)
-                                    )
-                                }
+                                    )))
+                                    .frame(width: 4)
+                                Text(genre.name)
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
+                            .frame(height:geometry.size.height/16)
+                            //contentShape(Rectangle())をつけることでセル全体を選択できる
+                            .contentShape(Rectangle())
+                            .onTapGesture {
+                                selectedGenreId = genre.id
+                                selectedGenreName = genre.name
+                                showModal = true
+                                selectedGenreColor = UIColor(
+                                    red: CGFloat(genre.colorRed),
+                                    green: CGFloat(genre.colorGreen),
+                                    blue: CGFloat(genre.colorBlue),
+                                    alpha: CGFloat(genre.colorAlpha)
+                                )
+                            }
                         }
                     }
                 }
                 .navigationTitle("学習対象を選択")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: RecordDeleteView()
-                            .environmentObject(GenreColorMap())
-                        ) {
-                            Text("データの一覧と削除")
-                                .foregroundColor(.blue)
+                        HStack{
+                            NavigationLink(destination: RecordDeleteView()
+                                .environmentObject(GenreColorMap())
+                            ) {
+                                Text("データの一覧と削除")
+                                    .foregroundColor(.blue)
+                            }
                         }
                     }
                 }
