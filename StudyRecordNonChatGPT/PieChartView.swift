@@ -16,20 +16,58 @@ struct PieSliceVariable:View{
     
     @Binding var startDate: Date
     @Binding var endDate: Date
-
+    let onInfo : Bool
+    private func timeInHoursAndMinutes(_ minutes: Int) -> (hours: Int, minutes: Int) {
+        let hours = minutes / 60
+        let remainingMinutes = minutes % 60
+        return (hours, remainingMinutes)
+    }
     var body: some View {
         VStack {
-           // PieChartDataをPieSliceDataに変換
-            let pieSliceData = convertToPieSliceData(pieChartData: convertToPieChartData(studyData: viewModel.studyByDayAndGenre,startDate: startDate, endDate: endDate))
+            // PieChartDataをPieSliceDataに変換
+            let convPieSliceData = convertToPieChartData(studyData: viewModel.studyByDayAndGenre,startDate: startDate, endDate: endDate)
+            let pieSliceData = convertToPieSliceData(pieChartData: convPieSliceData)
             if pieSliceData.isEmpty{
                 Text("この期間のデータはありません><")
             }
             else{
-                // PieSliceDataを使って円グラフを描画
-                ZStack {
-                    ForEach(pieSliceData, id: \.genreID) { data in
-                        PieSlice(startAngle: data.startAngle, endAngle: data.endAngle)
-                            .fill(Color(genreColorMap.colorMap[data.genreID] ?? UIColor(.red))) // ランダムな色を使用。実際にはジャンルに基づいた色を使用することを推奨します。
+                VStack{
+                    // PieSliceDataを使って円グラフを描画
+                    ZStack {
+                        ForEach(pieSliceData, id: \.genreID) { data in
+                            PieSlice(startAngle: data.startAngle, endAngle: data.endAngle)
+                                .fill(Color(genreColorMap.colorMap[data.genreID] ?? UIColor(.red))) // ランダムな色を使用。実際にはジャンルに基づいた色を使用することを推奨します。
+                        }
+                    }
+                    if onInfo{
+                        let totalMinutes = convPieSliceData.reduce(0, { $0 + $1.studyTime })
+                        GeometryReader { geometry in
+                            ScrollView{
+                                ForEach(convPieSliceData.sorted(by: { $0.studyTime > $1.studyTime }), id: \.genreID) { data in
+                                    let (hours, minutes) = timeInHoursAndMinutes(data.studyTime)
+                                    
+                                    HStack{
+                                        Text("\(genreColorMap.nameMap[data.genreID] ?? "エラーです　「記録する」からデータを削除してください。")")
+                                            .font(.title2.bold())
+                                            .foregroundColor(.primary)
+                                        Spacer()
+                                        Text("\(hours) 時間 \(minutes) 分")
+                                            .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .bold)))
+                                            .foregroundColor(.primary)
+                                    }
+                                    .padding()
+                                    .overlay(
+                                        HStack{
+                                            Divider()
+                                                .frame(width: geometry.size.width * (CGFloat(data.studyTime) / CGFloat(totalMinutes)), height: 6)
+                                                .background(Color(genreColorMap.colorMap[data.genreID] ?? UIColor(.red)))
+                                            Spacer()
+                                        }.padding(.horizontal), alignment: .bottom
+                                    )
+                                }
+                                .padding(.vertical)
+                            }
+                        }
                     }
                 }
             }
@@ -140,13 +178,13 @@ struct PieChartView: View{
 struct PieChartVieww: View {
     @ObservedObject private var viewModel = ViewModelStudy()
     @EnvironmentObject var genreColorMap: GenreColorMap
-
+    
     private func timeInHoursAndMinutes(_ minutes: Int) -> (hours: Int, minutes: Int) {
         let hours = minutes / 60
         let remainingMinutes = minutes % 60
         return (hours, remainingMinutes)
     }
-
+    
     var body: some View {
         let totalMinutes = viewModel.totalStudyTimeByGenre.reduce(0, { $0 + $1.studyTime })
         let (totalHours, remainingMinutes) = timeInHoursAndMinutes(totalMinutes)

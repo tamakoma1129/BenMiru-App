@@ -85,52 +85,41 @@ struct StatsView: View {
                     
                     List{
                         Section{
-                            VStack{
-                                HStack{
-                                    Text("円グラフ")
-                                        .bold()
-                                        .font(.system(size: geo.size.width/15))
-                                        .foregroundColor(Color(UIColor(named:"Border")!))
-                                    Spacer()
-                                    Button(action: {
-                                        //ボタンアクション
-                                    }) {
-                                        HStack {
-                                            Text("詳細")
-                                                .foregroundColor(Color(UIColor(named:"Border")!))
-                                        }
+                            NavigationLink(destination: PieSliceVariable(startDate: $customStartDate, endDate: $customEndDate,onInfo: true)) {
+                                VStack{
+                                    HStack{
+                                        Text("円グラフ")
+                                            .bold()
+                                            .font(.system(size: geo.size.width/15))
+                                            .foregroundColor(Color(UIColor(named:"Border")!))
+                                        Spacer()
                                     }
+                                    Divider()
+                                    // startDateとendDateをPieSliceVariableに渡す
+                                    PieSliceVariable(startDate: $customStartDate, endDate: $customEndDate, onInfo: false)
+                                        .frame(height:geo.size.height*0.3)
                                 }
-                                Divider()
-                                // startDateとendDateをPieSliceVariableに渡す
-                                PieSliceVariable(startDate: $customStartDate, endDate: $customEndDate)
-                                    .frame(height:geo.size.height*0.3)
                             }
                         }
                         Section{
-                            VStack{
-                                HStack{
-                                    Text("積み上げ棒グラフ")
-                                        .bold()
-                                        .font(.system(size: geo.size.width/15))
-                                        .foregroundColor(Color(UIColor(named:"Border")!))
-                                    Spacer()
-                                    Button(action: {
-                                        //ボタンアクション
-                                    }) {
-                                        HStack {
-                                            Text("詳細")
-                                                .foregroundColor(Color(UIColor(named:"Border")!))
-                                        }
+                            NavigationLink(destination: StackedBarChartView(startDate: $customStartDate, endDate: $customEndDate,chartOn: true)) {
+                                VStack{
+                                    HStack{
+                                        Text("積み上げ棒グラフ")
+                                            .bold()
+                                            .font(.system(size: geo.size.width/15))
+                                            .foregroundColor(Color(UIColor(named:"Border")!))
+                                        Spacer()
                                     }
+                                    Divider()
+                                    // startDateとendDateをPieSliceVariableに渡す
+                                    StackedBarChartView(startDate: $customStartDate, endDate: $customEndDate,chartOn:false)
+                                        .frame(height:geo.size.height*0.3)
                                 }
-                                Divider()
-                                // startDateとendDateをPieSliceVariableに渡す
-                                StackedBarChartView(startDate: $customStartDate, endDate: $customEndDate,chartOn:false)
-                                    .frame(height:geo.size.height*0.5)
                             }
                         }
                     }
+                    
                     .navigationTitle("統計")
                     .navigationBarTitleDisplayMode(.inline)
                 }
