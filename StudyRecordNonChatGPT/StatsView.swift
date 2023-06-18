@@ -48,15 +48,17 @@ struct StatsView: View {
     }
     @State private var selectedDateRange = DateRange.oneWeek
     @State private var customStartDate: Date = Calendar.current.date(byAdding: .weekOfMonth, value: -1, to: Date())!
-    @State private var customEndDate: Date = Date()
+    @State private var customEndDate: Date = Calendar.current.date(byAdding: .hour, value: 9, to: Date())!
     
     
     var body: some View {
         GeometryReader{ geo in
             NavigationView{
                 VStack{
-                    DatePicker("〜\(formatDate(date: customEndDate))の期間", selection: $customEndDate, displayedComponents: .date)
-                        .padding()
+                    HStack{
+                        DatePicker("〜\(formatDate(date: customEndDate))の期間", selection: $customEndDate, displayedComponents: .date)
+                            .padding()
+                    }
                     // 日付範囲を選択するPickerを配置
                     Picker("Date Range", selection: $selectedDateRange) {
                         ForEach(DateRange.allCases) { range in
