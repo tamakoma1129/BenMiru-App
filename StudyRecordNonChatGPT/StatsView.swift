@@ -9,46 +9,36 @@ import SwiftUI
 //StatsViewのストラクト
 struct StatsView: View {
     enum DateRange: String, CaseIterable, Identifiable {
-        case oneDay = "1日"
         case oneWeek = "1週間"
         case oneMonth = "1ヶ月"
         case oneYear = "1年"
         case all = "全期間"
-        case custom = "カスタム"
         
         var id: String { self.rawValue }
     }
+    
     // 期間を計算
-    func calculateDateRange(for range: DateRange) -> (startDate: Date, endDate: Date) {
+    func calculateDateRange(for range: DateRange, endDate: Date) -> (startDate: Date, endDate: Date) {
         let calendar = Calendar.current
         var startDate: Date
-        let endDate: Date
         
         switch range {
-        case .oneDay:
-            startDate = calendar.startOfDay(for: Date())
-            endDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
         case .oneWeek:
-            startDate = calendar.date(byAdding: .weekOfMonth, value: -1, to: Date())!
-            endDate = calendar.startOfDay(for: Date())
+            startDate = calendar.date(byAdding: .day, value: -6, to: endDate)!
         case .oneMonth:
-            startDate = calendar.date(byAdding: .month, value: -1, to: Date())!
-            endDate = calendar.startOfDay(for: Date())
+            startDate = calendar.date(byAdding: .month, value: -1, to: endDate)!
+            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
         case .oneYear:
-            startDate = calendar.date(byAdding: .year, value: -1, to: Date())!
-            endDate = calendar.startOfDay(for: Date())
+            startDate = calendar.date(byAdding: .year, value: -1, to: endDate)!
+            startDate = calendar.date(byAdding: .day, value: 1, to: startDate)!
         case .all:
             // すべての期間をカバーするため、非常に過去の日付を使用します。
-            startDate = calendar.date(byAdding: .year, value: -100, to: Date())!
-            endDate = calendar.startOfDay(for: Date())
-        case .custom:
-            // カスタムの場合、選択された日付をそのまま返します
-            startDate = customStartDate
-            endDate = customEndDate
+            startDate = calendar.date(byAdding: .year, value: -100, to: endDate)!
         }
         
         return (startDate, endDate)
     }
+    
     
     func formatDate(date: Date) -> String {
         let formatter = DateFormatter()
@@ -56,8 +46,8 @@ struct StatsView: View {
         formatter.dateFormat = "yyyy/MM/dd(E)" // 形式を設定
         return formatter.string(from: date)
     }
-    @State private var selectedDateRange = DateRange.oneDay
-    @State private var customStartDate: Date = Date()
+    @State private var selectedDateRange = DateRange.oneWeek
+    @State private var customStartDate: Date = Calendar.current.date(byAdding: .weekOfMonth, value: -1, to: Date())!
     @State private var customEndDate: Date = Date()
     
     
@@ -65,6 +55,8 @@ struct StatsView: View {
         GeometryReader{ geo in
             NavigationView{
                 VStack{
+                    DatePicker("〜\(formatDate(date: customEndDate))の期間", selection: $customEndDate, displayedComponents: .date)
+                        .padding()
                     // 日付範囲を選択するPickerを配置
                     Picker("Date Range", selection: $selectedDateRange) {
                         ForEach(DateRange.allCases) { range in
@@ -74,21 +66,21 @@ struct StatsView: View {
                     .pickerStyle(SegmentedPickerStyle())
                     .onChange(of: selectedDateRange) { newValue in
                         // 新しい日付範囲が選択された時に customStartDate と customEndDate を更新する
-                        let dateRange = calculateDateRange(for: newValue)
+                        let dateRange = calculateDateRange(for: newValue, endDate: customEndDate)
                         customStartDate = dateRange.startDate
                         customEndDate = dateRange.endDate
                     }
-                    
-                    // 選択した日付範囲に基づいてstartDateとendDateを計算
-                    let dateRange = calculateDateRange(for: selectedDateRange)
-                    
-                    // カスタムの場合はDatePickerを表示
-                    if selectedDateRange == .custom {
-                        DatePicker("Start Date", selection: $customStartDate, displayedComponents: .date)
-                        DatePicker("End Date", selection: $customEndDate, displayedComponents: .date)
+                    .onChange(of: customEndDate) { newValue in
+                        // 新しい日付範囲が選択された時に customStartDate と customEndDate を更新する
+                        let dateRange = calculateDateRange(for: selectedDateRange, endDate: newValue)
+                        customStartDate = dateRange.startDate
+                        customEndDate = dateRange.endDate
                     }
+                    // 選択した日付範囲に基づいてstartDateとendDateを計算
+                    let dateRange = calculateDateRange(for: selectedDateRange, endDate: customEndDate)
                     
                     Text("\(formatDate(date: dateRange.startDate))〜\(formatDate(date: dateRange.endDate))")
+                    
                     List{
                         Section{
                             VStack{
