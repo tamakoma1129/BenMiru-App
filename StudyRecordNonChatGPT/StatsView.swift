@@ -87,9 +87,10 @@ struct StatsView: View {
                         Section{
                             VStack{
                                 HStack{
-                                    Text("円グラフ(学習時間)")
+                                    Text("円グラフ")
                                         .bold()
                                         .font(.system(size: geo.size.width/15))
+                                        .foregroundColor(Color(UIColor(named:"Border")!))
                                     Spacer()
                                     Button(action: {
                                         //ボタンアクション
@@ -107,7 +108,27 @@ struct StatsView: View {
                             }
                         }
                         Section{
-                            Text("積み上げ棒グラフ")
+                            VStack{
+                                HStack{
+                                    Text("積み上げ棒グラフ")
+                                        .bold()
+                                        .font(.system(size: geo.size.width/15))
+                                        .foregroundColor(Color(UIColor(named:"Border")!))
+                                    Spacer()
+                                    Button(action: {
+                                        //ボタンアクション
+                                    }) {
+                                        HStack {
+                                            Text("詳細")
+                                                .foregroundColor(Color(UIColor(named:"Border")!))
+                                        }
+                                    }
+                                }
+                                Divider()
+                                // startDateとendDateをPieSliceVariableに渡す
+                                StackedBarChartView(startDate: $customStartDate, endDate: $customEndDate,chartOn:false)
+                                    .frame(height:geo.size.height*0.5)
+                            }
                         }
                     }
                     .navigationTitle("統計")

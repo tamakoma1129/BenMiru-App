@@ -13,13 +13,17 @@ struct StackedBarChartView: View {
     @State var selectedDate: Date?   //ユーザーのタップしたところを保存する変数selectedDateをStateで宣言
     @ObservedObject private var viewModel = ViewModelStudy()    //グラフ用にデータを加工かつ、データを同期する処理をするStructからデータを引っ張ってくる
     @EnvironmentObject var genreColorMap: GenreColorMap //IDと色を同期させた辞書を作っているClass
+    @Binding var startDate: Date
+    @Binding var endDate: Date
+    var chartOn: Bool
     var body: some View {
         VStack{
+            let filterStackChartData = viewModel.studyByDayAndGenre.filter { $0.key >= startDate && $0.key <= endDate }
             //グラフ使う時はChartで囲う
             Chart {
-                ForEach(viewModel.studyByDayAndGenre.keys.sorted(), id: \.self) { date in
-                    ForEach(viewModel.studyByDayAndGenre[date]!.keys.sorted(), id: \.self) { genreId in
-                        let minutes = (viewModel.studyByDayAndGenre[date]![genreId] ?? 0)
+                ForEach(filterStackChartData.keys.sorted(), id: \.self) { date in
+                    ForEach(filterStackChartData[date]!.keys.sorted(), id: \.self) { genreId in
+                        let minutes = (filterStackChartData[date]![genreId] ?? 0)
                         BarMark(x: .value("日", date),
                                 y: .value("分", minutes))
                         .foregroundStyle(Color(genreColorMap.colorMap[genreId] ?? UIColor(.red)))
@@ -46,41 +50,43 @@ struct StackedBarChartView: View {
             .frame(height: 200)  // グラフの高さ
             .padding()
             // 選択された日付の各グラフ棒の情報を表示するビュー
-            if let selectedDate = selectedDate {
-                VStack(alignment: .leading) {
-                    let sumDurationTime:Int = viewModel.studyByDayAndGenre[selectedDate]?.values.reduce(0, +) ?? 0   //選んだ日付の合計勉強時間をreduce関数で求める
-                    Text("日付: \(dateConv(beforeDate: selectedDate))")
-                    Text("合計\(sumDurationTime)分")
-                    ScrollView{
-                        ForEach(viewModel.studyByDayAndGenre[selectedDate]?.keys.sorted().reversed() ?? [], id: \.self) { genreId in
-                            let durationTime:Int =  (viewModel.studyByDayAndGenre[selectedDate]![genreId] ?? 0)
-                            GeometryReader { geometry in
-                            HStack{
-                                Text("\(genreColorMap.nameMap[genreId] ?? "エラーです　「記録する」からデータを削除してください。")" )
-                                    .font(.title2.bold())
-                                    .foregroundColor(.primary)
-                                Spacer()
-                                Text("\(durationTime, format: .number) 分")
-                                    .font(.title2.bold())
-                                    .foregroundColor(.primary)
-                            }
-                            .padding()
+            if chartOn{
+                if let selectedDate = selectedDate {
+                    VStack(alignment: .leading) {
+                        let sumDurationTime:Int = filterStackChartData[selectedDate]?.values.reduce(0, +) ?? 0   //選んだ日付の合計勉強時間をreduce関数で求める
+                        Text("日付: \(dateConv(beforeDate: selectedDate))")
+                        Text("合計\(sumDurationTime)分")
+                        ScrollView{
+                            ForEach(filterStackChartData[selectedDate]?.keys.sorted().reversed() ?? [], id: \.self) { genreId in
+                                let durationTime:Int =  (filterStackChartData[selectedDate]![genreId] ?? 0)
+                                GeometryReader { geometry in
+                                    HStack{
+                                        Text("\(genreColorMap.nameMap[genreId] ?? "エラーです　「記録する」からデータを削除してください。")" )
+                                            .font(.title2.bold())
+                                            .foregroundColor(.primary)
+                                        Spacer()
+                                        Text("\(durationTime, format: .number) 分")
+                                            .font(.title2.bold())
+                                            .foregroundColor(.primary)
+                                    }
+                                    .padding()
                                     .overlay(
                                         HStack{
                                             Divider()
                                                 .frame(width: geometry.size.width * (CGFloat(durationTime) / CGFloat(sumDurationTime)), height: 6)
                                                 .background(Color(genreColorMap.colorMap[genreId] ?? UIColor(.red)))
-                                        Spacer()
+                                            Spacer()
                                         }, alignment: .bottom
                                     )
+                                }
+                                .padding(.vertical)
                             }
-                            .padding(.vertical)
                         }
                     }
+                    .padding()
+                } else {
+                    Text("グラフをタッチで詳細")
                 }
-                .padding()
-            } else {
-                Text("グラフをタッチで詳細")
             }
         }
     }
