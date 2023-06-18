@@ -11,33 +11,76 @@ import SwiftUI
 
 struct IntroView: View {
     @Binding var isShowingIntro: Bool
+    @State private var selectedTab = 0
+    
     var body: some View {
-        ZStack {
-            TabView {
-                ForEach(0..<8) { index in
-                    // ここで画像を表示します。適切な画像名に置き換えてください。
-                    Image("S\(index)")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                }
-            }
-            .tabViewStyle(PageTabViewStyle())
-            .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
-            
-            VStack {
-                HStack {
-                    Spacer()
-                    Button(action: {
-                        // バツボタンが押されたときのアクション
-                        isShowingIntro = false
-                    }) {
-                        Image(systemName: "xmark")
-                            .font(.largeTitle)
-                            .padding()
-                            .foregroundColor(.white)
+        GeometryReader { geometry in
+            ZStack {
+                TabView(selection: $selectedTab) {
+                    ForEach(0..<8) { index in
+                        // ここで画像を表示します。適切な画像名に置き換えてください。
+                        Image("S\(index)")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .tag(index)
                     }
                 }
-                Spacer()
+                .tabViewStyle(PageTabViewStyle())
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                .animation(.easeInOut, value: selectedTab)
+                VStack{
+                    HStack{
+                        Spacer()
+                        Button(action: {
+                            // バツボタンが押されたときのアクション
+                            isShowingIntro = false
+                        }) {
+                            Image(systemName: "xmark")
+                                .font(.largeTitle)
+                                .padding()
+                                .foregroundColor(.white)
+                        }
+                        .padding(.trailing)
+                        .alignmentGuide(.top, computeValue: { d in d[.top] })
+                    }
+                    Spacer()
+                    if selectedTab < 7 {
+                        Button(action: {
+                            // "次へ"ボタンが押されたときのアクション
+                            if selectedTab < 7 {
+                                selectedTab += 1
+                            }
+                        }) {
+                            Text("次へ")
+                                .frame(width:geometry.size.width/2)
+                                .padding()
+                                .foregroundColor(.blue) // <--- 文字色を青色に変更
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.blue, lineWidth: 2) // <--- 枠線を追加
+                                )
+                        }
+                        .padding(.bottom,geometry.size.height/15)
+                        .alignmentGuide(.bottom, computeValue: { d in d[.bottom] })
+                    } else {
+                        Button(action: {
+                            // "はじめる"ボタンが押されたときのアクション
+                            isShowingIntro = false
+                        }) {
+                            Text("はじめる")
+                                .frame(width:geometry.size.width/2)
+                                .padding()
+                                .foregroundColor(.blue) // <--- 文字色を青色に変更
+                                .background(Color.clear)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.blue, lineWidth: 2) // <--- 枠線を追加
+                                )
+                                .padding(.bottom,geometry.size.height/15)
+                        }
+                    }
+                }
             }
         }
     }
