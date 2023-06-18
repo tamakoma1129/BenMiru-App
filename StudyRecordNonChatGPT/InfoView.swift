@@ -17,7 +17,7 @@ struct IntroView: View {
         GeometryReader { geometry in
             ZStack {
                 TabView(selection: $selectedTab) {
-                    ForEach(0..<8) { index in
+                    ForEach(0..<9) { index in
                         // ここで画像を表示します。適切な画像名に置き換えてください。
                         Image("S\(index)")
                             .resizable()
@@ -29,25 +29,11 @@ struct IntroView: View {
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
                 .animation(.easeInOut, value: selectedTab)
                 VStack{
-                    HStack{
-                        Spacer()
-                        Button(action: {
-                            // バツボタンが押されたときのアクション
-                            isShowingIntro = false
-                        }) {
-                            Image(systemName: "xmark")
-                                .font(.largeTitle)
-                                .padding()
-                                .foregroundColor(.white)
-                        }
-                        .padding(.trailing)
-                        .alignmentGuide(.top, computeValue: { d in d[.top] })
-                    }
                     Spacer()
-                    if selectedTab < 7 {
+                    if selectedTab < 8 {
                         Button(action: {
                             // "次へ"ボタンが押されたときのアクション
-                            if selectedTab < 7 {
+                            if selectedTab < 8 {
                                 selectedTab += 1
                             }
                         }) {
@@ -71,11 +57,11 @@ struct IntroView: View {
                             Text("はじめる")
                                 .frame(width:geometry.size.width/2)
                                 .padding()
-                                .foregroundColor(.blue) // <--- 文字色を青色に変更
+                                .foregroundColor(.blue) 
                                 .background(Color.clear)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.blue, lineWidth: 2) // <--- 枠線を追加
+                                        .stroke(Color.blue, lineWidth: 2)
                                 )
                                 .padding(.bottom,geometry.size.height/15)
                         }
