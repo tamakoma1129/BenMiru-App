@@ -28,7 +28,7 @@ struct HelpView: View {
                     }
                     Section(header:Text("その他")){
                         HStack{
-                            Text("レビューする")
+                            Text("アプリのレビューをする")
                                 .contentShape(Rectangle())
                                 .onTapGesture {
                                     reviewApp()

@@ -111,7 +111,7 @@ struct StackedBarChartView: View {
     
     private func dateConv(beforeDate:Date) -> (String) {
         let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy/MM/dd"
+            formatter.dateFormat = "yyyy/MM/dd(E)"
             formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
         let dateTokyo = formatter.string(from: beforeDate)
         return dateTokyo
