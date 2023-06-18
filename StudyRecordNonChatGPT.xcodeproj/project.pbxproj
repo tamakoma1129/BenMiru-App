@@ -12,6 +12,7 @@
 		9C14813A2A33FBEB00A8D958 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C1481392A33FBEB00A8D958 /* PieChartView.swift */; };
 		9C14813C2A39469D00A8D958 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C14813B2A39469D00A8D958 /* SettingsView.swift */; };
 		9C14813E2A396BEB00A8D958 /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C14813D2A396BEB00A8D958 /* HelpView.swift */; };
+		9C1481602A3EC70800A8D958 /* FirstView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C14815F2A3EC70800A8D958 /* FirstView.storyboard */; };
 		9C177A9B2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */; };
 		9C177A9D2A1F0E76001D4E29 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C177A9C2A1F0E76001D4E29 /* ContentView.swift */; };
 		9C177A9F2A1F0E78001D4E29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C177A9E2A1F0E78001D4E29 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 		9C1481392A33FBEB00A8D958 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		9C14813B2A39469D00A8D958 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9C14813D2A396BEB00A8D958 /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		9C14815F2A3EC70800A8D958 /* FirstView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FirstView.storyboard; sourceTree = "<group>"; };
 		9C177A972A1F0E76001D4E29 /* StudyRecordNonChatGPT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyRecordNonChatGPT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRecordNonChatGPTApp.swift; sourceTree = "<group>"; };
 		9C177A9C2A1F0E76001D4E29 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			children = (
 				9CD99D842A2A22F5000B7002 /* Info.plist */,
 				9C177A9A2A1F0E76001D4E29 /* StudyRecordNonChatGPTApp.swift */,
+				9C14815F2A3EC70800A8D958 /* FirstView.storyboard */,
 				9C177A9C2A1F0E76001D4E29 /* ContentView.swift */,
 				9C5E34982A1F48C800A84C26 /* MainView.swift */,
 				9C14813B2A39469D00A8D958 /* SettingsView.swift */,
@@ -200,6 +203,7 @@
 			files = (
 				9C177AA22A1F0E78001D4E29 /* Preview Assets.xcassets in Resources */,
 				9C5E34A12A1FB42A00A84C26 /* .gitignore in Resources */,
+				9C1481602A3EC70800A8D958 /* FirstView.storyboard in Resources */,
 				9C177A9F2A1F0E78001D4E29 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,9 +406,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StudyRecordNonChatGPT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "べんミル";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = FirstView.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -436,9 +441,10 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StudyRecordNonChatGPT/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "べんミル";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = FirstView.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
