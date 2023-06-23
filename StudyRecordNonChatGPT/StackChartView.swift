@@ -52,21 +52,23 @@ struct StackedBarChartView: View {
             // 選択された日付の各グラフ棒の情報を表示するビュー
             if chartOn{
                 if let selectedDate = selectedDate {
-                    VStack(alignment: .leading) {
-                        let sumDurationTime:Int = filterStackChartData[selectedDate]?.values.reduce(0, +) ?? 0   //選んだ日付の合計勉強時間をreduce関数で求める
-                        Text("日付: \(dateConv(beforeDate: selectedDate))")
-                        Text("合計\(sumDurationTime)分")
-                        ScrollView{
-                            ForEach(filterStackChartData[selectedDate]?.keys.sorted().reversed() ?? [], id: \.self) { genreId in
-                                let durationTime:Int =  (filterStackChartData[selectedDate]![genreId] ?? 0)
-                                GeometryReader { geometry in
+                    GeometryReader { geometry in
+                        VStack(alignment: .leading) {
+                            let sumDurationTime:Int = filterStackChartData[selectedDate]?.values.reduce(0, +) ?? 0   //選んだ日付の合計勉強時間をreduce関数で求める
+                            Text("日付: \(dateConv(beforeDate: selectedDate))")
+                            Text("合計\(sumDurationTime/60)時間\(sumDurationTime%60)分")
+                                .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .regular)))
+                            ScrollView{
+                                ForEach(filterStackChartData[selectedDate]?.keys.sorted().reversed() ?? [], id: \.self) { genreId in
+                                    let durationTime:Int =  (filterStackChartData[selectedDate]![genreId] ?? 0)
+                                    
                                     HStack{
                                         Text("\(genreColorMap.nameMap[genreId] ?? "エラーです　「記録する」からデータを削除してください。")" )
                                             .font(.title2.bold())
                                             .foregroundColor(.primary)
                                         Spacer()
-                                        Text("\(durationTime, format: .number) 分")
-                                            .font(.title2.bold())
+                                        Text("\(durationTime/60)時間\(durationTime%60)分")
+                                            .font(Font(UIFont.monospacedDigitSystemFont(ofSize: geometry.size.width/20, weight: .bold)))
                                             .foregroundColor(.primary)
                                     }
                                     .padding()
@@ -85,8 +87,8 @@ struct StackedBarChartView: View {
                     }
                     .padding()
                 } else{
-                        Text("グラフをタッチで詳細を表示")
-                    .frame(height:400)
+                    Text("グラフをタッチで詳細を表示")
+                        .frame(height:400)
                 }
             }
         }
@@ -111,8 +113,8 @@ struct StackedBarChartView: View {
     
     private func dateConv(beforeDate:Date) -> (String) {
         let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy/MM/dd(E)"
-            formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        formatter.dateFormat = "yyyy/MM/dd(E)"
+        formatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
         let dateTokyo = formatter.string(from: beforeDate)
         return dateTokyo
     }
