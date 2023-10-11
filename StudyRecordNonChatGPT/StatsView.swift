@@ -63,15 +63,15 @@ struct StatsView: View {
                         }
                     }
                     .pickerStyle(SegmentedPickerStyle())
-                    .onChange(of: selectedDateRange) { newValue in
+                    .onChange(of: selectedDateRange) {
                         // 新しい日付範囲が選択された時に customStartDate と customEndDate を更新する
-                        let dateRange = calculateDateRange(for: newValue, endDate: customEndDate)
+                        let dateRange = calculateDateRange(for: selectedDateRange, endDate: customEndDate)
                         customStartDate = dateRange.startDate
                         customEndDate = dateRange.endDate
                     }
-                    .onChange(of: customEndDate) { newValue in
+                    .onChange(of: customEndDate) {
                         // 新しい日付範囲が選択された時に customStartDate と customEndDate を更新する
-                        let dateRange = calculateDateRange(for: selectedDateRange, endDate: newValue)
+                        let dateRange = calculateDateRange(for: selectedDateRange, endDate: customEndDate )
                         customStartDate = dateRange.startDate
                         customEndDate = dateRange.endDate
                     }

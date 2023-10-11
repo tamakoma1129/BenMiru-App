@@ -148,7 +148,7 @@ struct MainView: View {
                         allPage()
                         selectedPage=viewBlock.blockedStudyRecordEntities.count-1
                     }
-                    .onChange(of: viewBlock.blockedStudyRecordEntities.count){ _ in
+                    .onChange(of: viewBlock.blockedStudyRecordEntities.count){
                         allPage()
                         selectedPage=viewBlock.blockedStudyRecordEntities.count-1
                     }

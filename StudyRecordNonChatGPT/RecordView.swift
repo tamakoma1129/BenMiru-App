@@ -149,10 +149,13 @@ struct RecordView: View {
                             }
                         }
                     }
+                    .onChange(of: allMinuteTime) {
+                        print("RecordView側:\(allMinuteTime)")
+                        print("Selected Tab: \(selectedTab)")
+                    }
                 }
                 .navigationTitle("\(genreName)の記録")
             }
-            
         }
         //TabBarを自作する
         struct TabBarView : View {
@@ -258,7 +261,7 @@ struct RecordView: View {
                         .onAppear {
                             convDate()
                         }
-                        .onChange(of: selectedDate) { newValue in
+                        .onChange(of: selectedDate) {
                             convDate()
                         }
                         //3個目のリスト要素　時間選択
@@ -290,17 +293,16 @@ struct RecordView: View {
                             hTimeModal.toggle()
                         }
                         .onAppear {
+                            convMinuteHour()
+                        }
+                        .onChange(of: allMinuteTime){
+                            convMinuteHour()
+                        }
+                        .onChange(of: selectedHour) {
                             convMinute()
                             convMinuteHour()
                         }
-                        .onChange(of: allMinuteTime){ _ in
-                            convMinuteHour()
-                        }
-                        .onChange(of: selectedHour) { newValue in
-                            convMinute()
-                            convMinuteHour()
-                        }
-                        .onChange(of: selectedMinute) { newValue in
+                        .onChange(of: selectedMinute) {
                             convMinute()
                             convMinuteHour()
                         }
@@ -372,3 +374,6 @@ struct RecordView: View {
 }
 //BlockLinesView(ACLi: [Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor),Color(uiColor)])
 
+class TimeManager: ObservableObject {
+    @Published var allMinuteTime: Int = 0
+}

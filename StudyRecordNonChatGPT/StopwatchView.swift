@@ -192,6 +192,9 @@ struct StopwatchView: View {
                 }
             }
         }
+        .onChange(of: allMinuteTime) {
+            print("StopwatchView側:\(allMinuteTime)")
+        }
     }
 }
 
